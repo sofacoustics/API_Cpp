@@ -1,0 +1,50 @@
+//**********************************************************************************
+//  FILE DESCRIPTION																
+//----------------------------------------------------------------------------------
+//!
+//  @file       libsofa.release.xconfig
+//  @brief      Xcode Config file for Release configuration
+//  @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+//  
+//  @date       10/05/2013
+//
+//  @details
+//  @n
+//
+//**********************************************************************************
+#include "libsofa.common.xcconfig"
+
+PRODUCT_NAME                    = $(TARGET_NAME)
+
+//**********************************************************************************
+// BUILD ARCHITECTURE
+//**********************************************************************************
+ARCHS                           = x86_64 i386
+ONLY_ACTIVE_ARCH                = NO
+
+//**********************************************************************************
+// PREPROCESSOR
+//**********************************************************************************
+GCC_PREPROCESSOR_DEFINITIONS    = NDEBUG=1 
+
+
+//**********************************************************************************
+// LINKED LIBRARIES
+//**********************************************************************************
+NETCDF_LIB					=  $(NETCDF_LIB_PATH)/libnetcdf.a
+NETCDF_CPP_LIB				=  $(NETCDF_LIB_PATH)/libnetcdf_c++4.a
+HDF5HL_LIB					=  $(NETCDF_LIB_PATH)/libhdf5_hl.a
+HDF5_LIB					=  $(NETCDF_LIB_PATH)/libhdf5.a
+CURL_LIB                    =  $(NETCDF_LIB_PATH)/libcurl.a
+Z_LIB						=  $(NETCDF_LIB_PATH)/libz.a
+
+OTHER_LDFLAGS               = $(NETCDF_LIB) $(NETCDF_CPP_LIB) $(HDF5HL_LIB) $(HDF5_LIB) $(CURL_LIB) $(Z_LIB)
+
+//**********************************************************************************
+// OPTIONS SPECIFIC FOR RELEASE CONFIGURATION
+//**********************************************************************************
+LLVM_VECTORIZE_LOOPS                        =   YES
+GCC_OPTIMIZATION_LEVEL                      =   fast
+GCC_GENERATE_DEBUGGING_SYMBOLS              =   NO
+LLVM_LTO                                    =   NO
+

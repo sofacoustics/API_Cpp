@@ -1,0 +1,28 @@
+/************************************************************************************/
+/*  FILE DESCRIPTION																*/
+/*----------------------------------------------------------------------------------*/
+/*!
+ *   @file       libsofa.changelog.txt
+ *   @brief      Changelog for libsofa library
+ *   @author     Thibaut Carpentier
+ *   @version    $(PRODUCT_VERSION)
+ *   @date       15/07/2013
+ *
+/************************************************************************************/
+
+
+****************************************************************
+@version    0.2.0
+@author     Thibaut Carpentier
+@date       01/2014
+
+* updating according to the latest AES X-212 draft
+
+
+
+****************************************************************
+@version    0.0.2
+@author     Thibaut Carpentier
+@date       07/2013
+
+* Using C++ exceptions rather than error code, whenever it's possible.
