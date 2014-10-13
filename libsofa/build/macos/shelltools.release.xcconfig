@@ -28,7 +28,7 @@ MACH_O_TYPE                     = mh_execute
 // LINKER
 //**********************************************************************************
 FRAMEWORK_LINKED                = 
-OTHER_LDFLAGS                   = $(SRCROOT)/../../lib/libsofa.a $(FRAMEWORK_LINKED)
+OTHER_LDFLAGS                   = $(SRCROOT)/../../lib/libsofa.a $(DEPENDENCIES_LIB) $(FRAMEWORK_LINKED)
 
 //**********************************************************************************
 // PREPROCESSOR

@@ -90,9 +90,45 @@ const std::string NetCDFFile::GetFilename() const
     return filename;
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Returns the names of all attributes
+ *
+ */
+/************************************************************************************/
+void NetCDFFile::GetAllAttributesNames(std::vector< std::string > &attributeNames) const
+{        
+    const std::multimap< std::string, netCDF::NcGroupAtt > attributes = file.getAtts();
+    
+    const std::size_t size = attributes.size();
+    
+    attributeNames.resize( size );
+    
+    std::size_t i = 0;
+    for( std::multimap< std::string, netCDF::NcGroupAtt >::const_iterator it = attributes.begin();
+        it != attributes.end();
+        ++it )
+    {
+        const std::string attributeName = (*it).first;
+        
+        attributeNames[ i ] = attributeName;
+        i++;
+    }
+}
 
-void NetCDFFile::PrintAllAttributes(std::ostream & output) const
+/************************************************************************************/
+/*!
+ *  @brief          Returns all the attributes that are of type char
+ *                  (in SOFA all attributes are char)
+ *
+ */
+/************************************************************************************/
+void NetCDFFile::GetAllCharAttributes(std::vector< std::string > &attributeNames,
+                                      std::vector< std::string > &attributeValues) const
 {
+    attributeNames.clear();
+    attributeValues.clear();
+    
     const std::multimap< std::string, netCDF::NcGroupAtt > attributes = file.getAtts();
     
     for( std::multimap< std::string, netCDF::NcGroupAtt >::const_iterator it = attributes.begin();
@@ -101,15 +137,46 @@ void NetCDFFile::PrintAllAttributes(std::ostream & output) const
     {
         const std::string attributeName = (*it).first;
         const netCDF::NcGroupAtt att    = (*it).second;
-                
+        
         if( sofa::NcUtils::IsChar( att ) == true )
         {
             const std::string value = sofa::NcUtils::GetAttributeValueAsString( att );
-            output << attributeName << " = " << value << std::endl;
+            
+            attributeNames.push_back( attributeName );
+            attributeValues.push_back( value );
         }
-    }    
+    }
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints all the attributes that are of type char
+ *                  (in SOFA all attributes are char)
+ *
+ */
+/************************************************************************************/
+void NetCDFFile::PrintAllAttributes(std::ostream & output) const
+{
+    std::vector< std::string > attributeNames;
+    std::vector< std::string > attributeValues;
+
+    GetAllCharAttributes( attributeNames, attributeValues );
+    
+    SOFA_ASSERT( attributeNames.size() == attributeValues.size() );
+    
+    for( std::size_t i = 0; i < attributeNames.size(); i++ )
+    {
+        output << attributeNames[i] << " = " << attributeValues[i] << std::endl;
+    }       
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Prints all the dimensions in the file
+ *                  (in SOFA all attributes are char)
+ *
+ */
+/************************************************************************************/
 void NetCDFFile::PrintAllDimensions(std::ostream & output) const
 {
     const std::multimap< std::string, netCDF::NcDim > dims = file.getDims();
@@ -130,6 +197,13 @@ void NetCDFFile::PrintAllDimensions(std::ostream & output) const
 
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints all the variables in the file
+ *                  (in SOFA all attributes are char)
+ *
+ */
+/************************************************************************************/
 void NetCDFFile::PrintAllVariables(std::ostream & output) const
 {
     /// retrieves all the variables
@@ -347,12 +421,8 @@ const bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
 /*!
  *  @brief          Checks if a named variable has a given attribute
  *  @param[in]      attributeName : name of the attribute to query
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
+ *  @param[in]      variableName
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 const bool NetCDFFile::VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const
@@ -364,15 +434,11 @@ const bool NetCDFFile::VariableHasAttribute(const std::string &attributeName, co
 /************************************************************************************/
 /*!
  *  @brief          Checks if the i-th variable has a given NcType
- *                    Returns false is the type does not match or if the index is out of range
- *                    or if any error occured
- *  @param[in]      -
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
+ *                  Returns false is the type does not match or if the index is out of range
+ *                  or if any error occured
+ *  @param[in]      type_
+ *  @param[in]      variableName
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 const bool NetCDFFile::HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const
@@ -452,6 +518,14 @@ const netCDF::NcGroupAtt NetCDFFile::getAttribute(const std::string &attributeNa
     return netCDF::NcGroupAtt();
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves a variable given its name;
+ *                  Returns a null object in case the variable is not found or any error occured.
+ *  @param[in]      dimensionName
+ *
+ */
+/************************************************************************************/
 const netCDF::NcDim NetCDFFile::getDimension(const std::string &dimensionName) const
 {
     if( dimensionName.empty() == true )
@@ -484,10 +558,7 @@ const netCDF::NcDim NetCDFFile::getDimension(const std::string &dimensionName) c
 /*!
  *  @brief          Retrieves a variable given its name;
  *                  Returns a null object in case the variable is not found or any error occured.
- *  @param[in]      -
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
+ *  @param[in]      variableName
  *
  */
 /************************************************************************************/
@@ -522,8 +593,8 @@ const netCDF::NcVar NetCDFFile::getVariable(const std::string &variableName) con
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type float, given its name.
- *                    Returns true if the attribute is float. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is float. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -537,8 +608,8 @@ const bool NetCDFFile::IsAttributeFloat(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type double, given its name.
- *                    Returns true if the attribute is double. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is double. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -552,8 +623,8 @@ const bool NetCDFFile::IsAttributeDouble(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type byte, given its name.
- *                    Returns true if the attribute is byte. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is byte. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -567,8 +638,8 @@ const bool NetCDFFile::IsAttributeByte(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type char, given its name.
- *                    Returns true if the attribute is char. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is char. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -582,8 +653,8 @@ const bool NetCDFFile::IsAttributeChar(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type short, given its name.
- *                    Returns true if the attribute is short. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is short. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -597,8 +668,8 @@ const bool NetCDFFile::IsAttributeShort(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type int, given its name.
- *                    Returns true if the attribute is int. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is int. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */
@@ -612,8 +683,8 @@ const bool NetCDFFile::IsAttributeInt(const std::string &attributeName) const
 /************************************************************************************/
 /*!
  *  @brief          Checks if a given attribute if of type long, given its name.
- *                    Returns true if the attribute is long. False otherwise.
- *                    (thus false if the attribute does not exist).
+ *                  Returns true if the attribute is long. False otherwise.
+ *                  (thus false if the attribute does not exist).
  *  @param[in]      attributeName : name of the attribute to query
  *
  */

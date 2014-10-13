@@ -31,14 +31,7 @@ GCC_PREPROCESSOR_DEFINITIONS    = DEBUG=1
 //**********************************************************************************
 // LINKED LIBRARIES
 //**********************************************************************************
-NETCDF_LIB					=  $(NETCDF_LIB_PATH)/libnetcdf.a
-NETCDF_CPP_LIB				=  $(NETCDF_LIB_PATH)/libnetcdf_c++4.a
-HDF5HL_LIB					=  $(NETCDF_LIB_PATH)/libhdf5_hl.a
-HDF5_LIB					=  $(NETCDF_LIB_PATH)/libhdf5.a
-CURL_LIB                    =  $(NETCDF_LIB_PATH)/libcurl.a
-Z_LIB						=  $(NETCDF_LIB_PATH)/libz.a
-
-OTHER_LDFLAGS               = $(NETCDF_LIB) $(NETCDF_CPP_LIB) $(HDF5HL_LIB) $(HDF5_LIB) $(CURL_LIB) $(Z_LIB)
+OTHER_LDFLAGS               = $(DEPENDENCIES_LIB)
 
 //**********************************************************************************
 // OPTIONS SPECIFIC FOR DEBUG CONFIGURATION

@@ -95,6 +95,11 @@ namespace sofa
         
         const std::string GetAttributeValueAsString(const std::string &attributeName) const;
         
+        void GetAllCharAttributes(std::vector< std::string > &attributeNames,
+                                  std::vector< std::string > &attributeValues) const;
+        
+        void GetAllAttributesNames(std::vector< std::string > &attributeNames) const;
+        
         void PrintAllAttributes(std::ostream & output = std::cout) const;
         
         

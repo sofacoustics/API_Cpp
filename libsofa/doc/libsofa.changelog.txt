@@ -10,6 +10,20 @@
  *
 /************************************************************************************/
 
+****************************************************************
+@version    1.0.1
+@author     Thibaut Carpentier
+@date       10/2014
+
+* adding a few functions in the NetCDFFile class (NetCDFFile::GetAllCharAttributes, etc.)
+* fixing mac os linker flags (thanks to Harald)
+
+****************************************************************
+@version    1.0.0
+@author     Thibaut Carpentier
+@date       09/2014
+
+* first release on sourceforge
 
 ****************************************************************
 @version    0.2.0
@@ -17,8 +31,6 @@
 @date       01/2014
 
 * updating according to the latest AES X-212 draft
-
-
 
 ****************************************************************
 @version    0.0.2
