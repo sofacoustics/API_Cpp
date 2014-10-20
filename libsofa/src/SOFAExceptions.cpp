@@ -58,6 +58,28 @@ http://www.sofaconventions.org
 
 using namespace sofa;
 
+/// specify whether raised exception prints something to cerr or not...
+/// use this with care
+bool sofa::Exception::logToCerr = true;
+
+/************************************************************************************/
+/*!
+ *  @brief          Enables or disables the logging of sofa::Exception on the standard error.
+ *                  Use this with great care !
+ *                  This affects globaly all sofa exceptions
+ *
+ */
+/************************************************************************************/
+void sofa::Exception::LogToCerr(const bool value)
+{
+    sofa::Exception::logToCerr = value;
+}
+
+const bool sofa::Exception::IsLoggedToCerr()
+{
+    return sofa::Exception::logToCerr;
+}
+
 /************************************************************************************/
 /*!
  *  @brief          Class constructor
@@ -92,8 +114,11 @@ Exception::Exception(const std::string &text,
     
 #else
  */
-    std::cerr << "Exception occured (in file " << Exception::getFileName( file ) << " at line " << line << ") : " << std::endl;
-    std::cerr << "        " << description << std::endl;
+    if( sofa::Exception::logToCerr == true )
+    {
+        std::cerr << "Exception occured (in file " << Exception::getFileName( file ) << " at line " << line << ") : " << std::endl;
+        std::cerr << "        " << description << std::endl;
+    }
 //#endif
     
     if( exitAfterException == true )
@@ -108,7 +133,7 @@ Exception::Exception(const std::string &text,
  *
  */
 /************************************************************************************/
-Exception::~Exception() throw()
+Exception::~Exception() SOFA_NOEXCEPT
 {
 }
 
@@ -118,7 +143,7 @@ Exception::~Exception() throw()
  *
  */
 /************************************************************************************/
-const char* Exception::what() const throw()
+const char* Exception::what() const SOFA_NOEXCEPT
 {
     return description.c_str();
 }
@@ -148,13 +173,7 @@ const unsigned long Exception::GetLine() const
 /************************************************************************************/
 /*!
  *  @brief          given a complete filename, this removes the path name.
- *  @param[in]      -
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 const std::string Exception::getFileName(const std::string & fullfilename)

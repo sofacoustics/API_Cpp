@@ -16,6 +16,7 @@
 				458CEB4A0AEF80AE0010981A /* PBXTargetDependency */,
 				F8ABCC61173EAB6D00F18AD2 /* PBXTargetDependency */,
 				F8ABCC63173EAB6D00F18AD2 /* PBXTargetDependency */,
+				F8B3F34A19F53F7D00C8004D /* PBXTargetDependency */,
 			);
 			name = all;
 			productName = all;
@@ -23,6 +24,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		F82B2B2419EE76EB006A84FC /* sofaexamples.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F82B2B2319EE76C2006A84FC /* sofaexamples.cpp */; };
 		F8ABC702173D2EFA00F18AD2 /* sofainfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8ABC701173D2EFA00F18AD2 /* sofainfo.cpp */; };
 		F8ABCBE8173E9D3D00F18AD2 /* SOFAAttributes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8ABCBE7173E9D3D00F18AD2 /* SOFAAttributes.cpp */; };
 		F8ABCBE9173E9D4800F18AD2 /* SOFAFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8ABCA28173D3A0A00F18AD2 /* SOFAFile.cpp */; };
@@ -49,6 +51,8 @@
 		F8ABD5A71742AF6A00F18AD2 /* SOFAPoint3.h in Headers */ = {isa = PBXBuildFile; fileRef = F8ABD5A61742AF6A00F18AD2 /* SOFAPoint3.h */; };
 		F8ABD5AD1742B00900F18AD2 /* SOFAPoint3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8ABD5AC1742B00900F18AD2 /* SOFAPoint3.cpp */; };
 		F8B077B8179438750006CB90 /* SOFAExceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B077B6179437BB0006CB90 /* SOFAExceptions.cpp */; };
+		F8B3F34C19F5627F00C8004D /* SOFAHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B3F34B19F5627F00C8004D /* SOFAHelper.h */; };
+		F8B3F34E19F562FB00C8004D /* SOFAHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B3F34D19F562FB00C8004D /* SOFAHelper.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -70,6 +74,13 @@
 			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = libspat_static;
 		};
+		F82B2B1A19EE76AC006A84FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = libsofa;
+		};
 		F8ABCC60173EAB6D00F18AD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
@@ -83,6 +94,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F8ABCC52173EAB2000F18AD2;
 			remoteInfo = sofainfo;
+		};
+		F8B3F34919F53F7D00C8004D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F82B2B1819EE76AC006A84FC;
+			remoteInfo = sofaexamples;
 		};
 		F8FD650D187EC541007B45C0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -102,6 +120,8 @@
 
 /* Begin PBXFileReference section */
 		D2AAC046055464E500DB518D /* libsofa_debug.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsofa_debug.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82B2B2119EE76AC006A84FC /* sofaexamples_debug */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sofaexamples_debug; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82B2B2319EE76C2006A84FC /* sofaexamples.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sofaexamples.cpp; path = ../../src/sofaexamples.cpp; sourceTree = "<group>"; };
 		F849B7EC175B917E00BB7C57 /* libsofa.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = libsofa.debug.xcconfig; sourceTree = "<group>"; };
 		F8ABC6D1173D2D8B00F18AD2 /* libsofa.common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = libsofa.common.xcconfig; sourceTree = "<group>"; };
 		F8ABC6D2173D2D8B00F18AD2 /* libsofa.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = libsofa.release.xcconfig; sourceTree = "<group>"; };
@@ -110,7 +130,6 @@
 		F8ABC9A5173D391E00F18AD2 /* SOFAFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAFile.h; sourceTree = "<group>"; };
 		F8ABCA28173D3A0A00F18AD2 /* SOFAFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAFile.cpp; sourceTree = "<group>"; };
 		F8ABCA93173D401F00F18AD2 /* SOFAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAUtils.h; sourceTree = "<group>"; };
-		F8ABCB37173E8BB900F18AD2 /* SOFAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAConfig.h; sourceTree = "<group>"; };
 		F8ABCB44173E908F00F18AD2 /* SOFAAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAAPI.h; sourceTree = "<group>"; };
 		F8ABCB69173E90F900F18AD2 /* SOFAVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAVersion.h; sourceTree = "<group>"; };
 		F8ABCB71173E91F000F18AD2 /* SOFAPlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAPlatform.h; sourceTree = "<group>"; };
@@ -149,12 +168,21 @@
 		F8B0777F1794366E0006CB90 /* libsofa.changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = libsofa.changelog.txt; path = ../../doc/libsofa.changelog.txt; sourceTree = SOURCE_ROOT; };
 		F8B077B4179436DD0006CB90 /* SOFAExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAExceptions.h; sourceTree = "<group>"; };
 		F8B077B6179437BB0006CB90 /* SOFAExceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAExceptions.cpp; sourceTree = "<group>"; };
+		F8B3F34B19F5627F00C8004D /* SOFAHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAHelper.h; sourceTree = "<group>"; };
+		F8B3F34D19F562FB00C8004D /* SOFAHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAHelper.cpp; sourceTree = "<group>"; };
 		F8FD650B187EC4A6007B45C0 /* shelltools.debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = shelltools.debug.xcconfig; sourceTree = "<group>"; };
 		F8FD650C187EC4A6007B45C0 /* shelltools.release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = shelltools.release.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		D289987405E68DCB004EDB86 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82B2B1D19EE76AC006A84FC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,6 +226,7 @@
 				D2AAC046055464E500DB518D /* libsofa_debug.a */,
 				F8ABC6DC173D2E8500F18AD2 /* sofainfo_debug */,
 				F8ABCC59173EAB2000F18AD2 /* sofamisc_debug */,
+				F82B2B2119EE76AC006A84FC /* sofaexamples_debug */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,6 +246,7 @@
 			children = (
 				F8ABC701173D2EFA00F18AD2 /* sofainfo.cpp */,
 				F8ABCC5D173EAB6300F18AD2 /* sofamisc.cpp */,
+				F82B2B2319EE76C2006A84FC /* sofaexamples.cpp */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -261,9 +291,9 @@
 				F8ABCBE5173E9BC200F18AD2 /* SOFA.h */,
 				F8ABCB44173E908F00F18AD2 /* SOFAAPI.h */,
 				F8ABCBAE173E983300F18AD2 /* SOFAAttributes.h */,
-				F8ABCB37173E8BB900F18AD2 /* SOFAConfig.h */,
 				F8ABCF0D173FEEE400F18AD2 /* SOFACoordinates.h */,
 				F8ABC9A5173D391E00F18AD2 /* SOFAFile.h */,
+				F8B3F34B19F5627F00C8004D /* SOFAHelper.h */,
 				F8ABCB72173E92A500F18AD2 /* SOFAHostArchitecture.h */,
 				F8ABCD9C173ECC3A00F18AD2 /* SOFANcFile.h */,
 				F8ABCB71173E91F000F18AD2 /* SOFAPlatform.h */,
@@ -288,6 +318,7 @@
 				F8B077B6179437BB0006CB90 /* SOFAExceptions.cpp */,
 				F8B077B4179436DD0006CB90 /* SOFAExceptions.h */,
 				F8ABCA28173D3A0A00F18AD2 /* SOFAFile.cpp */,
+				F8B3F34D19F562FB00C8004D /* SOFAHelper.cpp */,
 				F8ABD0B51740E6B100F18AD2 /* SOFAListener.cpp */,
 				F8ABD06F17401C3700F18AD2 /* SOFAListener.h */,
 				F8ABCD9D173ECC7200F18AD2 /* SOFANcFile.cpp */,
@@ -316,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8ABD05B174017F200F18AD2 /* SOFAPosition.h in Headers */,
+				F8B3F34C19F5627F00C8004D /* SOFAHelper.h in Headers */,
 				F8ABD07017401C3700F18AD2 /* SOFAListener.h in Headers */,
 				F8ABD07E1740233600F18AD2 /* SOFAEmitter.h in Headers */,
 				F8ABD08E1740239300F18AD2 /* SOFASource.h in Headers */,
@@ -346,6 +378,23 @@
 			productName = libspat;
 			productReference = D2AAC046055464E500DB518D /* libsofa_debug.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		F82B2B1819EE76AC006A84FC /* sofaexamples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F82B2B1E19EE76AC006A84FC /* Build configuration list for PBXNativeTarget "sofaexamples" */;
+			buildPhases = (
+				F82B2B1B19EE76AC006A84FC /* Sources */,
+				F82B2B1D19EE76AC006A84FC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F82B2B1919EE76AC006A84FC /* PBXTargetDependency */,
+			);
+			name = sofaexamples;
+			productName = sofatest;
+			productReference = F82B2B2119EE76AC006A84FC /* sofaexamples_debug */;
+			productType = "com.apple.product-type.tool";
 		};
 		F8ABC6DB173D2E8500F18AD2 /* sofainfo */ = {
 			isa = PBXNativeTarget;
@@ -407,6 +456,7 @@
 				D2AAC045055464E500DB518D /* libsofa */,
 				F8ABC6DB173D2E8500F18AD2 /* sofainfo */,
 				F8ABCC52173EAB2000F18AD2 /* sofamisc */,
+				F82B2B1819EE76AC006A84FC /* sofaexamples */,
 			);
 		};
 /* End PBXProject section */
@@ -423,6 +473,7 @@
 				F8ABCBE8173E9D3D00F18AD2 /* SOFAAttributes.cpp in Sources */,
 				F8ABCC9B173EAEFE00F18AD2 /* SOFAString.cpp in Sources */,
 				F8ABCF30173FF29700F18AD2 /* SOFAUnits.cpp in Sources */,
+				F8B3F34E19F562FB00C8004D /* SOFAHelper.cpp in Sources */,
 				F8ABCF3E173FF4E500F18AD2 /* SOFACoordinates.cpp in Sources */,
 				F8ABD063174018A000F18AD2 /* SOFAPosition.cpp in Sources */,
 				F8ABD0B61740E6B100F18AD2 /* SOFAListener.cpp in Sources */,
@@ -432,6 +483,14 @@
 				F8ABD28F174129F500F18AD2 /* SOFAEmitter.cpp in Sources */,
 				F8ABD40D1742314100F18AD2 /* SOFASimpleFreeFieldHRIR.cpp in Sources */,
 				F8ABD5AD1742B00900F18AD2 /* SOFAPoint3.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F82B2B1B19EE76AC006A84FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F82B2B2419EE76EB006A84FC /* sofaexamples.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,6 +518,11 @@
 			target = D2AAC045055464E500DB518D /* libsofa */;
 			targetProxy = 458CEB490AEF80AE0010981A /* PBXContainerItemProxy */;
 		};
+		F82B2B1919EE76AC006A84FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC045055464E500DB518D /* libsofa */;
+			targetProxy = F82B2B1A19EE76AC006A84FC /* PBXContainerItemProxy */;
+		};
 		F8ABCC61173EAB6D00F18AD2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8ABC6DB173D2E8500F18AD2 /* sofainfo */;
@@ -468,6 +532,11 @@
 			isa = PBXTargetDependency;
 			target = F8ABCC52173EAB2000F18AD2 /* sofamisc */;
 			targetProxy = F8ABCC62173EAB6D00F18AD2 /* PBXContainerItemProxy */;
+		};
+		F8B3F34A19F53F7D00C8004D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F82B2B1819EE76AC006A84FC /* sofaexamples */;
+			targetProxy = F8B3F34919F53F7D00C8004D /* PBXContainerItemProxy */;
 		};
 		F8FD650E187EC541007B45C0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -534,6 +603,20 @@
 			};
 			name = Release;
 		};
+		F82B2B1F19EE76AC006A84FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8FD650B187EC4A6007B45C0 /* shelltools.debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		F82B2B2019EE76AC006A84FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8FD650C187EC4A6007B45C0 /* shelltools.release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
 		F8ABC6DE173D2E8500F18AD2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F8FD650B187EC4A6007B45C0 /* shelltools.debug.xcconfig */;
@@ -588,6 +671,15 @@
 			buildConfigurations = (
 				458CEB670AEF80E80010981A /* Debug */,
 				458CEB680AEF80E80010981A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F82B2B1E19EE76AC006A84FC /* Build configuration list for PBXNativeTarget "sofaexamples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F82B2B1F19EE76AC006A84FC /* Debug */,
+				F82B2B2019EE76AC006A84FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

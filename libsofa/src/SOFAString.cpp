@@ -92,8 +92,8 @@ const std::string sofa::String::PadWith(const std::string &src,
 
 void sofa::String::PrintSeparationLine(std::ostream & output)
 {
-    const unsigned int padding                = 30;
-    const std::string verticalSeparator        = " ";
+    const unsigned int padding               = 30;
+    const std::string verticalSeparator      = " ";
     const std::string horizontalSeparator    = "_";
     
     output << sofa::String::PadWith( horizontalSeparator, padding, horizontalSeparator );    

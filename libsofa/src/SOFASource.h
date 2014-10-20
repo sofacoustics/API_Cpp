@@ -91,6 +91,7 @@ namespace sofa
         const bool hasVarSourceView;  ///< flag to check if a NcVar was provided for SourceView
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         Source( const Source &other );
         const Source & operator= ( const Source &other );

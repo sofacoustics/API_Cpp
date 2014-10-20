@@ -49,6 +49,7 @@ http://www.sofaconventions.org
  */
 /************************************************************************************/
 #include "../src/SOFAAPI.h"
+#include "../src/SOFASimpleFreeFieldHRIR.h"
 #include <sstream>
 
 using namespace sofa;
@@ -211,6 +212,22 @@ const unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor()
     
     return (unsigned int) major;
 }
+
+const std::string sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersion()
+{
+    return sofa::SimpleFreeFieldHRIR::GetConventionVersion();
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMajor()
+{
+    return sofa::SimpleFreeFieldHRIR::ConventionVersionMajor;
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor()
+{
+    return sofa::SimpleFreeFieldHRIR::ConventionVersionMinor;
+}
+
 
 /************************************************************************************/
 /*!

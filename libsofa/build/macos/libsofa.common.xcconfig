@@ -38,9 +38,9 @@ VALID_ARCHS                     = i386 x86_64
 //**********************************************************************************
 // VERSION
 //**********************************************************************************
-PRODUCT_VERSION_MAJOR           = 0
-PRODUCT_VERSION_MINOR           = 2
-PRODUCT_VERSION_RELEASE         = 0
+PRODUCT_VERSION_MAJOR           = 1
+PRODUCT_VERSION_MINOR           = 0
+PRODUCT_VERSION_RELEASE         = 2
 PRODUCT_VERSION                 = $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_RELEASE)
 
 //**********************************************************************************

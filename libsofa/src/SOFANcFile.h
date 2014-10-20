@@ -76,10 +76,12 @@ namespace sofa
         virtual ~NetCDFFile();
         
         const std::string GetFilename() const;
-                        
-        /**
-         netCDF Attributes
-         */
+        
+        virtual const bool IsValid() const;
+        
+        //==============================================================================
+        // netCDF Attributes
+        //==============================================================================
         const unsigned int GetNumGlobalAttributes() const;
         const bool HasAttribute(const std::string &attributeName) const;
         
@@ -100,31 +102,40 @@ namespace sofa
         
         void GetAllAttributesNames(std::vector< std::string > &attributeNames) const;
         
-        void PrintAllAttributes(std::ostream & output = std::cout) const;
+        void PrintAllAttributes(std::ostream & output = std::cout,
+                                const bool withPadding = false) const;
         
         
-        /**
-         netCDF Dimensions
-         */
+        //==============================================================================
+        // netCDF Dimensions
+        //==============================================================================
         const unsigned int GetNumDimensions() const;
         const std::size_t GetDimension(const std::string &dimensionName) const;
         const bool HasDimension(const std::string &dimensionName) const;
         
+        void GetAllDimensionsNames(std::vector< std::string > &dimensionNames) const;
+        
         void PrintAllDimensions(std::ostream & output = std::cout) const;
                 
         
-        /**
-         netCDF Variables
-         */
+        //==============================================================================
+        // netCDF Variables
+        //==============================================================================
         const unsigned int GetNumVariables() const;
         const bool HasVariable(const std::string &variableName) const;
         
+        void GetAllVariablesNames(std::vector< std::string > &variableNames) const;
+        
         const netCDF::NcType GetVariableType(const std::string &variableName) const;
-
+        const std::string GetVariableTypeName(const std::string &variableName) const;
+        
         const bool HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const;
         
         const int GetVariableDimensionality(const std::string &variableName) const;
         void GetVariableDimensions(std::vector< std::size_t > &dims, const std::string &variableName) const;
+        void GetVariableDimensionsNames(std::vector< std::string > &dims, const std::string &variableName) const;
+        const std::string GetVariableDimensionsNamesAsString(const std::string &variableName) const;
+        const std::string GetVariableDimensionsAsString(const std::string &variableName) const;
         
         const bool VariableIsScalar(const std::string &variableName) const;
         
@@ -139,13 +150,28 @@ namespace sofa
                                          const std::string &variableName) const;
         
         
+        void GetVariablesAttributes(std::vector< std::string > &attributeNames, const std::string &variableName) const;
+        void GetVariablesAttributes(std::vector< std::string > &attributeNames,
+                                    std::vector< std::string > &attributeValues,
+                                    const std::string &variableName) const;
         const bool VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const;
         
         void PrintAllVariables(std::ostream & output = std::cout) const;
         
-        const bool GetValues(double *values, const std::size_t dim1, const std::size_t dim2, const std::string &variableName) const;
-        const bool GetValues(double *values, const std::size_t dim1, const std::size_t dim2, const std::size_t dim3, const std::string &variableName) const;
-                
+        const bool GetValues(double *values,
+                             const std::size_t dim1,
+                             const std::size_t dim2,
+                             const std::string &variableName) const;
+        
+        const bool GetValues(double *values,
+                             const std::size_t dim1,
+                             const std::size_t dim2,
+                             const std::size_t dim3,
+                             const std::string &variableName) const;
+        
+        const bool GetValues(std::vector< double > &values,
+                             const std::string &variableName) const;
+        
     protected:
         const netCDF::NcGroupAtt getAttribute(const std::string &attributeName) const;
         
@@ -159,6 +185,7 @@ namespace sofa
         const std::string filename;
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         NetCDFFile( const NetCDFFile &other );                    
         const NetCDFFile & operator= ( const NetCDFFile &other ); 

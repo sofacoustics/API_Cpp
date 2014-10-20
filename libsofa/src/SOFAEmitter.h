@@ -98,6 +98,7 @@ namespace sofa
         const bool hasVarEmitterView;
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         Emitter( const Emitter &other );
         const Emitter & operator= ( const Emitter &other );

@@ -11,6 +11,23 @@
 /************************************************************************************/
 
 ****************************************************************
+@version    1.0.2
+@author     Thibaut Carpentier
+@date       10/2014
+
+* sofa::File::GetDataSamples moved to sofa::SimpleFreeFieldHRIR::GetDataIR for consistency
+* added sofa::SimpleFreeFieldHRIR::GetDataDelay
+* removed SOFAConfig.h (the DEBUG or _DEBUG macro was problematic)
+* added helper functions :
+sofa::IsValidNetCDFFile, sofa::IsValidSOFAFile, sofa::IsValidSimpleFreeFieldHRIRFile
+* added sofa::NetCDFFile::GetValues(std::vector< double > &values, const std::string &variableName)
+and other similar methods
+* added misc examples in sofaexamples.cpp
+* cosmetic changes all over the place
+* sofa::SimpleFreeFieldHRIR::IsValidSimpleFreeFieldHRIRFile renamed sofa::SimpleFreeFieldHRIR::IsValid for consistency
+* sofa::File::IsValidSOFAFile renamed sofa::File::IsValid for consistency
+
+****************************************************************
 @version    1.0.1
 @author     Thibaut Carpentier
 @date       10/2014

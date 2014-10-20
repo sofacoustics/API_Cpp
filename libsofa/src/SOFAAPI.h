@@ -66,6 +66,9 @@ namespace sofa
     class SOFA_API ApiInfos
     {
     public:
+        //==============================================================================
+        // API
+        //==============================================================================
         static const std::string GetAPIName();
         
         static const std::string GetAPIVersion();
@@ -74,12 +77,23 @@ namespace sofa
         static const unsigned int GetAPIVersionMajor();
         static const unsigned int GetAPIVersionRelease();
         
+        static const std::string GetAPICopyright();
+        
+        //==============================================================================
+        // Specifications
+        //==============================================================================
         static const std::string GetSpecificationsVersion();
         
         static const unsigned int GetSpecificationsVersionMinor();
         static const unsigned int GetSpecificationsVersionMajor();
                 
-        static const std::string GetAPICopyright();
+        //==============================================================================
+        // Conventions
+        //==============================================================================
+        static const std::string GetSimpleFreeFieldHRIRConventionVersion();
+        
+        static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
+        static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
         
     protected:
         ApiInfos();

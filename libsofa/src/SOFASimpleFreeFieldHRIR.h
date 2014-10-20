@@ -77,15 +77,20 @@ namespace sofa
         
         virtual ~SimpleFreeFieldHRIR();
         
-        const bool IsValidSimpleFreeFieldHRIRFile() const;
-        
-        const bool HasDatabaseName() const;
+        virtual const bool IsValid() const SOFA_OVERRIDE;
         
         const bool GetSamplingRate(double &value) const;
+        
+        //==============================================================================
+        const bool GetDataIR(std::vector< double > &values) const;
+        const bool GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        const bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
         
     private:
         const bool checkGlobalAttributes() const;
         const bool checkListenerVariables() const;
+        
+        const bool hasDatabaseName() const;
         
     private:
         /// avoid shallow and copy constructor

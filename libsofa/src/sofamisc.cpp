@@ -12,8 +12,7 @@
 /************************************************************************************/
 #include "../src/SOFA.h"
 
-static const unsigned int padding                = 30;
-static const std::string verticalSeparator        = " ";
+static const std::string verticalSeparator       = " ";
 const std::string horizontalSeparator            = "_";
 
 /************************************************************************************/
@@ -36,13 +35,13 @@ int main(int argc, char *argv[])
     
     sofa::String::PrintSeparationLine( output );
     
-    output << sofa::String::PadWith( "name ", padding );    
+    output << sofa::String::PadWith( "name " );
     output << verticalSeparator;
-    output << sofa::String::PadWith( "required", padding );
+    output << sofa::String::PadWith( "required" );
     output << verticalSeparator ;
-    output << sofa::String::PadWith( "read only", padding );
+    output << sofa::String::PadWith( "read only" );
     output << verticalSeparator ;
-    output << sofa::String::PadWith( "default", padding ) ;
+    output << sofa::String::PadWith( "default" ) ;
     output << std::endl;
     
     sofa::String::PrintSeparationLine( output );
@@ -56,16 +55,18 @@ int main(int argc, char *argv[])
         //const bool hasDefault  = sofa::Attributes::HasDefaultValue( type_ );
         const std::string def  = sofa::Attributes::GetDefaultValue( type_ );
         
-        output << sofa::String::PadWith( name, padding );
+        output << sofa::String::PadWith( name );
         output << verticalSeparator;
-        output << sofa::String::PadWith( sofa::String::bool2yesorno( required ), padding );
+        output << sofa::String::PadWith( sofa::String::bool2yesorno( required ) );
         output << verticalSeparator;
-        output << sofa::String::PadWith( sofa::String::bool2yesorno( readonly ), padding );
+        output << sofa::String::PadWith( sofa::String::bool2yesorno( readonly ) );
         output << verticalSeparator;
-        output << sofa::String::PadWith( def, padding );
+        output << sofa::String::PadWith( def );
         output << std::endl;
     }
     
     sofa::String::PrintSeparationLine( output );
+    
+    return 0;
 }
 

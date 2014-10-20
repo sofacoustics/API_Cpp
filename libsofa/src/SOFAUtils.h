@@ -64,7 +64,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    inline const float FAbs(const float x) throw()
+    inline const float FAbs(const float x) SOFA_NOEXCEPT
     {
         return fabsf(x);
     }
@@ -77,7 +77,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    inline const double FAbs(const double x) throw()
+    inline const double FAbs(const double x) SOFA_NOEXCEPT
     {
         return fabs(x);
     }
@@ -92,7 +92,7 @@ namespace sofa
      */
     /************************************************************************************/    
     template< typename Type >
-    inline const Type smin(const Type &a, const Type &b)
+    inline const Type smin(const Type &a, const Type &b) SOFA_NOEXCEPT
     {
         return ( a < b ) ? a : b;
     }
@@ -107,7 +107,7 @@ namespace sofa
      */
     /************************************************************************************/  
     template< typename Type >
-    inline const Type smax(const Type &a, const Type &b)
+    inline const Type smax(const Type &a, const Type &b) SOFA_NOEXCEPT
     {
         return ( a > b ) ? a : b;
     }

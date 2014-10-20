@@ -349,6 +349,40 @@ namespace sofa
         
         /************************************************************************************/
         /*!
+         *  @brief          Returns the dimensions names of a NcVar
+         *                  Returns an empty vector if an error occured
+         *  @param[in]      var : the Nc variable to query
+         *  @param[out]     dims :
+         *
+         *  @details        the vector dims is resized accordingly to the dimensionality of the variable
+         */
+        /************************************************************************************/
+        inline void GetDimensionsNames(std::vector< std::string > &dims, const netCDF::NcVar & var)
+        {
+            if( IsValid( var ) == false )
+            {
+                dims.clear();
+                return;
+            }
+            
+            const int numDimensions = var.getDimCount();
+            
+            SOFA_ASSERT( numDimensions > 0 );
+            
+            dims.resize( numDimensions );
+            
+            for( int i = 0; i < numDimensions; i++ )
+            {
+                const netCDF::NcDim dimension_ = var.getDim( i );
+                
+                SOFA_ASSERT( sofa::NcUtils::IsValid( dimension_ ) == true );
+                
+                dims[i] = dimension_.getName();
+            }
+        }
+        
+        /************************************************************************************/
+        /*!
          *  @brief          Retrieves the values of a NcVar, as double.
          *                  This assumes the NcVar has 'numValues' values, of type double;
          *  @param[in]      ncStuff : the stuff to query

@@ -55,21 +55,27 @@ http://www.sofaconventions.org
 
 #if ( defined(unix) || defined(__unix) || defined(__unix__) || defined(__linux__) )
 
+    //==============================================================================
     /// UNIX
+    //==============================================================================
     #define SOFA_UNIX 1
     #undef SOFA_MAC
     #undef SOFA_WINDOWS
 
 #elif ( defined(macintosh) || defined(__MACH__) || defined(__APPLE__) )
 
+    //==============================================================================
     /// MAC OS
+    //==============================================================================
     #define SOFA_MAC 1
     #undef SOFA_WINDOWS
     #undef SOFA_UNIX
 
 #elif ( defined(_WIN32) || defined (_WIN64)) || (defined (WIN32) || defined(__DOS__) || defined(_MSC_VER) )
 
+    //==============================================================================
     /// WINDOWS
+    //==============================================================================
     #define SOFA_WINDOWS 1
     #undef SOFA_MAC
     #undef SOFA_UNIX

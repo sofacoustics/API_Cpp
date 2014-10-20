@@ -90,6 +90,7 @@ namespace sofa
          */
         
     public:
+        //==============================================================================
         /// data members kept public for convenience
         double data[3];
         sofa::Units::Type units;

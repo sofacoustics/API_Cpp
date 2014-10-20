@@ -18,10 +18,13 @@ static void DisplayHelp(std::ostream & output = std::cout)
     output << "    syntax : ./sofainfo [filename]" << std::endl;
 }
 
-/**
- access element [i][j][k] of a "3D array" of dimensions [dim1][dim2][dim3]
- stored in a 1D data array
+/************************************************************************************/
+/*!
+ *  @brief          Helper function to  access element [i][j][k] of a "3D array" of dimensions [dim1][dim2][dim3]
+ *                  stored in a 1D data array
+ *
  */
+/************************************************************************************/
 static inline const std::size_t array3DIndex(const unsigned long i,
                                              const unsigned long j,
                                              const unsigned long k,
@@ -32,6 +35,13 @@ static inline const std::size_t array3DIndex(const unsigned long i,
     return dim2 * dim3 * i + dim3 * j + k;
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Helper function to  access element [i][j] of a "2D array" of dimensions [dim1][dim2]
+ *                  stored in a 1D data array
+ *
+ */
+/************************************************************************************/
 static inline const std::size_t array2DIndex(const unsigned long i,
                                              const unsigned long j,
                                              const unsigned long dim1,
@@ -40,6 +50,12 @@ static inline const std::size_t array2DIndex(const unsigned long i,
     return dim2 * i + j;
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints Emitter informations
+ *
+ */
+/************************************************************************************/
 static void PrintEmitter(const sofa::File &theFile,
                           std::ostream & output)
 {
@@ -47,9 +63,8 @@ static void PrintEmitter(const sofa::File &theFile,
     sofa::Units::Type units;
     const bool ok = theFile.GetEmitterPosition( coordinates, units );
     
-    const unsigned int padding                = 30;
-    output << sofa::String::PadWith( "EmitterPosition:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-    output << sofa::String::PadWith( "EmitterPosition:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+    output << sofa::String::PadWith( "EmitterPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+    output << sofa::String::PadWith( "EmitterPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
     
     std::vector< std::size_t > dims;
     theFile.GetVariableDimensions( dims, "EmitterPosition" );
@@ -61,7 +76,7 @@ static void PrintEmitter(const sofa::File &theFile,
     
     theFile.GetEmitterPosition( &pos[0], dims[0], dims[1], dims[2] );
     
-    output << sofa::String::PadWith( "EmitterPosition", padding ) << " = " ;
+    output << sofa::String::PadWith( "EmitterPosition" ) << " = " ;
     
     for( std::size_t i = 0; i < dims[0]; i++ )
     {
@@ -77,6 +92,12 @@ static void PrintEmitter(const sofa::File &theFile,
     output << std::endl;
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints Receiver informations
+ *
+ */
+/************************************************************************************/
 static void PrintReceiver(const sofa::File &theFile,
                           std::ostream & output)
 {
@@ -84,9 +105,8 @@ static void PrintReceiver(const sofa::File &theFile,
     sofa::Units::Type units;
     const bool ok = theFile.GetReceiverPosition( coordinates, units );
     
-    const unsigned int padding                = 30;
-    output << sofa::String::PadWith( "ReceiverPosition:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-    output << sofa::String::PadWith( "ReceiverPosition:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+    output << sofa::String::PadWith( "ReceiverPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+    output << sofa::String::PadWith( "ReceiverPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
     
     std::vector< std::size_t > dims;
     theFile.GetVariableDimensions( dims, "ReceiverPosition" );
@@ -98,7 +118,7 @@ static void PrintReceiver(const sofa::File &theFile,
     
     theFile.GetReceiverPosition( &pos[0], dims[0], dims[1], dims[2] );
     
-    output << sofa::String::PadWith( "ReceiverPosition", padding ) << " = " ;
+    output << sofa::String::PadWith( "ReceiverPosition" ) << " = " ;
     
     for( std::size_t i = 0; i < dims[0]; i++ )
     {
@@ -114,6 +134,12 @@ static void PrintReceiver(const sofa::File &theFile,
     output << std::endl;
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints Listener informations
+ *
+ */
+/************************************************************************************/
 static void PrintListener(const sofa::File &theFile,
                           std::ostream & output)
 {
@@ -122,9 +148,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerPosition( coordinates, units );
         
-        const unsigned int padding                = 30;
-        output << sofa::String::PadWith( "ListenerPosition:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-        output << sofa::String::PadWith( "ListenerPosition:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+        output << sofa::String::PadWith( "ListenerPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+        output << sofa::String::PadWith( "ListenerPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
         std::vector< std::size_t > dims;
         theFile.GetVariableDimensions( dims, "ListenerPosition" );
@@ -136,7 +161,7 @@ static void PrintListener(const sofa::File &theFile,
         
         theFile.GetListenerPosition( &pos[0], dims[0], dims[1] );
         
-        output << sofa::String::PadWith( "ListenerPosition", padding ) << " = " ;
+        output << sofa::String::PadWith( "ListenerPosition" ) << " = " ;
         
         for( std::size_t i = 0; i < dims[0]; i++ )
         {
@@ -157,9 +182,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerView( coordinates, units );
         
-        const unsigned int padding                = 30;
-        output << sofa::String::PadWith( "ListenerView:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-        output << sofa::String::PadWith( "ListenerView:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+        output << sofa::String::PadWith( "ListenerView:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+        output << sofa::String::PadWith( "ListenerView:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
         std::vector< std::size_t > dims;
         theFile.GetVariableDimensions( dims, "ListenerView" );
@@ -171,7 +195,7 @@ static void PrintListener(const sofa::File &theFile,
         
         theFile.GetListenerView( &pos[0], dims[0], dims[1] );
         
-        output << sofa::String::PadWith( "ListenerView", padding ) << " = " ;
+        output << sofa::String::PadWith( "ListenerView" ) << " = " ;
         
         for( std::size_t i = 0; i < dims[0]; i++ )
         {
@@ -192,9 +216,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerUp( coordinates, units );
         
-        const unsigned int padding                = 30;
-        output << sofa::String::PadWith( "ListenerUp:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-        output << sofa::String::PadWith( "ListenerUp:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+        output << sofa::String::PadWith( "ListenerUp:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+        output << sofa::String::PadWith( "ListenerUp:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
         std::vector< std::size_t > dims;
         theFile.GetVariableDimensions( dims, "ListenerUp" );
@@ -206,7 +229,7 @@ static void PrintListener(const sofa::File &theFile,
         
         theFile.GetListenerUp( &pos[0], dims[0], dims[1] );
         
-        output << sofa::String::PadWith( "ListenerUp", padding ) << " = " ;
+        output << sofa::String::PadWith( "ListenerUp" ) << " = " ;
         
         for( std::size_t i = 0; i < dims[0]; i++ )
         {
@@ -220,6 +243,12 @@ static void PrintListener(const sofa::File &theFile,
     }
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Prints source informations
+ *
+ */
+/************************************************************************************/
 static void PrintSource(const sofa::File &theFile,
                         std::ostream & output)
 {
@@ -228,9 +257,8 @@ static void PrintSource(const sofa::File &theFile,
     sofa::Units::Type units;
     const bool ok = theFile.GetSourcePosition( coordinates, units );
     
-    const unsigned int padding                = 30;
-    output << sofa::String::PadWith( "SourcePosition:Type", padding ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
-    output << sofa::String::PadWith( "SourcePosition:Units", padding ) << " = " << sofa::Units::GetName( units ) << std::endl;
+    output << sofa::String::PadWith( "SourcePosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
+    output << sofa::String::PadWith( "SourcePosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
     
     std::vector< std::size_t > dims;
     theFile.GetVariableDimensions( dims, "SourcePosition" );
@@ -242,7 +270,7 @@ static void PrintSource(const sofa::File &theFile,
     
     theFile.GetSourcePosition( &pos[0], dims[0], dims[1] );
     
-    output << sofa::String::PadWith( "SourcePosition", padding ) << " = " ;
+    output << sofa::String::PadWith( "SourcePosition" ) << " = " ;
     
     for( std::size_t i = 0; i < dims[0]; i++ )
     {
@@ -267,6 +295,9 @@ int main(int argc, char *argv[])
     std::ostream & output = std::cout;
     std::string in;
     
+    //==============================================================================
+    // Parsing arguments
+    //==============================================================================
     if( argc == 2 )
     {
         in = argv[1];
@@ -290,7 +321,7 @@ int main(int argc, char *argv[])
          
         const sofa::File theFile( filename );
             
-        const bool isSOFA = theFile.IsValidSOFAFile();
+        const bool isSOFA = theFile.IsValid();
         
         if( isSOFA == true )
         {
@@ -306,7 +337,7 @@ int main(int argc, char *argv[])
         
         sofa::String::PrintSeparationLine( output );
         
-        theFile.PrintSOFAGlobalAttributes( output , paddingForDisplay  );
+        theFile.PrintAllAttributes( output , paddingForDisplay  );
         
         output << std::endl;
         
@@ -321,7 +352,7 @@ int main(int argc, char *argv[])
         
         const sofa::SimpleFreeFieldHRIR hrir( filename );
         
-        const bool isHRIR = hrir.IsValidSimpleFreeFieldHRIRFile();
+        const bool isHRIR = hrir.IsValid();
         
         if( isHRIR == true )
         {
@@ -338,45 +369,61 @@ int main(int argc, char *argv[])
         
         SOFA_ASSERT( ok == true );
         
-        const unsigned int padding                = 30;
-        output << sofa::String::PadWith( "Sampling Rate", padding ) << " = " << sr << std::endl;
+        output << sofa::String::PadWith( "Sampling Rate" ) << " = " << sr << std::endl;
         
         const unsigned int M = (unsigned int) hrir.GetNumMeasurements();
         const unsigned int R = (unsigned int) hrir.GetNumReceivers();
         const unsigned int N = (unsigned int) hrir.GetNumDataSamples();
         
+        /// change this according to your needs
+        const bool printListenerInfos   = true;
+        const bool printReceiverInfos   = true;
+        const bool printSourceInfos     = true;
+        const bool printEmitterInfos    = true;
+        const bool printData            = false;
         
-        /// Print ListenerPosition
-        output << std::endl;
-        PrintListener( theFile, output );
+        if( printListenerInfos == true )
+        {
+            output << std::endl;
+            PrintListener( theFile, output );
+        }
         
-        output << std::endl;
-        PrintReceiver( theFile, output );
+        if( printReceiverInfos == true )
+        {
+            output << std::endl;
+            PrintReceiver( theFile, output );
+        }
         
-        output << std::endl;
-        PrintSource( theFile, output );
+        if( printSourceInfos == true )
+        {
+            output << std::endl;
+            PrintSource( theFile, output );
+        }
         
-        output << std::endl;
-        PrintEmitter( theFile, output );
+        if( printEmitterInfos == true )
+        {
+            output << std::endl;
+            PrintEmitter( theFile, output );
+        }
         
-        /// Retrieves all the data
-        /*
-         std::vector< double > data(  M*R*N );
-         
-         hrir.GetDataSamples( &data[0], M, R, N );
-         
-         for( std::size_t i = 0; i < M; i++ )
-         {
-             for( std::size_t j = 0; j < R; j++ )
-             {
-                 for( std::size_t k = 0; k < N; k++ )
-                 {
-                     const std::size_t index = array3DIndex( i, j, k, M, R, N );
-                     output << data[ index ] << std::endl;
-                 }
-             }
-         }
-         */
+        if( printData == true )
+        {
+            std::vector< double > data;
+             
+            hrir.GetDataIR( data );
+             
+            for( std::size_t i = 0; i < M; i++ )
+            {
+                for( std::size_t j = 0; j < R; j++ )
+                {
+                    for( std::size_t k = 0; k < N; k++ )
+                    {
+                        const std::size_t index = array3DIndex( i, j, k, M, R, N );
+                        output << data[ index ] << std::endl;
+                    }
+                }
+            }
+        }
         
     }
     catch( sofa::Exception &e )
@@ -395,7 +442,6 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-
-
+    return 0;
 }
 

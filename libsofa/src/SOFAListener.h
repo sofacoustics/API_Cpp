@@ -91,6 +91,7 @@ namespace sofa
         const bool hasVarListenerView;  ///< flag to check if a NcVar was provided for ListenerView
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         Listener( const Listener &other );                    
         const Listener & operator= ( const Listener &other );

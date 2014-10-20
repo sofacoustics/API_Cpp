@@ -18,6 +18,7 @@ SRC 		=  	../../src/SOFAAPI.cpp \
 				../../src/SOFAEmitter.cpp \
 				../../src/SOFAExceptions.cpp \
 				../../src/SOFAFile.cpp \
+				../../src/SOFAHelper.cpp \
 				../../src/SOFAListener.cpp \
 				../../src/SOFANcFile.cpp \
 				../../src/SOFAPoint3.cpp \

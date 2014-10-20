@@ -475,8 +475,6 @@ void sofa::Attributes::ResetToDefault()
 /************************************************************************************/
 void sofa::Attributes::Print(std::ostream & output, const bool withPadding) const
 {
-    const unsigned int padding                = 30;
-    
     for( unsigned int i = 0; i < sofa::Attributes::kNumAttributes; i++ )
     {
         const sofa::Attributes::Type type_ = static_cast< const sofa::Attributes::Type >( i );
@@ -487,8 +485,8 @@ void sofa::Attributes::Print(std::ostream & output, const bool withPadding) cons
         
         if( withPadding == true )
         {
-            name  = sofa::String::PadWith( name, padding );
-            value = sofa::String::PadWith( value, padding );
+            name  = sofa::String::PadWith( name );
+            value = sofa::String::PadWith( value );
         }
         
         output << name << " = " << value << std::endl;

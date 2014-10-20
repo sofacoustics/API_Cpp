@@ -67,19 +67,25 @@ namespace sofa
     class SOFA_API Exception : public std::exception
     {
     public:
+        static void LogToCerr(const bool value);
+        static const bool IsLoggedToCerr();
+        
+    public:
         Exception(const std::string &text    = "unknown exception",
                   const std::string &file    = "",
                   const unsigned long line_    = 0,
                   const bool exitAfterException = false);
         
-        virtual ~Exception() throw();
-        virtual const char* what() const throw();
+        virtual ~Exception() SOFA_NOEXCEPT;
+        virtual const char* what() const SOFA_NOEXCEPT SOFA_OVERRIDE;
         
         const std::string GetFile() const;        
         const unsigned long GetLine() const;
         
     protected:
         static const std::string getFileName(const std::string & fullfilename);
+        
+        static bool logToCerr;
         
     protected:
         const std::string filename;            ///< name of the file where the exception occured

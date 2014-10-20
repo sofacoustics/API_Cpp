@@ -97,6 +97,7 @@ namespace sofa
         const bool hasVarReceiverView;
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         Receiver( const Receiver &other );                    
         const Receiver & operator= ( const Receiver &other );

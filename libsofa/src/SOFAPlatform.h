@@ -53,7 +53,6 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAHostArchitecture.h"
 #include "../src/SOFAVersion.h"
-#include "../src/SOFAConfig.h"
 
 /************************************************************************************/
 #include <cstdlib>
@@ -63,6 +62,80 @@ http://www.sofaconventions.org
 #include <iosfwd>
 #include <cassert>
 #include <assert.h>
+
+/************************************************************************************/
+// GCC compiler
+/************************************************************************************/
+#if (__cplusplus >= 201103L || defined (__GXX_EXPERIMENTAL_CXX0X__)) && (__GNUC__ * 100 + __GNUC_MINOR__) >= 405
+    #define SOFA_COMPILER_SUPPORTS_NOEXCEPT 1
+    #define SOFA_COMPILER_SUPPORTS_NULLPTR 1
+
+    #if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407 && ! defined (SOFA_COMPILER_SUPPORTS_OVERRIDE)
+        #define SOFA_COMPILER_SUPPORTS_OVERRIDE 1
+    #endif
+
+#endif
+
+/************************************************************************************/
+// clang compiler
+/************************************************************************************/
+#if defined( __clang__ ) && defined (__has_feature)
+
+    #if __has_feature( cxx_nullptr )
+        #define SOFA_COMPILER_SUPPORTS_NULLPTR 1
+    #endif
+
+    #if __has_feature( cxx_noexcept )
+        #define SOFA_COMPILER_SUPPORTS_NOEXCEPT 1
+    #endif
+
+    #if __has_feature( cxx_override_control )
+        #define SOFA_COMPILER_SUPPORTS_OVERRIDE 1
+    #endif
+
+#endif
+
+/************************************************************************************/
+// MSVC compiler
+/************************************************************************************/
+#if defined (_MSC_VER) && _MSC_VER >= 1600
+    #define SOFA_COMPILER_SUPPORTS_NULLPTR 1
+#endif
+
+#if defined (_MSC_VER) && _MSC_VER >= 1700
+    #define SOFA_COMPILER_SUPPORTS_OVERRIDE 1
+#endif
+
+/************************************************************************************/
+// override
+/************************************************************************************/
+#if ( SOFA_COMPILER_SUPPORTS_OVERRIDE == 1 )
+    #define SOFA_OVERRIDE override
+#else
+    #define SOFA_OVERRIDE
+#endif
+
+/************************************************************************************/
+// nullptr
+/************************************************************************************/
+#if ( SOFA_COMPILER_SUPPORTS_NULLPTR == 0 )
+    #define nullptr NULL
+#endif
+
+/************************************************************************************/
+// noexcept
+/************************************************************************************/
+/**
+ noexcept is an improved version of throw(), which is deprecated in C++11.
+ Unlike throw(), noexcept will not call std::unexpected and may or may not unwind the stack,
+ which potentially allows the compiler to implement noexcept without the runtime overhead of throw().
+ */
+#if( SOFA_COMPILER_SUPPORTS_NOEXCEPT == 1 )
+    #define SOFA_NOEXCEPT  noexcept
+#else
+    #define SOFA_NOEXCEPT  throw()
+#endif
+
 
 /************************************************************************************/
 #if ( SOFA_WINDOWS == 1 )

@@ -89,7 +89,7 @@ SimpleFreeFieldHRIR::~SimpleFreeFieldHRIR()
 {
 }
 
-const bool SimpleFreeFieldHRIR::HasDatabaseName() const
+const bool SimpleFreeFieldHRIR::hasDatabaseName() const
 {
     const netCDF::NcGroupAtt att = getAttribute( "DatabaseName" );
     
@@ -210,14 +210,14 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::IsValidSimpleFreeFieldHRIRFile() const
+const bool SimpleFreeFieldHRIR::IsValid() const
 {
-    if( IsValidSOFAFile() == false )
+    if( sofa::File::IsValid() == false )
     {
         return false;
     }
     
-    if( HasDatabaseName() == false )
+    if( hasDatabaseName() == false )
     {
         SOFA_THROW( "missing 'DatabaseName' global attribute" );
         return false;
@@ -301,6 +301,52 @@ const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
     return sofa::NcUtils::GetValue( value, var );        
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.IR values
+ *  @param[in]      values : array containing the values. 
+ *                  The array must be allocated large enough
+ *  @param[in]      dim1 : first dimension (M)
+ *  @param[in]      dim2 : second dimension (R)
+ *  @param[in]      dim3 : third dimension (N)
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+const bool SimpleFreeFieldHRIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+{
+    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.IR" );
+}
 
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.IR values
+ *  @param[in]      values : the array is resized if needed
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+const bool SimpleFreeFieldHRIR::GetDataIR(std::vector< double > &values) const
+{
+    const long M = GetNumMeasurements();
+    const long R = GetNumReceivers();
+    const long N = GetNumDataSamples();
+    
+    SOFA_ASSERT( M > 0 );
+    SOFA_ASSERT( R > 0 );
+    SOFA_ASSERT( N > 0 );
+    
+    const std::size_t size_ = M * R * N;
+    
+    values.resize( size_ );
+    
+    SOFA_ASSERT( values.empty() == false );
+    
+    return GetDataIR( &values[0], M, R, N );
+}
 
+const bool SimpleFreeFieldHRIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+{
+    return NetCDFFile::GetValues( values, dim1, dim2, "Data.Delay" );
+}
 

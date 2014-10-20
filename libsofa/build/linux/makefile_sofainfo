@@ -39,7 +39,7 @@ LIBSOFA_MACROS = 	    -DNDEBUG=1  \
 
 #************************************************************************************
 # Warning levels
-WARNING_CFLAGS	=   -Wmain -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -Wno-unused
+WARNING_CFLAGS	=   -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -Wno-unused
 
 #************************************************************************************
 # C++ compiler flags (-g -O2 -Wall)

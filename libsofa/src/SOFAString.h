@@ -89,8 +89,8 @@ namespace sofa
         }
         
         const std::string PadWith(const std::string &src,
-                                  const std::size_t totalLength,
-                                  const std::string &pad = " ");
+                                  const std::size_t totalLength     = 30,
+                                  const std::string &pad            = " ");
         
         void PrintSeparationLine(std::ostream & output = std::cout);
     }

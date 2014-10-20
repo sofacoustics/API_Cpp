@@ -94,6 +94,7 @@ namespace sofa
         
         const long long GetMillisecondsSinceEpoch() const;
         
+        //==============================================================================
         const unsigned int GetYear() const;
         const unsigned int GetMonth() const;
         const unsigned int GetDay() const;

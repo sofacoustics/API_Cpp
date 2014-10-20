@@ -93,9 +93,10 @@ File::~File()
  *                    if the SOFA dimensions are OK (I,M,R,E,N,C)
  */
 /************************************************************************************/
-const bool File::IsValidSOFAFile() const
+const bool File::IsValid() const
 {
-    return ( hasSOFARequiredAttributes() == true 
+    return ( sofa::NetCDFFile::IsValid() == true
+            && hasSOFARequiredAttributes() == true
             && hasSOFAConvention() == true 
             && SOFADimensionsAreValid() == true 
             && checkListenerVariables() == true
@@ -110,14 +111,10 @@ const bool File::IsValidSOFAFile() const
 /************************************************************************************/
 /*!
  *  @brief          Prints the value of all (required) SOFA global attributes
- *                    for this file
- *  @param[in]      -
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
+ *                  for this file
+ *  @param[in]      output : output stream
+ *  @param[in]      withPadding : use padding for display
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 void File::PrintSOFAGlobalAttributes(std::ostream & output, const bool withPadding) const
@@ -130,19 +127,18 @@ void File::PrintSOFAGlobalAttributes(std::ostream & output, const bool withPaddi
 
 void File::PrintSOFADimensions(std::ostream & output, const bool withPadding) const
 {
-    const unsigned int padding                = 30;
     
-    const std::string numMeasurements    = sofa::String::Int2String( (int) GetNumMeasurements() );
-    const std::string numReceivers        = sofa::String::Int2String( (int) GetNumReceivers() );
-    const std::string numEmitters        = sofa::String::Int2String( (int) GetNumEmitters() );
+    const std::string numMeasurements   = sofa::String::Int2String( (int) GetNumMeasurements() );
+    const std::string numReceivers      = sofa::String::Int2String( (int) GetNumReceivers() );
+    const std::string numEmitters       = sofa::String::Int2String( (int) GetNumEmitters() );
     const std::string numDataSamples    = sofa::String::Int2String( (int) GetNumDataSamples() );
     
     if( withPadding == true )
     {        
-        output << sofa::String::PadWith( "Number of measurements (M)", padding ) << " = " << numMeasurements << std::endl;
-        output << sofa::String::PadWith( "Number of receivers (R)", padding ) << " = " << numReceivers << std::endl;
-        output << sofa::String::PadWith( "Number of emitters (E)", padding ) << " = " << numEmitters << std::endl;
-        output << sofa::String::PadWith( "Number of data samples (N)", padding ) << " = " << numDataSamples << std::endl;
+        output << sofa::String::PadWith( "Number of measurements (M)" ) << " = " << numMeasurements << std::endl;
+        output << sofa::String::PadWith( "Number of receivers (R)" ) << " = " << numReceivers << std::endl;
+        output << sofa::String::PadWith( "Number of emitters (E)" ) << " = " << numEmitters << std::endl;
+        output << sofa::String::PadWith( "Number of data samples (N)" ) << " = " << numDataSamples << std::endl;
     }
     else
     {
@@ -779,11 +775,11 @@ const bool File::checkDimensions() const
 /************************************************************************************/
 const bool File::checkDataVariable() const
 {
-    if( IsFIRDataType() )
+    if( IsFIRDataType() == true )
     {
         return checkFirDataType();
     }
-    else if( IsTFDataType() )
+    else if( IsTFDataType() == true )
     {
         return checkTFDataType();
     }
@@ -806,6 +802,13 @@ const bool File::IsTFDataType() const
     return ( value == "TF" );
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Checks requirements for DataType 'TF'
+ *                  returns true if everything conforms to the standard
+ *
+ */
+/************************************************************************************/
 const bool File::checkTFDataType() const
 {
     //const long I = GetDimension( "I" );
@@ -863,7 +866,7 @@ const bool File::checkTFDataType() const
     
     if( sofa::NcUtils::IsValid( varN ) == false )
     {
-        SOFA_THROW( "invalid 'N' variable" );
+        SOFA_THROW( "missing 'N' variable" );
         return false;
     }
     
@@ -906,6 +909,14 @@ const bool File::checkTFDataType() const
     return true;
 }
 
+
+/************************************************************************************/
+/*!
+ *  @brief          Checks requirements for DataType 'FIR'
+ *                  returns true if everything conforms to the standard
+ *
+ */
+/************************************************************************************/
 const bool File::checkFirDataType() const
 {
     const long I = GetDimension( "I" );
@@ -918,7 +929,7 @@ const bool File::checkFirDataType() const
     
     if( sofa::NcUtils::IsValid( varIR ) == false )
     {
-        SOFA_THROW( "invalid 'Data.IR' variable" );
+        SOFA_THROW( "missing 'Data.IR' variable" );
         return false;
     }
     
@@ -938,7 +949,7 @@ const bool File::checkFirDataType() const
     
     if( sofa::NcUtils::IsValid( varSamplingRate ) == false )
     {
-        SOFA_THROW( "invalid 'Data.SamplingRate' variable" );
+        SOFA_THROW( "missing 'Data.SamplingRate' variable" );
         return false;
     }
     
@@ -976,7 +987,7 @@ const bool File::checkFirDataType() const
     
     if( sofa::NcUtils::IsValid( varDelay ) == false )
     {
-        SOFA_THROW( "invalid 'Data.Delay' variable" );
+        SOFA_THROW( "missing 'Data.Delay' variable" );
         return false;
     }
     
@@ -1044,6 +1055,79 @@ const bool File::get(sofa::Coordinates::Type &coordinates, sofa::Units::Type &un
         return true;
     }
 }
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "SourceUp" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasSourceUp() const
+{
+    return sofa::NetCDFFile::HasVariable( "SourceUp" );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "SourceView" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasSourceView() const
+{
+    return sofa::NetCDFFile::HasVariable( "SourceView" );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "ReceiverUp" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasReceiverUp() const
+{
+    return sofa::NetCDFFile::HasVariable( "ReceiverUp" );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "ReceiverView" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasReceiverView() const
+{
+    return sofa::NetCDFFile::HasVariable( "ReceiverView" );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "EmitterUp" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasEmitterUp() const
+{
+    return sofa::NetCDFFile::HasVariable( "EmitterUp" );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file contains a "EmitterView" variable
+ *                  (this is not a required variable)
+ *
+ */
+/************************************************************************************/
+const bool File::HasEmitterView() const
+{
+    return sofa::NetCDFFile::HasVariable( "EmitterView" );
+}
+
 
 const bool File::GetListenerPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const
 {    
@@ -1165,8 +1249,63 @@ const bool File::GetSourceView(double *values, const unsigned long dim1, const u
     return NetCDFFile::GetValues( values, dim1, dim2, "SourceView" );
 }
 
-const bool File::GetDataSamples(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+const bool File::GetListenerPosition(std::vector< double > &values) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.IR" );
+    return NetCDFFile::GetValues( values, "ListenerPosition" );
+}
+
+const bool File::GetListenerUp(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "ListenerUp" );
+}
+
+const bool File::GetListenerView(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "ListenerView" );
+}
+
+const bool File::GetSourcePosition(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "SourcePosition" );
+}
+
+const bool File::GetSourceUp(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "SourceUp" );
+}
+
+const bool File::GetSourceView(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "SourceView" );
+}
+
+const bool File::GetReceiverPosition(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "ReceiverPosition" );
+}
+
+const bool File::GetReceiverUp(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "ReceiverUp" );
+}
+
+const bool File::GetReceiverView(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "ReceiverView" );
+}
+
+const bool File::GetEmitterPosition(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "EmitterPosition" );
+}
+
+const bool File::GetEmitterUp(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "EmitterUp" );
+}
+
+const bool File::GetEmitterView(std::vector< double > &values) const
+{
+    return NetCDFFile::GetValues( values, "EmitterView" );
 }
 

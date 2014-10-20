@@ -90,6 +90,7 @@ namespace sofa
         const netCDF::NcVar var;                ///< the NcVar is not hold
         
     private:
+        //==============================================================================
         /// avoid shallow and copy constructor
         PositionVariable( const PositionVariable &other );                    
         const PositionVariable & operator= ( const PositionVariable &other );

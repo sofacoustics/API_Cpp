@@ -63,7 +63,6 @@ http://www.sofaconventions.org
 /// public API
 #include "../src/SOFAAPI.h"
 #include "../src/SOFAAttributes.h"
-#include "../src/SOFAConfig.h"
 #include "../src/SOFACoordinates.h"
 #include "../src/SOFAFile.h"
 #include "../src/SOFAHostArchitecture.h"
@@ -73,6 +72,7 @@ http://www.sofaconventions.org
 #include "../src/SOFAString.h"
 #include "../src/SOFAUnits.h"
 #include "../src/SOFAVersion.h"
+#include "../src/SOFAHelper.h"
 
 /// private files
 //#include "../src/SOFADate.h"
