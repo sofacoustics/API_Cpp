@@ -373,7 +373,7 @@ static void CreateSimpleFreeFieldHRIRFile()
 int main(int argc, char *argv[])
 {
     ///@todo : change this !
-    const std::string filename = "/Users/tcarpent/Desktop/SOFA_FILES/BiLi_44100_sofa/IRC_AlPa_v1_44100.sofa";
+    const std::string filename = "/Users/tcarpent/Desktop/ClubFritz_SH_BM_01-1.sofa";
     //"/Users/tcarpent/Downloads/ClubFritz_SH_BM_01.sofa";
     
     TestFileConvention( filename );

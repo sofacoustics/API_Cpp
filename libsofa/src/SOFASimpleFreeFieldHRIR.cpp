@@ -294,7 +294,7 @@ const bool SimpleFreeFieldHRIR::IsValid() const
 
 const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
 {
-    SOFA_ASSERT( IsValidSimpleFreeFieldHRIRFile() == true );
+    SOFA_ASSERT( SimpleFreeFieldHRIR::IsValid() == true );
     
     const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
         
