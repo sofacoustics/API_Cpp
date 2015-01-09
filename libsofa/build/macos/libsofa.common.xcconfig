@@ -21,18 +21,19 @@ MACOSX_SDK_10_5                 = $(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk
 MACOSX_SDK_10_6                 = $(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk 
 MACOSX_SDK_10_7                 = $(DEVELOPER_SDK_DIR)/MacOSX10.7.sdk 
 MACOSX_SDK_10_8                 = $(DEVELOPER_SDK_DIR)/MacOSX10.8.sdk
-MACOSX_SDK_10_8                 = $(DEVELOPER_SDK_DIR)/MacOSX10.9.sdk
+MACOSX_SDK_10_9                 = $(DEVELOPER_SDK_DIR)/MacOSX10.9.sdk
+MACOSX_SDK_10_10                = $(DEVELOPER_SDK_DIR)/MacOSX10.10.sdk
 
-COPYRIGHT_TAG                   = Copyright © 2013-2014
+COPYRIGHT_TAG                   = Copyright © 2013-2015
 ORGANIZATION_NAME               = Ircam
 EXECUTABLE_PREFIX               =   
 
 GCC_VERSION                     = com.apple.compilers.llvm.clang.1_0     ///< for Xcode 4
 //GCC_VERSION                     = 4.2                                 ///< for Xcode 3.2
 
-SDKROOT                         = $(MACOSX_SDK_10_9)
+SDKROOT                         = $(MACOSX_SDK_10_10)
 
-MACOSX_DEPLOYMENT_TARGET        = 10.6
+MACOSX_DEPLOYMENT_TARGET        = 10.7
 VALID_ARCHS                     = i386 x86_64
 
 //**********************************************************************************
@@ -40,7 +41,7 @@ VALID_ARCHS                     = i386 x86_64
 //**********************************************************************************
 PRODUCT_VERSION_MAJOR           = 1
 PRODUCT_VERSION_MINOR           = 0
-PRODUCT_VERSION_RELEASE         = 2
+PRODUCT_VERSION_RELEASE         = 3
 PRODUCT_VERSION                 = $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_RELEASE)
 
 //**********************************************************************************
@@ -183,7 +184,7 @@ GCC_WARN_UNUSED_VARIABLE                    =   NO
 COMBINE_HIDPI_IMAGES                        =   YES
 CLANG_MODULES_AUTOLINK                      =   NO
 CLANG_ENABLE_OBJC_ARC                       =   NO
-CLANG_CXX_LIBRARY                           =   libstdc++   ///< libc++ would require 10.7 as target deployment
+CLANG_CXX_LIBRARY                           =   libc++   ///< libc++ would require 10.7 as target deployment
 
 
 //**********************************************************************************

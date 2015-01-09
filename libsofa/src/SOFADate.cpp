@@ -180,7 +180,7 @@ Date::~Date()
  *
  */
 /************************************************************************************/
-Date::Date( const Date::Date &other ) 
+Date::Date( const Date &other )
 : millisSinceEpoch( other.millisSinceEpoch )
 {
 }
@@ -191,7 +191,7 @@ Date::Date( const Date::Date &other )
  *
  */
 /************************************************************************************/
-Date & Date::operator= (const Date::Date &other) 
+Date & Date::operator= (const Date &other)
 {
     millisSinceEpoch = other.millisSinceEpoch;
     return *this;

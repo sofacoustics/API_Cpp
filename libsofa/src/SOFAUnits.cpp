@@ -50,6 +50,7 @@ http://www.sofaconventions.org
 /************************************************************************************/
 #include "../src/SOFAUnits.h"
 #include "../src/SOFANcUtils.h"
+#include "../src/SOFAString.h"
 #include <map>
 
 using namespace sofa;
@@ -62,18 +63,67 @@ namespace UnitsHelper
     /*!
      *  @brief          Creates a mapping between units type and their names
      *
+     *  @details        This standard assumes that the spelling of units is consistent with the International System of Units (SI). 
+     *                  However variants exist, most notably in the US version of SI published by NIST 
+     *                  that includes some Americanized spellings. 
+     *                  It may also be prudent to recognise plural unit names, although this usage is deprecated in SI.
+     *
+     *                  Writing applications shall use SI spellings. 
+     *                  Reading applications should include aliasses from alternative spellings of the following units (table 8).
+     *
      */
     /************************************************************************************/
     static void initTypeMap()
     {
         if( typeMap.empty() == true )
-        {    
+        {
+            typeMap["metres"]                       = sofa::Units::kMeter;
+            typeMap["meters"]                       = sofa::Units::kMeter;
+            typeMap["metre"]                        = sofa::Units::kMeter;
             typeMap["meter"]                        = sofa::Units::kMeter;
+            
             typeMap["cubic meter"]                  = sofa::Units::kCubicMeter;
+            typeMap["cubic meters"]                 = sofa::Units::kCubicMeter;
+            typeMap["cubic metre"]                  = sofa::Units::kCubicMeter;
+            typeMap["cubic metres"]                 = sofa::Units::kCubicMeter;
+            
             typeMap["hertz"]                        = sofa::Units::kHertz;
             typeMap["samples"]                      = sofa::Units::kSamples;
+            
             typeMap["degree, degree, meter"]        = sofa::Units::kSphericalUnits;
+            typeMap["degree, degree, metre"]        = sofa::Units::kSphericalUnits;
+            typeMap["degree, degree, metres"]       = sofa::Units::kSphericalUnits;
+            typeMap["degree, degree, meters"]       = sofa::Units::kSphericalUnits;
+            typeMap["degrees, degrees, meter"]      = sofa::Units::kSphericalUnits;
+            typeMap["degrees, degrees, metre"]      = sofa::Units::kSphericalUnits;
+            typeMap["degrees, degrees, metres"]     = sofa::Units::kSphericalUnits;
+            typeMap["degrees, degrees, meters"]     = sofa::Units::kSphericalUnits;
+            
+            typeMap["degree,degree,meter"]          = sofa::Units::kSphericalUnits;
+            typeMap["degree,degree,metre"]          = sofa::Units::kSphericalUnits;
+            typeMap["degree,degree,metres"]         = sofa::Units::kSphericalUnits;
+            typeMap["degree,degree,meters"]         = sofa::Units::kSphericalUnits;
+            typeMap["degrees,degrees,meter"]        = sofa::Units::kSphericalUnits;
+            typeMap["degrees,degrees,metre"]        = sofa::Units::kSphericalUnits;
+            typeMap["degrees,degrees,metres"]       = sofa::Units::kSphericalUnits;
+            typeMap["degrees,degrees,meters"]       = sofa::Units::kSphericalUnits;
+            
+            typeMap["degree degree meter"]          = sofa::Units::kSphericalUnits;
+            typeMap["degree degree metre"]          = sofa::Units::kSphericalUnits;
+            typeMap["degree degree metres"]         = sofa::Units::kSphericalUnits;
+            typeMap["degree degree meters"]         = sofa::Units::kSphericalUnits;
+            typeMap["degrees degrees meter"]        = sofa::Units::kSphericalUnits;
+            typeMap["degrees degrees metre"]        = sofa::Units::kSphericalUnits;
+            typeMap["degrees degrees metres"]       = sofa::Units::kSphericalUnits;
+            typeMap["degrees degrees meters"]       = sofa::Units::kSphericalUnits;
+            
+            typeMap["kelvin"]                       = sofa::Units::kKelvin;
+            typeMap["Kelvin"]                       = sofa::Units::kKelvin;
+            typeMap["degree Kelvin"]                = sofa::Units::kKelvin;
             typeMap["degrees Kelvin"]               = sofa::Units::kKelvin;
+            typeMap["degree kelvin"]                = sofa::Units::kKelvin;
+            typeMap["degrees kelvin"]               = sofa::Units::kKelvin;
+
         }
     }
 }
@@ -81,14 +131,16 @@ namespace UnitsHelper
 
 const std::string sofa::Units::GetName(const sofa::Units::Type &type_)
 {
+    /// Writing applications shall use SI spellings in lower case.
+    
     switch( type_ )
     {
-        case sofa::Units::kMeter                : return "meter";
-        case sofa::Units::kCubicMeter           : return "cubic meter";
+        case sofa::Units::kMeter                : return "metre";
+        case sofa::Units::kCubicMeter           : return "cubic metre";
         case sofa::Units::kHertz                : return "hertz";
         case sofa::Units::kSamples              : return "samples";
-        case sofa::Units::kSphericalUnits       : return "degree, degree, meter";
-        case sofa::Units::kKelvin               : return "degrees Kelvin";
+        case sofa::Units::kSphericalUnits       : return "degree, degree, metre";   ///< multiple units shall be comma separated
+        case sofa::Units::kKelvin               : return "kelvin";
             
         default                                 : SOFA_ASSERT( false ); return "";    
         case sofa::Units::kNumUnitsTypes        : SOFA_ASSERT( false ); return "";    
@@ -99,7 +151,10 @@ const sofa::Units::Type sofa::Units::GetType(const std::string &name)
 {
     UnitsHelper::initTypeMap();
     
-    if( UnitsHelper::typeMap.count( name ) == 0 )
+    /// Reading applications should be case insensitive and include aliases from alternative spellings of the following units 
+    const std::string nameLowerCase = sofa::String::ToLowerCase( name );
+    
+    if( UnitsHelper::typeMap.count( nameLowerCase ) == 0 )
     {        
         SOFA_ASSERT( false );
         
@@ -107,7 +162,7 @@ const sofa::Units::Type sofa::Units::GetType(const std::string &name)
     }
     else
     {
-        return UnitsHelper::typeMap[ name ];
+        return UnitsHelper::typeMap[ nameLowerCase ];
     }
 }
 
@@ -175,7 +230,7 @@ const bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
     switch( type_ )
     {
         case sofa::Units::kHertz    : return true;
-        default                        : return false;
+        default                     : return false;
     }
 }
 

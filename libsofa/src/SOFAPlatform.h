@@ -119,7 +119,9 @@ http://www.sofaconventions.org
 // nullptr
 /************************************************************************************/
 #if ( SOFA_COMPILER_SUPPORTS_NULLPTR == 0 )
-    #define nullptr NULL
+    #ifndef nullptr
+        #define nullptr NULL
+    #endif
 #endif
 
 /************************************************************************************/

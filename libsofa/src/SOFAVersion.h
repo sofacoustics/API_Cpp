@@ -59,7 +59,7 @@ http://www.sofaconventions.org
 #define SOFA_VERSION_MINOR   0
 
 /* release number of current version of sofa library */
-#define SOFA_VERSION_RELEASE 2
+#define SOFA_VERSION_RELEASE 3
 
 
 //==============================================================================

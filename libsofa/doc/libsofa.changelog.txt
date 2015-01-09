@@ -11,6 +11,18 @@
 /************************************************************************************/
 
 ****************************************************************
+@version    1.0.3
+@author     Thibaut Carpentier
+@date       01/2015
+
+* added new Units aliases, according to latest changes in AES standard
+* Mac OS :
+- use libc++ instead of libstdc++
+- use SDK OSX 10.10
+- Min deployment target is now OSX >= 10.7
+(dependency libraries are re-built accordingly)
+
+****************************************************************
 @version    1.0.2
 @author     Thibaut Carpentier
 @date       10/2014

@@ -66,6 +66,14 @@ namespace sofa
             return atoi( str.c_str() );
         }
         
+        inline const std::string ToLowerCase(const std::string &str)
+        {
+            std::string result = str;
+            std::transform( result.begin(), result.end(), result.begin(), ::tolower);
+            
+            return result;
+        }
+        
         inline const std::string Int2String(const int value)
         {
             std::ostringstream str;

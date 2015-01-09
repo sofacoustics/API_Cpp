@@ -5,7 +5,7 @@
 #           namely this builds zlib, curl, hdf5, netcdf and netcdf-c++            
 # @author   Thibaut Carpentier, Ircam-Centre Pompidou-CNRS
 #
-# @details  Tested on Linux
+# @details  Tested on Linux gcc (GCC) 4.1.2 20080704 (Red Hat 4.1.2-54)
 #
 
 # the folder where the build occurs

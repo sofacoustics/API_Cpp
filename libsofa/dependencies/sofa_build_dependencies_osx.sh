@@ -5,7 +5,7 @@
 #           namely this builds zlib, curl, hdf5, netcdf and netcdf-c++            
 # @author   Thibaut Carpentier, Ircam-Centre Pompidou-CNRS
 #
-# @details  Tested on Mac OSX 10.9.2 with Xcode 5.1.1 Apple LLVM version 5.1 (clang-503.0.40) (based on LLVM 3.4svn)
+# @details  Tested on Mac OSX 10.10.1 with Xcode 6.1.1 Apple LLVM version 6.0 (clang-600.0.56) (based on LLVM 3.5svn)
 #
 
 # the folder where the build occurs
@@ -22,13 +22,13 @@ NETCDF_LIB=netcdf-4.3.2
 NETCDF_CXX_LIB=netcdf-cxx4-4.2
 
 # standard library
-STD_LIB=libstdc++
+STD_LIB=libc++
 
 # Mac OS SDK
-OSX_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk
+OSX_SDK=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk
 
 # build options
-BUILD_OPT="-stdlib=$STD_LIB -isysroot $OSX_SDK -mmacosx-version-min=10.6"
+BUILD_OPT="-stdlib=$STD_LIB -isysroot $OSX_SDK -mmacosx-version-min=10.7"
 
 ############################################################
 # Building zlib with i386 and x86_64 arch
