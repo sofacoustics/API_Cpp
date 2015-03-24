@@ -27,7 +27,7 @@
 
 /**
  
- Spatial acoustic data file format - AES X212 standard
+ Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
  http://www.aes.org
  
  SOFA (Spatially Oriented Format for Acoustics)
@@ -91,6 +91,54 @@ namespace sofa
      */
     /************************************************************************************/
     const bool IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid SimpleFreeFieldSOS file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    const bool IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid SimpleHeadphoneIR file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    const bool IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid GeneralFIR file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    const bool IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid GeneralTF file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    const bool IsValidGeneralTFFile(const std::string &filename) SOFA_NOEXCEPT;
     
 }
 

@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -91,9 +91,16 @@ namespace sofa
         // Conventions
         //==============================================================================
         static const std::string GetSimpleFreeFieldHRIRConventionVersion();
-        
         static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
         static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
+
+        static const std::string GetSimpleFreeFieldSOSConventionVersion();
+        static const unsigned int GetSimpleFreeFieldSOSConventionVersionMajor();
+        static const unsigned int GetSimpleFreeFieldSOSConventionVersionMinor();
+
+        static const std::string GetSimpleHeadphoneIRConventionVersion();
+        static const unsigned int GetSimpleHeadphoneIRConventionVersionMajor();
+        static const unsigned int GetSimpleHeadphoneIRConventionVersionMinor();
         
     protected:
         ApiInfos();

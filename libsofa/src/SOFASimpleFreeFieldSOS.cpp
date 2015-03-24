@@ -1,54 +1,54 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the <organization> nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ * Neither the name of the <organization> nor the
+ names of its contributors may be used to endorse or promote products
+ derived from this software without specific prior written permission.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+ DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 /**
-
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
-
-SOFA (Spatially Oriented Format for Acoustics)
-http://www.sofaconventions.org
-
-*/
+ 
+ Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
+ http://www.aes.org
+ 
+ SOFA (Spatially Oriented Format for Acoustics)
+ http://www.sofaconventions.org
+ 
+ */
 
 
 /************************************************************************************/
 /*  FILE DESCRIPTION                                                                */
 /*----------------------------------------------------------------------------------*/
 /*!
- *   @file       SOFASimpleFreeFieldHRIR.cpp
- *   @brief      Class for SOFA files with SimpleFreeFieldHRIR convention
+ *   @file       SOFASimpleFreeFieldSOS.cpp
+ *   @brief      Class for SOFA files with SimpleFreeFieldSOS convention
  *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
-#include "../src/SOFASimpleFreeFieldHRIR.h"
+#include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFAUtils.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
@@ -57,13 +57,14 @@ http://www.sofaconventions.org
 
 using namespace sofa;
 
-const unsigned int SimpleFreeFieldHRIR::ConventionVersionMajor  =   1;
-const unsigned int SimpleFreeFieldHRIR::ConventionVersionMinor  =   0;
+const unsigned int SimpleFreeFieldSOS::ConventionVersionMajor  =   1;
+const unsigned int SimpleFreeFieldSOS::ConventionVersionMinor  =   0;
 
-const std::string SimpleFreeFieldHRIR::GetConventionVersion()
+const std::string SimpleFreeFieldSOS::GetConventionVersion()
 {
-    return sofa::String::Int2String( SimpleFreeFieldHRIR::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( SimpleFreeFieldHRIR::ConventionVersionMinor );
+    return sofa::String::Int2String( SimpleFreeFieldSOS::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( SimpleFreeFieldSOS::ConventionVersionMinor );
 }
+
 
 /************************************************************************************/
 /*!
@@ -73,8 +74,8 @@ const std::string SimpleFreeFieldHRIR::GetConventionVersion()
  *
  */
 /************************************************************************************/
-SimpleFreeFieldHRIR::SimpleFreeFieldHRIR(const std::string &path,
-                                         const netCDF::NcFile::FileMode &mode)
+SimpleFreeFieldSOS::SimpleFreeFieldSOS(const std::string &path,
+                                       const netCDF::NcFile::FileMode &mode)
 : sofa::File( path, mode )
 {
 }
@@ -85,29 +86,29 @@ SimpleFreeFieldHRIR::SimpleFreeFieldHRIR(const std::string &path,
  *
  */
 /************************************************************************************/
-SimpleFreeFieldHRIR::~SimpleFreeFieldHRIR()
+SimpleFreeFieldSOS::~SimpleFreeFieldSOS()
 {
 }
 
-const bool SimpleFreeFieldHRIR::hasDatabaseName() const
+const bool SimpleFreeFieldSOS::hasDatabaseName() const
 {
     const netCDF::NcGroupAtt att = getAttribute( "DatabaseName" );
     
     return sofa::NcUtils::IsChar( att );
 }
 
-const bool SimpleFreeFieldHRIR::checkGlobalAttributes() const
+const bool SimpleFreeFieldSOS::checkGlobalAttributes() const
 {
     sofa::Attributes attributes;
     GetGlobalAttributes( attributes );
     
-    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "SimpleFreeFieldHRIR" )
+    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "SimpleFreeFieldSOS" )
     {
-        SOFA_THROW( "Not a 'SimpleFreeFieldHRIR' SOFAConvention" );
+        SOFA_THROW( "Not a 'SimpleFreeFieldSOS' SOFAConvention" );
         return false;
     }
     
-    if( attributes.Get( sofa::Attributes::kDataType ) != "FIR" )
+    if( attributes.Get( sofa::Attributes::kDataType ) != "SOS" )
     {
         SOFA_THROW( "invalid 'DataType'" );
         return false;
@@ -122,7 +123,7 @@ const bool SimpleFreeFieldHRIR::checkGlobalAttributes() const
     return true;
 }
 
-const bool SimpleFreeFieldHRIR::checkListenerVariables() const
+const bool SimpleFreeFieldSOS::checkListenerVariables() const
 {
     const long I = GetDimension( "I" );
     if( I != 1 )
@@ -206,11 +207,11 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if this is a valid SOFA file with SimpleFreeFieldHRIR convention
+ *  @brief          Returns true if this is a valid SOFA file with SimpleFreeFieldSOS convention
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::IsValid() const
+const bool SimpleFreeFieldSOS::IsValid() const
 {
     if( sofa::File::IsValid() == false )
     {
@@ -223,9 +224,9 @@ const bool SimpleFreeFieldHRIR::IsValid() const
         return false;
     }
     
-    if( IsFIRDataType() == false )
+    if( IsSOSDataType() == false )
     {
-        SOFA_THROW( "'DataType' shall be FIR" );
+        SOFA_THROW( "'DataType' shall be SOS" );
         return false;
     }
     
@@ -233,7 +234,6 @@ const bool SimpleFreeFieldHRIR::IsValid() const
     {
         return false;
     }
-    
     
     /// The number of emitters is 1
     if( GetNumEmitters() != 1 )
@@ -263,6 +263,18 @@ const bool SimpleFreeFieldHRIR::IsValid() const
     }
      */
     
+    /// N being the total number of coefficients, it is always a multiple of 6.
+    {
+        const long N = GetNumDataSamples();
+        
+        if( ( N % 6 ) != 0 )
+        {
+            SOFA_THROW( "invalid 'N' (should be a multiple of 6)" );
+            return false;
+        }
+    }
+
+    
     if( checkListenerVariables() == false )
     {
         return false;
@@ -271,7 +283,7 @@ const bool SimpleFreeFieldHRIR::IsValid() const
     
     SOFA_ASSERT( GetDimension( "I" ) == 1 );
     SOFA_ASSERT( GetDimension( "C" ) == 3 );
-     
+    
     return true;
 }
 
@@ -283,7 +295,7 @@ const bool SimpleFreeFieldHRIR::IsValid() const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::isSamplingRateScalar() const
+const bool SimpleFreeFieldSOS::isSamplingRateScalar() const
 {
     return VariableIsScalar( "Data.SamplingRate" ) == true
     && HasVariableType( netCDF::NcType::nc_DOUBLE, "Data.SamplingRate");
@@ -297,14 +309,14 @@ const bool SimpleFreeFieldHRIR::isSamplingRateScalar() const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
+const bool SimpleFreeFieldSOS::GetSamplingRate(double &value) const
 {
-    SOFA_ASSERT( SimpleFreeFieldHRIR::IsValid() == true );
+    SOFA_ASSERT( SimpleFreeFieldSOS::IsValid() == true );
     
     if( isSamplingRateScalar() == true )
     {
         const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
-            
+        
         return sofa::NcUtils::GetValue( value, var );
     }
     else
@@ -321,7 +333,7 @@ const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) const
+const bool SimpleFreeFieldSOS::GetSamplingRateUnits(sofa::Units::Type &units) const
 {
     const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
     
@@ -335,8 +347,8 @@ const bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) c
 
 /************************************************************************************/
 /*!
- *  @brief          Retrieves the Data.IR values
- *  @param[in]      values : array containing the values. 
+ *  @brief          Retrieves the Data.SOS values
+ *  @param[in]      values : array containing the values.
  *                  The array must be allocated large enough
  *  @param[in]      dim1 : first dimension (M)
  *  @param[in]      dim2 : second dimension (R)
@@ -345,20 +357,20 @@ const bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) c
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+const bool SimpleFreeFieldSOS::GetDataSOS(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.IR" );
+    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.SOS" );
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Retrieves the Data.IR values
+ *  @brief          Retrieves the Data.SOS values
  *  @param[in]      values : the array is resized if needed
  *  @return         true on success
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetDataIR(std::vector< double > &values) const
+const bool SimpleFreeFieldSOS::GetDataSOS(std::vector< double > &values) const
 {
     const long M = GetNumMeasurements();
     const long R = GetNumReceivers();
@@ -374,10 +386,10 @@ const bool SimpleFreeFieldHRIR::GetDataIR(std::vector< double > &values) const
     
     SOFA_ASSERT( values.empty() == false );
     
-    return GetDataIR( &values[0], M, R, N );
+    return GetDataSOS( &values[0], M, R, N );
 }
 
-const bool SimpleFreeFieldHRIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+const bool SimpleFreeFieldSOS::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
 {
     return NetCDFFile::GetValues( values, dim1, dim2, "Data.Delay" );
 }

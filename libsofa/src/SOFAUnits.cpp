@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -69,7 +69,7 @@ namespace UnitsHelper
      *                  It may also be prudent to recognise plural unit names, although this usage is deprecated in SI.
      *
      *                  Writing applications shall use SI spellings. 
-     *                  Reading applications should include aliasses from alternative spellings of the following units (table 8).
+     *                  Reading applications should include aliases from alternative spellings of the following units (table 8).
      *
      */
     /************************************************************************************/
@@ -168,9 +168,12 @@ const sofa::Units::Type sofa::Units::GetType(const std::string &name)
 
 const bool sofa::Units::IsValid(const std::string &name)
 {
+    /// AES69-2015 : Reading applications should be case insensitive    
+    const std::string name_ = sofa::String::ToLowerCase( name );
+    
     UnitsHelper::initTypeMap();
     
-    return ( UnitsHelper::typeMap.count( name ) != 0 );
+    return ( UnitsHelper::typeMap.count( name_ ) != 0 );
 }
 
 /************************************************************************************/

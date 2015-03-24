@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -348,6 +348,19 @@ const bool File::hasSOFAConvention() const
         SOFA_THROW( "invalid SOFA Conventions" );
         return false;
     }
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns the "SOFAConventions" attribute if it exists;
+ *                  throw an exception otherwise
+ *  @details        This doesnt check if the file conforms to the given convention
+ *
+ */
+/************************************************************************************/
+const std::string File::GetSOFAConventions() const
+{
+    return GetAttributeValueAsString( "SOFAConventions" );
 }
 
 /************************************************************************************/
@@ -783,6 +796,10 @@ const bool File::checkDataVariable() const
     {
         return checkTFDataType();
     }
+    else if( IsSOSDataType() == true )
+    {
+        return checkSOSDataType();
+    }
     else
     {
         SOFA_THROW( "invalid 'DataType'" );
@@ -800,6 +817,12 @@ const bool File::IsTFDataType() const
 {
     const std::string value = GetAttributeValueAsString( "DataType" );
     return ( value == "TF" );
+}
+
+const bool File::IsSOSDataType() const
+{
+    const std::string value = GetAttributeValueAsString( "DataType" );
+    return ( value == "SOS" );
 }
 
 /************************************************************************************/
@@ -939,7 +962,7 @@ const bool File::checkFirDataType() const
         return false;
     }
     
-    if( sofa::NcUtils::HasDimensions(  M,  R,  N, varIR ) == false )
+    if( sofa::NcUtils::HasDimensions( M,  R,  N, varIR ) == false )
     {
         SOFA_THROW( "invalid dimensions for 'Data.IR'" );
         return false;
@@ -1007,7 +1030,106 @@ const bool File::checkFirDataType() const
     return true;
 }
 
-const bool File::getCoordinates(sofa::Coordinates::Type &coordinates, const std::string &variableName) const
+
+/************************************************************************************/
+/*!
+ *  @brief          Checks requirements for DataType 'SOS'
+ *                  returns true if everything conforms to the standard
+ *
+ */
+/************************************************************************************/
+const bool File::checkSOSDataType() const
+{
+    const long I = GetDimension( "I" );
+    const long M = GetNumMeasurements();
+    const long R = GetNumReceivers();
+    const long N = GetNumDataSamples();
+    
+    /// NB : this is specific to DataType 'SOS'
+    const netCDF::NcVar varSOS        = NetCDFFile::getVariable( "Data.SOS" );
+    
+    if( sofa::NcUtils::IsValid( varSOS ) == false )
+    {
+        SOFA_THROW( "missing 'Data.SOS' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::IsDouble( varSOS ) == false )
+    {
+        SOFA_THROW( "invalid 'Data.SOS' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::HasDimensions( M,  R,  N, varSOS ) == false )
+    {
+        SOFA_THROW( "invalid dimensions for 'Data.SOS'" );
+        return false;
+    }
+    
+    const netCDF::NcVar varSamplingRate        = NetCDFFile::getVariable( "Data.SamplingRate" );
+    
+    if( sofa::NcUtils::IsValid( varSamplingRate ) == false )
+    {
+        SOFA_THROW( "missing 'Data.SamplingRate' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::IsDouble( varSamplingRate ) == false )
+    {
+        SOFA_THROW( "invalid 'Data.SamplingRate' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::HasDimension( I, varSamplingRate ) == false
+       && sofa::NcUtils::HasDimension( M, varSamplingRate ) == false )
+    {
+        SOFA_THROW( "invalid dimensions for 'Data.SamplingRate'" );
+        return false;
+    }
+    
+    const netCDF::NcVarAtt attSamplingRateUnits = sofa::NcUtils::GetAttribute( varSamplingRate, "Units" );
+    
+    if( sofa::Units::IsValid( attSamplingRateUnits ) == false )
+    {
+        SOFA_THROW( "invalid 'Data.SamplingRate:Units'" );
+        return false;
+    }
+    
+    const std::string unitsName = sofa::NcUtils::GetAttributeValueAsString( attSamplingRateUnits );
+    
+    if( sofa::Units::IsFrequencyUnit( unitsName ) == false )
+    {
+        SOFA_THROW( "invalid 'Data.SamplingRate:Units'" );
+        return false;
+    }
+    
+    
+    const netCDF::NcVar varDelay        = NetCDFFile::getVariable( "Data.Delay" );
+    
+    if( sofa::NcUtils::IsValid( varDelay ) == false )
+    {
+        SOFA_THROW( "missing 'Data.Delay' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::IsDouble( varDelay ) == false )
+    {
+        SOFA_THROW( "invalid 'Data.Delay' variable" );
+        return false;
+    }
+    
+    if( sofa::NcUtils::HasDimensions( I, R, varDelay ) == false
+       && sofa::NcUtils::HasDimensions( M, R, varDelay ) == false )
+    {
+        SOFA_THROW( "invalid dimensions for 'Data.Delay'" );
+        return false;
+    }
+    
+    return true;
+}
+
+const bool File::getCoordinates(sofa::Coordinates::Type &coordinates,
+                                const std::string &variableName) const
 {
     const netCDF::NcVar var        = NetCDFFile::getVariable( variableName );
     const sofa::PositionVariable pos( var );
@@ -1023,7 +1145,8 @@ const bool File::getCoordinates(sofa::Coordinates::Type &coordinates, const std:
     }
 }
 
-const bool File::getUnits(sofa::Units::Type &units, const std::string &variableName) const
+const bool File::getUnits(sofa::Units::Type &units,
+                          const std::string &variableName) const
 {
     const netCDF::NcVar var        = NetCDFFile::getVariable( variableName );
     const sofa::PositionVariable pos( var );
@@ -1039,7 +1162,9 @@ const bool File::getUnits(sofa::Units::Type &units, const std::string &variableN
     }
 }
 
-const bool File::get(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units, const std::string &variableName) const
+const bool File::get(sofa::Coordinates::Type &coordinates,
+                     sofa::Units::Type &units,
+                     const std::string &variableName) const
 {
     const netCDF::NcVar var        = NetCDFFile::getVariable( variableName );
     const sofa::PositionVariable pos( var );

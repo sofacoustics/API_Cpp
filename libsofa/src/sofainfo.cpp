@@ -3,7 +3,7 @@
 /*----------------------------------------------------------------------------------*/
 /*!
  *   @file       sofainfo.cpp
- *   @brief      First test
+ *   @brief      Prints informations for SimpleFreeFieldHRIR file
  *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  *
  *   @date       10/05/2013
@@ -291,7 +291,7 @@ static void PrintSource(const sofa::File &theFile,
 /************************************************************************************/
 int main(int argc, char *argv[])
 {
-    
+
     std::ostream & output = std::cout;
     std::string in;
     
@@ -313,7 +313,7 @@ int main(int argc, char *argv[])
         DisplayHelp( output );
         return 0;
     }
-
+     
     const std::string filename = in;
     
     try
@@ -369,7 +369,11 @@ int main(int argc, char *argv[])
         
         SOFA_ASSERT( ok == true );
         
-        output << sofa::String::PadWith( "Sampling Rate" ) << " = " << sr << std::endl;
+        sofa::Units::Type units;
+        hrir.GetSamplingRateUnits( units );
+        
+        output << sofa::String::PadWith( "Data.SamplingRate" ) << " = " << sr << std::endl;
+        output << sofa::String::PadWith( "Data.SamplingRate:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
         const unsigned int M = (unsigned int) hrir.GetNumMeasurements();
         const unsigned int R = (unsigned int) hrir.GetNumReceivers();

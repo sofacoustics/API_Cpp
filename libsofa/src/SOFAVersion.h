@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -59,7 +59,7 @@ http://www.sofaconventions.org
 #define SOFA_VERSION_MINOR   0
 
 /* release number of current version of sofa library */
-#define SOFA_VERSION_RELEASE 3
+#define SOFA_VERSION_RELEASE 4
 
 
 //==============================================================================

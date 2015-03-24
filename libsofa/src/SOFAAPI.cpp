@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -50,6 +50,8 @@ http://www.sofaconventions.org
 /************************************************************************************/
 #include "../src/SOFAAPI.h"
 #include "../src/SOFASimpleFreeFieldHRIR.h"
+#include "../src/SOFASimpleFreeFieldSOS.h"
+#include "../src/SOFASimpleHeadphoneIR.h"
 #include <sstream>
 
 using namespace sofa;
@@ -228,6 +230,37 @@ const unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor(
     return sofa::SimpleFreeFieldHRIR::ConventionVersionMinor;
 }
 
+
+const std::string sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersion()
+{
+    return sofa::SimpleFreeFieldSOS::GetConventionVersion();
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMajor()
+{
+    return sofa::SimpleFreeFieldSOS::ConventionVersionMajor;
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMinor()
+{
+    return sofa::SimpleFreeFieldSOS::ConventionVersionMinor;
+}
+
+
+const std::string sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersion()
+{
+    return sofa::SimpleHeadphoneIR::GetConventionVersion();
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMajor()
+{
+    return sofa::SimpleHeadphoneIR::ConventionVersionMajor;
+}
+
+const unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor()
+{
+    return sofa::SimpleHeadphoneIR::ConventionVersionMinor;
+}
 
 /************************************************************************************/
 /*!

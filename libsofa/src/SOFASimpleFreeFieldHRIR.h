@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -80,6 +80,7 @@ namespace sofa
         virtual const bool IsValid() const SOFA_OVERRIDE;
         
         const bool GetSamplingRate(double &value) const;
+        const bool GetSamplingRateUnits(sofa::Units::Type &units) const;
         
         //==============================================================================
         const bool GetDataIR(std::vector< double > &values) const;
@@ -91,6 +92,7 @@ namespace sofa
         const bool checkListenerVariables() const;
         
         const bool hasDatabaseName() const;
+        const bool isSamplingRateScalar() const;
         
     private:
         /// avoid shallow and copy constructor

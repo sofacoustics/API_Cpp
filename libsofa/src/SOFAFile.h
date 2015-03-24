@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES X212 standard
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
 http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
@@ -87,8 +87,11 @@ namespace sofa
         void PrintSOFAGlobalAttributes(std::ostream & output = std::cout,
                                        const bool withPadding = false) const;
         
+        const std::string GetSOFAConventions() const;
+        
         const bool IsFIRDataType() const;
         const bool IsTFDataType() const;
+        const bool IsSOSDataType() const;
         
         //==============================================================================
         // SOFA Dimensions
@@ -172,6 +175,7 @@ namespace sofa
         const bool checkDataVariable() const;
         const bool checkFirDataType() const;
         const bool checkTFDataType() const;
+        const bool checkSOSDataType() const;
         
         const bool getCoordinates(sofa::Coordinates::Type &coordinates, const std::string &variableName) const;
         const bool getUnits(sofa::Units::Type &units, const std::string &variableName) const;

@@ -11,6 +11,18 @@
 /************************************************************************************/
 
 ****************************************************************
+@version    1.0.4
+@author     Thibaut Carpentier
+@date       03/2015
+
+* added SimpleFreeFieldSOS convention
+* added SimpleHeadphoneIR convention
+* added GeneralFIR convention
+* added GeneralTF convention
+* according to AES69-2015, Data.SamplingRate can be [I] or [M], unlike previous versions
+of this library. The code is updated accordingly.
+
+****************************************************************
 @version    1.0.3
 @author     Thibaut Carpentier
 @date       01/2015

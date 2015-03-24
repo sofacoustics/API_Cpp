@@ -25,6 +25,10 @@ SRC 		=  	../../src/SOFAAPI.cpp \
 				../../src/SOFAPosition.cpp \
 				../../src/SOFAReceiver.cpp \
 				../../src/SOFASimpleFreeFieldHRIR.cpp \
+				../../src/SOFASimpleFreeFieldSOS.cpp \
+				../../src/SOFASimpleHeadphoneIR.cpp \
+				../../src/SOFAGeneralTF.cpp \
+				../../src/SOFAGeneralFIR.cpp \
 				../../src/SOFASource.cpp \
 				../../src/SOFAString.cpp \
 				../../src/SOFAUnits.cpp

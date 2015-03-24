@@ -28,10 +28,18 @@ static void TestFileConvention(const std::string & filename,
     const bool validnetCDF                  = sofa::IsValidNetCDFFile( filename );
     const bool validSOFA                    = sofa::IsValidSOFAFile( filename );
     const bool validSimpleFreeFieldHRIR     = sofa::IsValidSimpleFreeFieldHRIRFile( filename );
-
+    const bool validSimpleFreeFieldSOS      = sofa::IsValidSimpleFreeFieldSOSFile( filename );
+    const bool validSimpleHeadphoneIR       = sofa::IsValidSimpleHeadphoneIRFile( filename );
+    const bool validGeneralFIR              = sofa::IsValidGeneralFIRFile( filename );
+    const bool validGeneralTF               = sofa::IsValidGeneralTFFile( filename );
+    
     output << "netCDF               = " << sofa::String::bool2yesorno( validnetCDF ) << std::endl;
     output << "SOFA                 = " << sofa::String::bool2yesorno( validSOFA ) << std::endl;
     output << "SimpleFreeFieldHRIR  = " << sofa::String::bool2yesorno( validSimpleFreeFieldHRIR ) << std::endl;
+    output << "SimpleFreeFieldSOS   = " << sofa::String::bool2yesorno( validSimpleFreeFieldSOS ) << std::endl;
+    output << "SimpleHeadphoneIR    = " << sofa::String::bool2yesorno( validSimpleHeadphoneIR ) << std::endl;
+    output << "GeneralFIR           = " << sofa::String::bool2yesorno( validGeneralFIR ) << std::endl;
+    output << "GeneralTF            = " << sofa::String::bool2yesorno( validGeneralTF ) << std::endl;
 }
 
 /************************************************************************************/
@@ -373,8 +381,11 @@ static void CreateSimpleFreeFieldHRIRFile()
 int main(int argc, char *argv[])
 {
     ///@todo : change this !
-    const std::string filename = "/Users/tcarpent/Desktop/ClubFritz_SH_BM_01-1.sofa";
+    const std::string filename = "/Users/tcarpent/Desktop/sofa_files/BTDEI-hp_H010-subj_S115-Set02_BEC-RAW.sofa";
+    //"/Users/tcarpent/Desktop/sofa_files/subject_003.sofa";
     //"/Users/tcarpent/Downloads/ClubFritz_SH_BM_01.sofa";
+    //"/Users/tcarpent/Desktop/sofa_files/hpir_nh2.sofa";
+    ///"/Users/tcarpent/Desktop/sofa_files/BTDEI-hp_H010-subj_S115-Set02_BEC-RAW.sofa";
     
     TestFileConvention( filename );
     
