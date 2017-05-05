@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAGeneralFIR.h
  *   @brief      Class for SOFA files with GeneralFIR convention
@@ -69,23 +67,34 @@ namespace sofa
     public:
         static const unsigned int ConventionVersionMajor;
         static const unsigned int ConventionVersionMinor;
-        static const std::string GetConventionVersion();
+        static std::string GetConventionVersion();
         
     public:
         GeneralFIR(const std::string &path,
                    const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
         
-        virtual ~GeneralFIR();
+        virtual ~GeneralFIR() {};
         
-        virtual const bool IsValid() const SOFA_OVERRIDE;
+        virtual bool IsValid() const SOFA_OVERRIDE;
+        
+        bool GetSamplingRate(double &value) const;
+        bool GetSamplingRateUnits(sofa::Units::Type &units) const;
+        
+        //==============================================================================
+        bool GetDataIR(std::vector< double > &values) const;
+        bool GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        
+        //==============================================================================
+        bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetDataDelay(std::vector< double > &values) const;
         
     private:
-        const bool checkGlobalAttributes() const;
+        //==============================================================================
+        bool checkGlobalAttributes() const;
         
     private:
         /// avoid shallow and copy constructor
-        GeneralFIR( const GeneralFIR &other );
-        const GeneralFIR & operator= ( const GeneralFIR &other );
+        SOFA_AVOID_COPY_CONSTRUCTOR( GeneralFIR );
     };
     
 }

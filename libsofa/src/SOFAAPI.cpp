@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAAPI.cpp
  *   @brief      Informations about this API
@@ -52,6 +50,8 @@ http://www.sofaconventions.org
 #include "../src/SOFASimpleFreeFieldHRIR.h"
 #include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFASimpleHeadphoneIR.h"
+#include "../src/SOFAMultiSpeakerBRIR.h"
+#include "../src/SOFAGeneralFIR.h"
 #include <sstream>
 
 using namespace sofa;
@@ -82,7 +82,7 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-const std::string sofa::ApiInfos::GetAPIName()
+std::string sofa::ApiInfos::GetAPIName()
 {
     return "SOFA C++ API";
 }
@@ -96,7 +96,7 @@ const std::string sofa::ApiInfos::GetAPIName()
  *
  */
 /************************************************************************************/
-const std::string sofa::ApiInfos::GetAPIVersion()
+std::string sofa::ApiInfos::GetAPIVersion()
 {    
     const int major     = (int) GetAPIVersionMajor();
     const int minor     = (int) GetAPIVersionMinor();
@@ -122,7 +122,7 @@ const std::string sofa::ApiInfos::GetAPIVersion()
  *
  */
 /************************************************************************************/
-const unsigned int sofa::ApiInfos::GetAPIVersionMinor()
+unsigned int sofa::ApiInfos::GetAPIVersionMinor()
 {
     const int minor     = (int) SOFA_VERSION_MINOR;
     
@@ -137,7 +137,7 @@ const unsigned int sofa::ApiInfos::GetAPIVersionMinor()
  *
  */
 /************************************************************************************/
-const unsigned int sofa::ApiInfos::GetAPIVersionMajor()
+unsigned int sofa::ApiInfos::GetAPIVersionMajor()
 {
     const int major     = (int) SOFA_VERSION_MAJOR;
     
@@ -152,7 +152,7 @@ const unsigned int sofa::ApiInfos::GetAPIVersionMajor()
  *
  */
 /************************************************************************************/
-const unsigned int sofa::ApiInfos::GetAPIVersionRelease()
+unsigned int sofa::ApiInfos::GetAPIVersionRelease()
 {
     const int release   = (int) SOFA_VERSION_RELEASE;
     
@@ -169,7 +169,7 @@ const unsigned int sofa::ApiInfos::GetAPIVersionRelease()
  *
  */
 /************************************************************************************/
-const std::string sofa::ApiInfos::GetSpecificationsVersion()
+std::string sofa::ApiInfos::GetSpecificationsVersion()
 {
     const int major     = (int) GetSpecificationsVersionMajor();
     const int minor     = (int) GetSpecificationsVersionMinor();
@@ -191,7 +191,7 @@ const std::string sofa::ApiInfos::GetSpecificationsVersion()
  *
  */
 /************************************************************************************/
-const unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor()
+unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor()
 {
     const int major     = (int) SOFA_SPECIFICATIONS_MINOR;
     
@@ -206,7 +206,7 @@ const unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor()
  *
  */
 /************************************************************************************/
-const unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor()
+unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor()
 {
     const int major     = (int) SOFA_SPECIFICATIONS_MAJOR;
     
@@ -215,51 +215,83 @@ const unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor()
     return (unsigned int) major;
 }
 
-const std::string sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersion()
+std::string sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersion()
 {
     return sofa::SimpleFreeFieldHRIR::GetConventionVersion();
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMajor()
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMajor()
 {
     return sofa::SimpleFreeFieldHRIR::ConventionVersionMajor;
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor()
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor()
 {
     return sofa::SimpleFreeFieldHRIR::ConventionVersionMinor;
 }
 
 
-const std::string sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersion()
+std::string sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersion()
 {
     return sofa::SimpleFreeFieldSOS::GetConventionVersion();
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMajor()
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMajor()
 {
     return sofa::SimpleFreeFieldSOS::ConventionVersionMajor;
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMinor()
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMinor()
 {
     return sofa::SimpleFreeFieldSOS::ConventionVersionMinor;
 }
 
 
-const std::string sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersion()
+std::string sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersion()
 {
     return sofa::SimpleHeadphoneIR::GetConventionVersion();
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMajor()
+unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMajor()
 {
     return sofa::SimpleHeadphoneIR::ConventionVersionMajor;
 }
 
-const unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor()
+unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor()
 {
     return sofa::SimpleHeadphoneIR::ConventionVersionMinor;
+}
+
+
+std::string sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersion()
+{
+    return sofa::MultiSpeakerBRIR::GetConventionVersion();
+}
+
+unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMajor()
+{
+    return sofa::MultiSpeakerBRIR::ConventionVersionMajor;
+}
+
+unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMinor()
+{
+    return sofa::MultiSpeakerBRIR::ConventionVersionMinor;
+}
+
+
+std::string sofa::ApiInfos::GetGeneralFIRConventionVersion()
+{
+    return sofa::GeneralFIR::GetConventionVersion();
+}
+
+unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMajor()
+{
+    return sofa::GeneralFIR::ConventionVersionMajor;
+}
+
+unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMinor()
+{
+    return sofa::GeneralFIR::ConventionVersionMinor;
 }
 
 /************************************************************************************/
@@ -268,13 +300,13 @@ const unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor()
  *
  */
 /************************************************************************************/
-const std::string sofa::ApiInfos::GetAPICopyright()
+std::string sofa::ApiInfos::GetAPICopyright()
 {
     const std::string copyright =
     sofa::ApiInfos::GetAPIName() + " version " + sofa::ApiInfos::GetAPIVersion()
     + " (implementing SOFA specifications version " + sofa::ApiInfos::GetSpecificationsVersion() + ")\n"
     + "\n" +
-    "Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC\n"
+    "Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC\n"
     "All rights reserved.\n"
     "\n"
     "Redistribution and use in source and binary forms, with or without\n"

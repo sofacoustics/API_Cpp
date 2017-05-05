@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFASimpleFreeFieldSOS.h
  *   @brief      Class for SOFA files with SimpleFreeFieldSOS convention
@@ -69,35 +67,37 @@ namespace sofa
     public:
         static const unsigned int ConventionVersionMajor;
         static const unsigned int ConventionVersionMinor;
-        static const std::string GetConventionVersion();
+        static std::string GetConventionVersion();
         
     public:
         SimpleFreeFieldSOS(const std::string &path,
                             const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
         
-        virtual ~SimpleFreeFieldSOS();
+        virtual ~SimpleFreeFieldSOS() {};
         
-        virtual const bool IsValid() const SOFA_OVERRIDE;
+        virtual bool IsValid() const SOFA_OVERRIDE;
         
-        const bool GetSamplingRate(double &value) const;
-        const bool GetSamplingRateUnits(sofa::Units::Type &units) const;
+        bool GetSamplingRate(double &value) const;
+        bool GetSamplingRateUnits(sofa::Units::Type &units) const;
         
         //==============================================================================
-        const bool GetDataSOS(std::vector< double > &values) const;
-        const bool GetDataSOS(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetDataSOS(std::vector< double > &values) const;
+        bool GetDataSOS(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        
+        //==============================================================================
+        bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetDataDelay(std::vector< double > &values) const;
         
     private:
-        const bool checkGlobalAttributes() const;
-        const bool checkListenerVariables() const;
+        //==============================================================================
+        bool checkGlobalAttributes() const;
+        bool checkListenerVariables() const;
         
-        const bool hasDatabaseName() const;
-        const bool isSamplingRateScalar() const;
+        bool hasDatabaseName() const;
         
     private:
         /// avoid shallow and copy constructor
-        SimpleFreeFieldSOS( const SimpleFreeFieldSOS &other );
-        const SimpleFreeFieldSOS & operator= ( const SimpleFreeFieldSOS &other );
+        SOFA_AVOID_COPY_CONSTRUCTOR( SimpleFreeFieldSOS );
     };
     
 }

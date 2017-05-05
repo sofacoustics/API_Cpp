@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAReceiver.cpp
  *   @brief      
@@ -74,16 +72,6 @@ Receiver::Receiver(const netCDF::NcVar & varReceiverPosition,
 
 /************************************************************************************/
 /*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Receiver::~Receiver()
-{
-}
-
-/************************************************************************************/
-/*!
  *  @brief          Checks if the NcVar corresponds to 
  *                    ReceiverPosition 
  *                        ReceiverPosition:Type
@@ -106,7 +94,7 @@ Receiver::~Receiver()
  *  @n                some of the tests are redundant, but anyway they should be rather fast
  */
 /************************************************************************************/
-const bool Receiver::IsValid() const
+bool Receiver::IsValid() const
 {
     /// ReceiverPosition
     if( ReceiverPosition.IsValid() == false )
@@ -155,7 +143,7 @@ const bool Receiver::IsValid() const
  *
  */
 /************************************************************************************/
-const bool Receiver::HasReceiverUpVariable() const
+bool Receiver::HasReceiverUpVariable() const
 {
     if( hasVarReceiverUp == true )
     {
@@ -178,7 +166,7 @@ const bool Receiver::HasReceiverUpVariable() const
  *
  */
 /************************************************************************************/
-const bool Receiver::HasReceiverViewVariable() const
+bool Receiver::HasReceiverViewVariable() const
 {
     if( hasVarReceiverView == true )
     {
@@ -190,23 +178,23 @@ const bool Receiver::HasReceiverViewVariable() const
     }
 }
 
-const bool Receiver::ReceiverPositionHasDimensions(const unsigned long dim1,
-                                                   const unsigned long dim2,
-                                                   const unsigned long dim3) const
+bool Receiver::ReceiverPositionHasDimensions(const unsigned long dim1,
+                                             const unsigned long dim2,
+                                             const unsigned long dim3) const
 {
     return ReceiverPosition.HasDimensions( dim1, dim2, dim3 );
 }
 
-const bool Receiver::ReceiverUpHasDimensions(const unsigned long dim1,
-                                             const unsigned long dim2,
-                                             const unsigned long dim3) const
+bool Receiver::ReceiverUpHasDimensions(const unsigned long dim1,
+                                       const unsigned long dim2,
+                                       const unsigned long dim3) const
 {
     return ReceiverUp.HasDimensions( dim1, dim2, dim3 );
 }
 
-const bool Receiver::ReceiverViewHasDimensions(const unsigned long dim1,
-                                               const unsigned long dim2,
-                                               const unsigned long dim3) const
+bool Receiver::ReceiverViewHasDimensions(const unsigned long dim1,
+                                         const unsigned long dim2,
+                                         const unsigned long dim3) const
 {
     return ReceiverView.HasDimensions( dim1, dim2, dim3 );
 }

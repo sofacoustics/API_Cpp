@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAUtils.h
  *   @brief      Standard utility functions
@@ -64,7 +62,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    inline const float FAbs(const float x) SOFA_NOEXCEPT
+    inline float FAbs(const float x) SOFA_NOEXCEPT
     {
         return fabsf(x);
     }
@@ -77,7 +75,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    inline const double FAbs(const double x) SOFA_NOEXCEPT
+    inline double FAbs(const double x) SOFA_NOEXCEPT
     {
         return fabs(x);
     }
@@ -92,7 +90,7 @@ namespace sofa
      */
     /************************************************************************************/    
     template< typename Type >
-    inline const Type smin(const Type &a, const Type &b) SOFA_NOEXCEPT
+    Type smin(const Type &a, const Type &b) SOFA_NOEXCEPT
     {
         return ( a < b ) ? a : b;
     }
@@ -107,7 +105,7 @@ namespace sofa
      */
     /************************************************************************************/  
     template< typename Type >
-    inline const Type smax(const Type &a, const Type &b) SOFA_NOEXCEPT
+    Type smax(const Type &a, const Type &b) SOFA_NOEXCEPT
     {
         return ( a > b ) ? a : b;
     }

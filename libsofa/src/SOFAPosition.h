@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAPosition.h
  *   @brief      Represents a sofa position variable
@@ -73,27 +71,26 @@ namespace sofa
         PositionVariable(const netCDF::NcVar & variable);
         ~PositionVariable();
         
-        const bool IsValid(const bool shouldHaveTypeAndUnits = true) const;
+        bool IsValid(const bool shouldHaveTypeAndUnits = true) const;
         
-        const bool HasUnits() const;
-        const bool HasCoordinates() const;
+        bool HasUnits() const;
+        bool HasCoordinates() const;
         
-        const sofa::Units::Type GetUnits() const;
-        const sofa::Coordinates::Type GetCoordinates() const;
+        sofa::Units::Type GetUnits() const;
+        sofa::Coordinates::Type GetCoordinates() const;
         
-        const unsigned int GetDimensionality() const;
+        unsigned int GetDimensionality() const;
         
-        const bool HasDimensions(const std::size_t dim1, const std::size_t dim2) const;
-        const bool HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const;
+        bool HasDimensions(const std::size_t dim1, const std::size_t dim2) const;
+        bool HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const;
                         
-    protected:        
+    private:        
         const netCDF::NcVar var;                ///< the NcVar is not hold
         
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        PositionVariable( const PositionVariable &other );                    
-        const PositionVariable & operator= ( const PositionVariable &other );
+        SOFA_AVOID_COPY_CONSTRUCTOR( PositionVariable );
     };
     
 }

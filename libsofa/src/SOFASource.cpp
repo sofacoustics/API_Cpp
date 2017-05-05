@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFASource.cpp
  *   @brief      Represents a sofa source
@@ -74,16 +72,6 @@ Source::Source(const netCDF::NcVar & varSourcePosition,
 
 /************************************************************************************/
 /*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Source::~Source()
-{
-}
-
-/************************************************************************************/
-/*!
  *  @brief          Checks if the NcVar corresponds to
  *                    SourcePosition
  *                        SourcePosition:Type
@@ -104,7 +92,7 @@ Source::~Source()
  *  @n                some of the tests are redundant, but anyway they should be rather fast
  */
 /************************************************************************************/
-const bool Source::IsValid() const
+bool Source::IsValid() const
 {
     /// SourcePosition
     if( SourcePosition.IsValid() == false )
@@ -154,7 +142,7 @@ const bool Source::IsValid() const
  *
  */
 /************************************************************************************/
-const bool Source::HasSourceUp() const
+bool Source::HasSourceUp() const
 {
     if( hasVarSourceUp == true )
     {
@@ -177,7 +165,7 @@ const bool Source::HasSourceUp() const
  *
  */
 /************************************************************************************/
-const bool Source::HasSourceView() const
+bool Source::HasSourceView() const
 {
     if( hasVarSourceView == true )
     {
@@ -189,20 +177,20 @@ const bool Source::HasSourceView() const
     }
 }
 
-const bool Source::SourcePositionHasDimensions(const unsigned long dim1,
-                                                   const unsigned long dim2) const
+bool Source::SourcePositionHasDimensions(const unsigned long dim1,
+                                         const unsigned long dim2) const
 {
     return SourcePosition.HasDimensions( dim1, dim2 );
 }
 
-const bool Source::SourceUpHasDimensions(const unsigned long dim1,
-                                             const unsigned long dim2) const
+bool Source::SourceUpHasDimensions(const unsigned long dim1,
+                                   const unsigned long dim2) const
 {
     return SourceUp.HasDimensions( dim1, dim2 );
 }
 
-const bool Source::SourceViewHasDimensions(const unsigned long dim1,
-                                               const unsigned long dim2) const
+bool Source::SourceViewHasDimensions(const unsigned long dim1,
+                                     const unsigned long dim2) const
 {
     return SourceView.HasDimensions( dim1, dim2 );
 }

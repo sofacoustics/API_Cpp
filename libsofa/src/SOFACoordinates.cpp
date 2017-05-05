@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFACoordinates.cpp
  *   @brief      SOFA Coordinates systems
@@ -57,21 +55,23 @@ using namespace sofa;
 
 namespace CoordinatesHelper
 {
-    static std::map< std::string, sofa::Coordinates::Type > typeMap;
-    
     /************************************************************************************/
     /*!
      *  @brief          Creates a mapping between coordinates type and their names
      *
      */
     /************************************************************************************/
-    static void initTypeMap()
+    static const std::map< std::string, sofa::Coordinates::Type > & getTypeMap()
     {
+        static std::map< std::string, sofa::Coordinates::Type > typeMap;
+        
         if( typeMap.empty() == true )
         {    
             typeMap["cartesian"]                    = sofa::Coordinates::kCartesian;
             typeMap["spherical"]                    = sofa::Coordinates::kSpherical;
         }
+        
+        return typeMap;
     }
 }
 
@@ -82,7 +82,7 @@ namespace CoordinatesHelper
  *
  */
 /************************************************************************************/
-const std::string sofa::Coordinates::GetName(const sofa::Coordinates::Type &type_)
+std::string sofa::Coordinates::GetName(const sofa::Coordinates::Type &type_)
 {
     switch( type_ )
     {
@@ -103,11 +103,11 @@ const std::string sofa::Coordinates::GetName(const sofa::Coordinates::Type &type
  *
  */
 /************************************************************************************/
-const sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name)
+sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name)
 {
-    CoordinatesHelper::initTypeMap();
+    const std::map< std::string, sofa::Coordinates::Type > & typeMap = CoordinatesHelper::getTypeMap();
     
-    if( CoordinatesHelper::typeMap.count( name ) == 0 )
+    if( typeMap.count( name ) == 0 )
     {        
         SOFA_ASSERT( false );
         
@@ -115,7 +115,7 @@ const sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name
     }
     else
     {
-        return CoordinatesHelper::typeMap[ name ];
+        return typeMap.at( name );
     }
 }
 
@@ -126,11 +126,11 @@ const sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name
  *
  */
 /************************************************************************************/
-const bool sofa::Coordinates::IsValid(const std::string &name)
+bool sofa::Coordinates::IsValid(const std::string &name)
 {
-    CoordinatesHelper::initTypeMap();
+    const std::map< std::string, sofa::Coordinates::Type > & typeMap = CoordinatesHelper::getTypeMap();
     
-    return ( CoordinatesHelper::typeMap.count( name ) != 0 );
+    return ( typeMap.count( name ) != 0 );
 }
 
 /************************************************************************************/
@@ -140,7 +140,7 @@ const bool sofa::Coordinates::IsValid(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Coordinates::IsValid(const netCDF::NcAtt & attr)
+bool sofa::Coordinates::IsValid(const netCDF::NcAtt & attr)
 {
     if( sofa::NcUtils::IsValid( attr ) == false )
     {

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFA.h
  *   @brief      Spatially Oriented Format for Acoustics
@@ -60,25 +58,33 @@ http://www.sofaconventions.org
 #ifndef _SOFA_H__
 #define _SOFA_H__
 
+//==============================================================================
 /// public API
+//==============================================================================
 #include "../src/SOFAAPI.h"
 #include "../src/SOFAAttributes.h"
 #include "../src/SOFACoordinates.h"
 #include "../src/SOFAFile.h"
-#include "../src/SOFAHostArchitecture.h"
 #include "../src/SOFANcFile.h"
 #include "../src/SOFAPlatform.h"
 #include "../src/SOFASimpleFreeFieldHRIR.h"
 #include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFASimpleHeadphoneIR.h"
+#include "../src/SOFAMultiSpeakerBRIR.h"
 #include "../src/SOFAGeneralFIR.h"
+#include "../src/SOFAGeneralFIRE.h"
 #include "../src/SOFAGeneralTF.h"
-#include "../src/SOFAString.h"
+#include "../src/SOFASingleRoomDRIR.h"
 #include "../src/SOFAUnits.h"
 #include "../src/SOFAVersion.h"
 #include "../src/SOFAHelper.h"
 
+//==============================================================================
 /// private files
+//==============================================================================
+//#include "../src/SOFAHostArchitecture.h"
+//#include "../src/SOFAExceptions.h"
+//#include "../src/SOFAString.h"
 //#include "../src/SOFADate.h"
 //#include "../src/SOFAEmitter.h"
 //#include "../src/SOFAListener.h"

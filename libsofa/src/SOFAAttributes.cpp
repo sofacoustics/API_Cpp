@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAAttributes.cpp
  *   @brief      General metadata are represented as global attributes in netCDF
@@ -58,16 +56,16 @@ using namespace sofa;
 
 namespace AttributesHelper
 {
-    static std::map< std::string, sofa::Attributes::Type > typeMap;
-    
     /************************************************************************************/
     /*!
      *  @brief          Creates a mapping between Attributes type and their names
      *
      */
     /************************************************************************************/
-    static void initTypeMap()
+    static const std::map< std::string, sofa::Attributes::Type > & getTypeMap()
     {
+        static std::map< std::string, sofa::Attributes::Type > typeMap;
+        
         if( typeMap.empty() == true )
         {
             typeMap["Conventions"]                  = sofa::Attributes::kConventions;
@@ -101,8 +99,9 @@ namespace AttributesHelper
             typeMap["ReceiverDescription"]          = sofa::Attributes::kReceiverDescription;
             typeMap["EmitterShortName"]             = sofa::Attributes::kEmitterShortName;
             typeMap["EmitterDescription"]           = sofa::Attributes::kEmitterDescription;
-
         }
+        
+        return typeMap;
     }
 }
 
@@ -113,7 +112,7 @@ namespace AttributesHelper
  *
  */
 /************************************************************************************/
-const bool sofa::Attributes::IsRequired(const sofa::Attributes::Type &type_)
+bool sofa::Attributes::IsRequired(const sofa::Attributes::Type &type_)
 {
     switch( type_ )
     {            
@@ -161,7 +160,7 @@ const bool sofa::Attributes::IsRequired(const sofa::Attributes::Type &type_)
  *
  */
 /************************************************************************************/
-const bool sofa::Attributes::IsReadOnly(const sofa::Attributes::Type &type_)
+bool sofa::Attributes::IsReadOnly(const sofa::Attributes::Type &type_)
 {
     switch( type_ )
     {            
@@ -209,45 +208,24 @@ const bool sofa::Attributes::IsReadOnly(const sofa::Attributes::Type &type_)
  *
  */
 /************************************************************************************/
-const std::string sofa::Attributes::GetName(const sofa::Attributes::Type &type_)
+std::string sofa::Attributes::GetName(const sofa::Attributes::Type &type_)
 {
-    switch( type_ )
-    {            
-        case sofa::Attributes::kConventions             : return "Conventions";
-        case sofa::Attributes::kVersion                 : return "Version";
-        case sofa::Attributes::kSOFAConventions         : return "SOFAConventions";
-        case sofa::Attributes::kSOFAConventionsVersion  : return "SOFAConventionsVersion";
-        case sofa::Attributes::kAPIName                 : return "APIName";
-        case sofa::Attributes::kAPIVersion              : return "APIVersion";
-        case sofa::Attributes::kApplicationName         : return "ApplicationName";
-        case sofa::Attributes::kApplicationVersion      : return "ApplicationVersion";
-        case sofa::Attributes::kAuthorContact           : return "AuthorContact";
-        case sofa::Attributes::kOrganization            : return "Organization";
-        case sofa::Attributes::kLicense                 : return "License";
-        case sofa::Attributes::kComment                 : return "Comment";
-        case sofa::Attributes::kHistory                 : return "History";
-        case sofa::Attributes::kReferences              : return "References";
-        case sofa::Attributes::kDataType                : return "DataType";
-        case sofa::Attributes::kRoomType                : return "RoomType";
-        case sofa::Attributes::kOrigin                  : return "Origin";
-        case sofa::Attributes::kDateCreated             : return "DateCreated";
-        case sofa::Attributes::kDateModified            : return "DateModified";
-        case sofa::Attributes::kTitle                   : return "Title";
-        case sofa::Attributes::kRoomShortName           : return "RoomShortName";
-        case sofa::Attributes::kRoomDescription         : return "RoomDescription";
-        case sofa::Attributes::kRoomLocation            : return "RoomLocation";
-        case sofa::Attributes::kListenerShortName       : return "ListenerShortName";
-        case sofa::Attributes::kListenerDescription     : return "ListenerDescription";
-        case sofa::Attributes::kSourceShortName         : return "SourceShortName";
-        case sofa::Attributes::kSourceDescription       : return "SourceDescription";
-        case sofa::Attributes::kReceiverShortName       : return "ReceiverShortName";
-        case sofa::Attributes::kReceiverDescription     : return "ReceiverDescription";
-        case sofa::Attributes::kEmitterShortName        : return "EmitterShortName";
-        case sofa::Attributes::kEmitterDescription      : return "EmitterDescription";
-            
-        default                                         : SOFA_ASSERT( false ); return "";
-        case sofa::Attributes::kNumAttributes           : SOFA_ASSERT( false ); return "";
+    SOFA_ASSERT( type_ != sofa::Attributes::kNumAttributes );
+    
+    const std::map< std::string, sofa::Attributes::Type > & typeMap = AttributesHelper::getTypeMap();
+    
+    for( std::map< std::string, sofa::Attributes::Type >::const_iterator it = typeMap.begin();
+         it != typeMap.end();
+         it++ )
+    {
+        if( it->second == type_ )
+        {
+            return it->first;
+        }
     }
+    
+    SOFA_ASSERT( false );
+    return "";        
 }
 
 /************************************************************************************/
@@ -257,11 +235,11 @@ const std::string sofa::Attributes::GetName(const sofa::Attributes::Type &type_)
  *
  */
 /************************************************************************************/
-const sofa::Attributes::Type sofa::Attributes::GetType(const std::string &name)
+sofa::Attributes::Type sofa::Attributes::GetType(const std::string &name)
 {
-    AttributesHelper::initTypeMap();
+    const std::map< std::string, sofa::Attributes::Type > & typeMap = AttributesHelper::getTypeMap();
     
-    if( AttributesHelper::typeMap.count( name ) == 0 )
+    if( typeMap.count( name ) == 0 )
     {        
         SOFA_ASSERT( false );
         
@@ -269,9 +247,8 @@ const sofa::Attributes::Type sofa::Attributes::GetType(const std::string &name)
     }
     else
     {
-        return AttributesHelper::typeMap[ name ];
+        return typeMap.at( name );
     }
-    
 }
 
 /************************************************************************************/
@@ -281,7 +258,7 @@ const sofa::Attributes::Type sofa::Attributes::GetType(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Attributes::HasDefaultValue(const sofa::Attributes::Type &type_)
+bool sofa::Attributes::HasDefaultValue(const sofa::Attributes::Type &type_)
 {
     switch( type_ )
     {            
@@ -322,13 +299,13 @@ const bool sofa::Attributes::HasDefaultValue(const sofa::Attributes::Type &type_
     }
 }
 
-const bool sofa::Attributes::IsRequired(const std::string &name)
+bool sofa::Attributes::IsRequired(const std::string &name)
 {
     const sofa::Attributes::Type type_ = sofa::Attributes::GetType( name );
     return sofa::Attributes::IsRequired( type_ );
 }
 
-const bool sofa::Attributes::IsReadOnly(const std::string &name)
+bool sofa::Attributes::IsReadOnly(const std::string &name)
 {
     const sofa::Attributes::Type type_ = sofa::Attributes::GetType( name );
     return sofa::Attributes::IsReadOnly( type_ );
@@ -341,13 +318,13 @@ const bool sofa::Attributes::IsReadOnly(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Attributes::HasDefaultValue(const std::string &name)
+bool sofa::Attributes::HasDefaultValue(const std::string &name)
 {
     const sofa::Attributes::Type type_ = sofa::Attributes::GetType( name );
     return sofa::Attributes::HasDefaultValue( type_ );
 }
 
-const std::string sofa::Attributes::GetDefaultValue(const sofa::Attributes::Type &type_)
+std::string sofa::Attributes::GetDefaultValue(const sofa::Attributes::Type &type_)
 {
     if( HasDefaultValue( type_ ) == true )
     {
@@ -380,7 +357,7 @@ const std::string sofa::Attributes::GetDefaultValue(const sofa::Attributes::Type
  *
  */
 /************************************************************************************/
-const std::string sofa::Attributes::GetDefaultValue(const std::string &name)
+std::string sofa::Attributes::GetDefaultValue(const std::string &name)
 {
     const sofa::Attributes::Type type_ = sofa::Attributes::GetType( name );
     return sofa::Attributes::GetDefaultValue( type_ );
@@ -430,16 +407,6 @@ sofa::Attributes::Attributes()
 , EmitterDescription()
 {
     ResetToDefault();
-}
-
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-sofa::Attributes::~Attributes()
-{
 }
 
 /************************************************************************************/
@@ -546,7 +513,7 @@ void sofa::Attributes::Set(const sofa::Attributes::Type &type_, const std::strin
  *
  */
 /************************************************************************************/
-const std::string sofa::Attributes::Get(const sofa::Attributes::Type &type_) const
+std::string sofa::Attributes::Get(const sofa::Attributes::Type &type_) const
 {
     switch( type_ )
     {            

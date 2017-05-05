@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFASource.h
  *   @brief      Represents a sofa source
@@ -71,18 +69,18 @@ namespace sofa
                const netCDF::NcVar & varSourceUp,
                const netCDF::NcVar & varSourceView);
         
-        ~Source();
+        ~Source() {};
         
-        const bool IsValid() const;
+        bool IsValid() const;
         
-        const bool HasSourceUp() const;
-        const bool HasSourceView() const;
+        bool HasSourceUp() const;
+        bool HasSourceView() const;
         
-        const bool SourcePositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        const bool SourceUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        const bool SourceViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
+        bool SourcePositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
+        bool SourceUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
+        bool SourceViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
         
-    protected:
+    private:
         const sofa::PositionVariable SourcePosition;
         const sofa::PositionVariable SourceUp;
         const sofa::PositionVariable SourceView;
@@ -93,9 +91,7 @@ namespace sofa
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        Source( const Source &other );
-        const Source & operator= ( const Source &other );
-        
+        SOFA_AVOID_COPY_CONSTRUCTOR( Source );        
     };
     
 }

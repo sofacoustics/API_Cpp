@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAGeneralTF.h
  *   @brief      Class for SOFA files with GeneralTF convention
@@ -69,23 +67,23 @@ namespace sofa
     public:
         static const unsigned int ConventionVersionMajor;
         static const unsigned int ConventionVersionMinor;
-        static const std::string GetConventionVersion();
+        static std::string GetConventionVersion();
         
     public:
         GeneralTF(const std::string &path,
                    const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
         
-        virtual ~GeneralTF();
+        virtual ~GeneralTF() {};
         
-        virtual const bool IsValid() const SOFA_OVERRIDE;
+        virtual bool IsValid() const SOFA_OVERRIDE;
         
     private:
-        const bool checkGlobalAttributes() const;
+        //==============================================================================
+        bool checkGlobalAttributes() const;
         
     private:
         /// avoid shallow and copy constructor
-        GeneralTF( const GeneralTF &other );
-        const GeneralTF & operator= ( const GeneralTF &other );
+        SOFA_AVOID_COPY_CONSTRUCTOR( GeneralTF );
     };
     
 }

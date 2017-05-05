@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAEmitter.cpp
  *   @brief      Represents a sofa emitter
@@ -74,16 +72,6 @@ Emitter::Emitter(const netCDF::NcVar & varEmitterPosition,
 
 /************************************************************************************/
 /*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Emitter::~Emitter()
-{
-}
-
-/************************************************************************************/
-/*!
  *  @brief          Checks if the NcVar corresponds to
  *                    EmitterPosition
  *                        EmitterPosition:Type
@@ -106,7 +94,7 @@ Emitter::~Emitter()
  *  @n                some of the tests are redundant, but anyway they should be rather fast
  */
 /************************************************************************************/
-const bool Emitter::IsValid() const
+bool Emitter::IsValid() const
 {
     /// EmitterPosition
     if( EmitterPosition.IsValid() == false )
@@ -155,7 +143,7 @@ const bool Emitter::IsValid() const
  *
  */
 /************************************************************************************/
-const bool Emitter::HasEmitterUpVariable() const
+bool Emitter::HasEmitterUpVariable() const
 {
     if( hasVarEmitterUp == true )
     {
@@ -178,7 +166,7 @@ const bool Emitter::HasEmitterUpVariable() const
  *
  */
 /************************************************************************************/
-const bool Emitter::HasEmitterViewVariable() const
+bool Emitter::HasEmitterViewVariable() const
 {
     if( hasVarEmitterView == true )
     {
@@ -190,23 +178,23 @@ const bool Emitter::HasEmitterViewVariable() const
     }
 }
 
-const bool Emitter::EmitterPositionHasDimensions(const unsigned long dim1,
-                                                   const unsigned long dim2,
-                                                   const unsigned long dim3) const
+bool Emitter::EmitterPositionHasDimensions(const unsigned long dim1,
+                                           const unsigned long dim2,
+                                           const unsigned long dim3) const
 {
     return EmitterPosition.HasDimensions( dim1, dim2, dim3 );
 }
 
-const bool Emitter::EmitterUpHasDimensions(const unsigned long dim1,
-                                             const unsigned long dim2,
-                                             const unsigned long dim3) const
+bool Emitter::EmitterUpHasDimensions(const unsigned long dim1,
+                                     const unsigned long dim2,
+                                     const unsigned long dim3) const
 {
     return EmitterUp.HasDimensions( dim1, dim2, dim3 );
 }
 
-const bool Emitter::EmitterViewHasDimensions(const unsigned long dim1,
-                                               const unsigned long dim2,
-                                               const unsigned long dim3) const
+bool Emitter::EmitterViewHasDimensions(const unsigned long dim1,
+                                       const unsigned long dim2,
+                                       const unsigned long dim3) const
 {
     return EmitterView.HasDimensions( dim1, dim2, dim3 );
 }

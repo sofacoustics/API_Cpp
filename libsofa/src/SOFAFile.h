@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAFile.h
  *   @brief      Class for SOFA files
@@ -73,33 +71,34 @@ namespace sofa
         File(const std::string &path,
              const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
         
-        virtual ~File();
+        virtual ~File() {};
         
-        virtual const bool IsValid() const SOFA_OVERRIDE;
+        virtual bool IsValid() const SOFA_OVERRIDE;
                 
         //==============================================================================
         // SOFA Attributes
         //==============================================================================
-        const bool HasAttribute(const sofa::Attributes::Type &type_) const;
+        bool HasAttribute(const sofa::Attributes::Type &type_) const;
                 
         void GetGlobalAttributes(sofa::Attributes &attributes) const;
         
         void PrintSOFAGlobalAttributes(std::ostream & output = std::cout,
                                        const bool withPadding = false) const;
         
-        const std::string GetSOFAConventions() const;
+        std::string GetSOFAConventions() const;
         
-        const bool IsFIRDataType() const;
-        const bool IsTFDataType() const;
-        const bool IsSOSDataType() const;
+        bool IsFIRDataType() const;
+        bool IsFIREDataType() const;
+        bool IsTFDataType() const;
+        bool IsSOSDataType() const;
         
         //==============================================================================
         // SOFA Dimensions
         //==============================================================================
-        const long GetNumMeasurements() const;
-        const long GetNumReceivers() const;
-        const long GetNumEmitters() const;
-        const long GetNumDataSamples() const;
+        long GetNumMeasurements() const;
+        long GetNumReceivers() const;
+        long GetNumEmitters() const;
+        long GetNumDataSamples() const;
         
         void PrintSOFADimensions(std::ostream & output = std::cout,
                                  const bool withPadding = false) const;
@@ -107,85 +106,106 @@ namespace sofa
         //==============================================================================
         // SOFA Variables
         //==============================================================================
-        const bool GetListenerPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetListenerUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetListenerView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetListenerPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetListenerUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetListenerView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
 
-        const bool GetReceiverPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetReceiverUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetReceiverView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool HasReceiverUp() const;
-        const bool HasReceiverView() const;
+        bool GetReceiverPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetReceiverUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetReceiverView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool HasReceiverUp() const;
+        bool HasReceiverView() const;
 
-        const bool GetSourcePosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetSourceUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetSourceView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool HasSourceUp() const;
-        const bool HasSourceView() const;
+        bool GetSourcePosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetSourceUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetSourceView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool HasSourceUp() const;
+        bool HasSourceView() const;
         
-        const bool GetEmitterPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetEmitterUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool GetEmitterView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
-        const bool HasEmitterUp() const;
-        const bool HasEmitterView() const;
+        bool GetEmitterPosition(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetEmitterUp(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool GetEmitterView(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units) const;
+        bool HasEmitterUp() const;
+        bool HasEmitterView() const;
         
-        const bool GetListenerPosition(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        const bool GetListenerUp(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        const bool GetListenerView(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetListenerPosition(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetListenerUp(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetListenerView(double *values, const unsigned long dim1, const unsigned long dim2) const;
         
-        const bool GetSourcePosition(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        const bool GetSourceUp(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        const bool GetSourceView(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetSourcePosition(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetSourceUp(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool GetSourceView(double *values, const unsigned long dim1, const unsigned long dim2) const;
         
-        const bool GetReceiverPosition(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool GetReceiverUp(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool GetReceiverView(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetReceiverPosition(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetReceiverUp(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetReceiverView(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
         
-        const bool GetEmitterPosition(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool GetEmitterUp(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool GetEmitterView(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetEmitterPosition(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetEmitterUp(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool GetEmitterView(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
         
         //==============================================================================
-        const bool GetListenerPosition(std::vector< double > &values) const;
-        const bool GetListenerUp(std::vector< double > &values) const;
-        const bool GetListenerView(std::vector< double > &values) const;
+        bool GetListenerPosition(std::vector< double > &values) const;
+        bool GetListenerUp(std::vector< double > &values) const;
+        bool GetListenerView(std::vector< double > &values) const;
         
-        const bool GetSourcePosition(std::vector< double > &values) const;
-        const bool GetSourceUp(std::vector< double > &values) const;
-        const bool GetSourceView(std::vector< double > &values) const;
+        bool GetSourcePosition(std::vector< double > &values) const;
+        bool GetSourceUp(std::vector< double > &values) const;
+        bool GetSourceView(std::vector< double > &values) const;
         
-        const bool GetReceiverPosition(std::vector< double > &values) const;
-        const bool GetReceiverUp(std::vector< double > &values) const;
-        const bool GetReceiverView(std::vector< double > &values) const;
+        bool GetReceiverPosition(std::vector< double > &values) const;
+        bool GetReceiverUp(std::vector< double > &values) const;
+        bool GetReceiverView(std::vector< double > &values) const;
         
-        const bool GetEmitterPosition(std::vector< double > &values) const;
-        const bool GetEmitterUp(std::vector< double > &values) const;
-        const bool GetEmitterView(std::vector< double > &values) const;
+        bool GetEmitterPosition(std::vector< double > &values) const;
+        bool GetEmitterUp(std::vector< double > &values) const;
+        bool GetEmitterView(std::vector< double > &values) const;
         
     protected:
-        const bool hasSOFAConvention() const;
-        const bool hasSOFARequiredAttributes() const;
-        const bool hasSOFARequiredDimensions() const;
-        const bool SOFADimensionsAreValid() const;
-        const bool checkListenerVariables() const;
-        const bool checkSourceVariables() const;
-        const bool checkReceiverVariables() const;
-        const bool checkEmitterVariables() const;
-        const bool checkDimensions() const;
-        const bool checkDataVariable() const;
-        const bool checkFirDataType() const;
-        const bool checkTFDataType() const;
-        const bool checkSOSDataType() const;
+        //==============================================================================
+        bool hasSOFAConvention() const;
+        bool hasSOFARequiredAttributes() const;
+        bool hasSOFARequiredDimensions() const;
+        bool SOFADimensionsAreValid() const;
+        bool checkListenerVariables() const;
+        bool checkSourceVariables() const;
+        bool checkReceiverVariables() const;
+        bool checkEmitterVariables() const;
+        bool checkDimensions() const;
+        bool checkDataVariable() const;
+        bool checkFirDataType() const;
+        bool checkFireDataType() const;
+        bool checkTFDataType() const;
+        bool checkSOSDataType() const;
         
-        const bool getCoordinates(sofa::Coordinates::Type &coordinates, const std::string &variableName) const;
-        const bool getUnits(sofa::Units::Type &units, const std::string &variableName) const;
-        const bool get(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units, const std::string &variableName) const;
+        bool getCoordinates(sofa::Coordinates::Type &coordinates, const std::string &variableName) const;
+        bool getUnits(sofa::Units::Type &units, const std::string &variableName) const;
+        bool get(sofa::Coordinates::Type &coordinates, sofa::Units::Type &units, const std::string &variableName) const;
+        
+        //==============================================================================
+        bool getDataIR(std::vector< double > &values) const;
+        bool getDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        
+        //==============================================================================
+        bool getDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
+        bool getDataDelay(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool getDataDelay(std::vector< double > &values) const;
+        
+        //==============================================================================
+        bool isSamplingRateScalar() const;
+        bool getSamplingRate(double &value) const;
+        bool getSamplingRateUnits(sofa::Units::Type &units) const;
+        
+        //==============================================================================
+        void ensureGlobalAttribute(const sofa::Attributes::Type &type_) const;
+        void ensureGlobalAttribute(const std::string &attributeName) const;
+        void ensureSOFAConvention(const std::string &conventionName) const;
+        void ensureDataType(const std::string &typeName) const;
         
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        File( const File &other );                    
-        const File & operator= ( const File &other ); 
+        SOFA_AVOID_COPY_CONSTRUCTOR( File );
     };
     
 }

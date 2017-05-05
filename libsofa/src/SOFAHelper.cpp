@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAHelper.cpp
  *   @brief      Helper functions
@@ -49,18 +47,22 @@
  */
 /************************************************************************************/
 #include "../src/SOFAHelper.h"
+#include "../src/SOFAExceptions.h"
 #include "../src/SOFASimpleFreeFieldHRIR.h"
 #include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFASimpleHeadphoneIR.h"
+#include "../src/SOFAMultiSpeakerBRIR.h"
 #include "../src/SOFAGeneralFIR.h"
+#include "../src/SOFAGeneralFIRE.h"
 #include "../src/SOFAGeneralTF.h"
+#include "../src/SOFASingleRoomDRIR.h"
 
 using namespace sofa;
 
 namespace sofaLocal
 {
     template< class Type >
-    const bool isValid(const std::string &filename) SOFA_NOEXCEPT
+    bool isValid(const std::string &filename) SOFA_NOEXCEPT
     {
         const bool exceptionState = sofa::Exception::IsLoggedToCerr();
         
@@ -98,7 +100,7 @@ namespace sofaLocal
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidNetCDFFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidNetCDFFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::NetCDFFile >( filename );
 }
@@ -113,7 +115,7 @@ const bool sofa::IsValidNetCDFFile(const std::string &filename) SOFA_NOEXCEPT
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidSOFAFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidSOFAFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::File >( filename );
 }
@@ -128,7 +130,7 @@ const bool sofa::IsValidSOFAFile(const std::string &filename) SOFA_NOEXCEPT
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::SimpleFreeFieldHRIR >( filename );
 }
@@ -143,7 +145,7 @@ const bool sofa::IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOF
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::SimpleFreeFieldSOS >( filename );
 }
@@ -158,7 +160,7 @@ const bool sofa::IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::SimpleHeadphoneIR >( filename );
 }
@@ -173,9 +175,24 @@ const bool sofa::IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::GeneralFIR >( filename );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file is a valid GeneralFIRE file
+ *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+ *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+ *
+ *  @details        This method wont raise any exception
+ *
+ */
+/************************************************************************************/
+bool sofa::IsValidGeneralFIREFile(const std::string &filename) SOFA_NOEXCEPT
+{
+    return sofaLocal::isValid< sofa::GeneralFIRE >( filename );
 }
 
 /************************************************************************************/
@@ -188,9 +205,38 @@ const bool sofa::IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEP
  *
  */
 /************************************************************************************/
-const bool sofa::IsValidGeneralTFFile(const std::string &filename) SOFA_NOEXCEPT
+bool sofa::IsValidGeneralTFFile(const std::string &filename) SOFA_NOEXCEPT
 {
     return sofaLocal::isValid< sofa::GeneralTF >( filename );
 }
 
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file is a valid MultiSpeakerBRIR file
+ *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+ *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+ *
+ *  @details        This method wont raise any exception
+ *
+ */
+/************************************************************************************/
+bool sofa::IsValidMultiSpeakerBRIRFile(const std::string &filename) SOFA_NOEXCEPT
+{
+    return sofaLocal::isValid< sofa::MultiSpeakerBRIR >( filename );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if the file is a valid SingleRoomDRIR file
+ *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+ *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+ *
+ *  @details        This method wont raise any exception
+ *
+ */
+/************************************************************************************/
+bool sofa::IsValidSingleRoomDRIRFile(const std::string &filename) SOFA_NOEXCEPT
+{
+    return sofaLocal::isValid< sofa::SingleRoomDRIR >( filename );
+}
 

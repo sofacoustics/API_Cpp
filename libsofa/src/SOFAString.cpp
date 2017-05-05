@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAString.cpp
  *   @brief      Useful functions to manipulate strings
@@ -62,9 +60,9 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-const std::string sofa::String::PadWith(const std::string &src,
-                                        const std::size_t totalLength,
-                                        const std::string &pad)
+std::string sofa::String::PadWith(const std::string &src,
+                                  const std::size_t totalLength,
+                                  const std::string &pad)
 {
     const std::size_t length = src.length();
     if( length > totalLength )

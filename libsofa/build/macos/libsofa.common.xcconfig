@@ -1,21 +1,15 @@
-//**********************************************************************************
-//  FILE DESCRIPTION																
-//----------------------------------------------------------------------------------
-//!
+//==============================================================================
+//
 //  @file       libsofa.common.xconfig
 //  @brief      Xcode Config file 
 //  @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
-//  
 //  @date       10/05/2013
 //
-//  @details
-//  @n
-//
-//**********************************************************************************
+//==============================================================================
 
-//**********************************************************************************
+//==============================================================================
 // COMMON DEFINITIONS
-//**********************************************************************************
+//==============================================================================
 MACOSX_SDK_10_4                 = $(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk 
 MACOSX_SDK_10_5                 = $(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk 
 MACOSX_SDK_10_6                 = $(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk 
@@ -23,30 +17,31 @@ MACOSX_SDK_10_7                 = $(DEVELOPER_SDK_DIR)/MacOSX10.7.sdk
 MACOSX_SDK_10_8                 = $(DEVELOPER_SDK_DIR)/MacOSX10.8.sdk
 MACOSX_SDK_10_9                 = $(DEVELOPER_SDK_DIR)/MacOSX10.9.sdk
 MACOSX_SDK_10_10                = $(DEVELOPER_SDK_DIR)/MacOSX10.10.sdk
+MACOSX_SDK_10_11                = $(DEVELOPER_SDK_DIR)/MacOSX10.11.sdk
+MACOSX_SDK_10_12                = $(DEVELOPER_SDK_DIR)/MacOSX10.12.sdk
 
-COPYRIGHT_TAG                   = Copyright © 2013-2015
+COPYRIGHT_TAG                   = Copyright © 2013-2017
 ORGANIZATION_NAME               = Ircam
 EXECUTABLE_PREFIX               =   
 
 GCC_VERSION                     = com.apple.compilers.llvm.clang.1_0     ///< for Xcode 4
-//GCC_VERSION                     = 4.2                                 ///< for Xcode 3.2
 
-SDKROOT                         = $(MACOSX_SDK_10_10)
+SDKROOT                         = $(MACOSX_SDK_10_12)
 
 MACOSX_DEPLOYMENT_TARGET        = 10.7
 VALID_ARCHS                     = i386 x86_64
 
-//**********************************************************************************
+//==============================================================================
 // VERSION
-//**********************************************************************************
+//==============================================================================
 PRODUCT_VERSION_MAJOR           = 1
 PRODUCT_VERSION_MINOR           = 0
 PRODUCT_VERSION_RELEASE         = 4
 PRODUCT_VERSION                 = $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_RELEASE)
 
-//**********************************************************************************
+//==============================================================================
 // PATHS
-//**********************************************************************************
+//==============================================================================
 // Headers paths
 NETCDF_SRC_PATH             =   $(SRCROOT)/../../dependencies/include
 
@@ -64,13 +59,13 @@ LIBRARY_SEARCH_PATHS        =   $(NETCDF_LIB_PATH)
 DELIVERY_PATH               =   $(SRCROOT)/../../lib
 INFOPLIST_FILE              =   $(SRCROOT)/libsofa.plist
 
-//**********************************************************************************
+//==============================================================================
 // PREPROCESSOR
-//**********************************************************************************
+//==============================================================================
 
-//**********************************************************************************
+//==============================================================================
 // LINKER
-//**********************************************************************************
+//==============================================================================
 NETCDF_LIB					=  $(NETCDF_LIB_PATH)/libnetcdf.a
 NETCDF_CPP_LIB				=  $(NETCDF_LIB_PATH)/libnetcdf_c++4.a
 HDF5HL_LIB					=  $(NETCDF_LIB_PATH)/libhdf5_hl.a
@@ -80,11 +75,11 @@ Z_LIB						=  $(NETCDF_LIB_PATH)/libz.a
 
 DEPENDENCIES_LIB            =  $(NETCDF_LIB) $(NETCDF_CPP_LIB) $(HDF5HL_LIB) $(HDF5_LIB) $(CURL_LIB) $(Z_LIB)
 
-//**********************************************************************************
-//**********************************************************************************
-//**********************************************************************************
-//**********************************************************************************
-//**********************************************************************************
+//==============================================================================
+//==============================================================================
+//==============================================================================
+//==============================================================================
+//==============================================================================
 // YOU PROBABLY WONT NEED TO CHANGE WHAT COMES NEXT
 
 ALWAYS_SEARCH_USER_PATHS        =   YES
@@ -103,15 +98,15 @@ DYLIB_CURRENT_VERSION           =   $(PRODUCT_VERSION)
 DYLIB_COMPATIBILITY_VERSION     =   $(PRODUCT_VERSION)
 FRAMEWORK_VERSION               =   $(PRODUCT_VERSION)
 
-//**********************************************************************************
+//==============================================================================
 // Special Files
-//**********************************************************************************
+//==============================================================================
 GENERATE_PKGINFO_FILE   =   YES
 INFOPLIST_PREPROCESS    =   YES
 
-//**********************************************************************************
+//==============================================================================
 // Packaging & Deployment
-//**********************************************************************************
+//==============================================================================
 SKIP_INSTALL                                        =   YES
 COPY_PHASE_STRIP                                    =   YES
 STRIP_INSTALLED_PRODUCT                             =   YES
@@ -120,9 +115,9 @@ STANDARD_C_PLUS_PLUS_LIBRARY_TYPE                   =   dynamic
 PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR    =   YES
 PREBINDING                                          =   NO
 
-//**********************************************************************************
+//==============================================================================
 // GCC Code Generation
-//**********************************************************************************
+//==============================================================================
 GCC_PRECOMPILE_PREFIX_HEADER                =   NO
 GCC_FAST_OBJC_DISPATCH                      =   YES
 GCC_ENABLE_SSE3_EXTENSIONS                  =   YES
@@ -130,10 +125,6 @@ GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS   =   YES
 GCC_ENABLE_SSE41_EXTENSIONS                 =   YES
 GCC_ENABLE_SSE42_EXTENSIONS                 =   NO  ///< warning it seems that 'old' computers dont have SSE42 extensions
 
-/// The speed increase with the fast math option is not THAT relevant
-/// However the loss of precision may be an issue especially for the RAT.
-/// So let's switch if off
-//GCC_FAST_MATH                               =   YES
 GCC_FAST_MATH                               =   NO
 
 GCC_STRICT_ALIASING                         =   YES
@@ -151,16 +142,16 @@ GCC_SYMBOLS_PRIVATE_EXTERN                  =   YES
 GCC_INLINES_ARE_PRIVATE_EXTERN              =   YES
 
 GCC_AUTO_VECTORIZATION                      =   YES
-OTHER_CFLAGS                                =   // -falign-loops=16 ///< this is deprecated with clang
+OTHER_CFLAGS                                =
 OTHER_CPLUSPLUSFLAGS                        =   $(OTHER_CFLAGS)
 SEPARATE_STRIP                              =   NO
 DEAD_CODE_STRIPPING                         =   YES
 
 ZERO_LINK                                   =   NO
 
-//**********************************************************************************
+//==============================================================================
 // WARNINGS
-//**********************************************************************************
+//==============================================================================
 WARNING_CFLAGS                              =   -Wmost -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -Wno-unused
 GCC_WARN_64_TO_32_BIT_CONVERSION            =   YES
 GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS         =   YES
@@ -178,18 +169,18 @@ GCC_WARN_UNUSED_PARAMETER                   =   NO
 GCC_WARN_UNUSED_VALUE                       =   NO
 GCC_WARN_UNUSED_VARIABLE                    =   NO
 
-//**********************************************************************************
+//==============================================================================
 // CLANG
-//**********************************************************************************
+//==============================================================================
 COMBINE_HIDPI_IMAGES                        =   YES
 CLANG_MODULES_AUTOLINK                      =   NO
 CLANG_ENABLE_OBJC_ARC                       =   NO
-CLANG_CXX_LIBRARY                           =   libc++   ///< libc++ would require 10.7 as target deployment
+CLANG_CXX_LIBRARY                           =   libc++   ///< requires >= 10.7 as target deployment
 
 
-//**********************************************************************************
+//==============================================================================
 // CLANG Static Analyzer
-//**********************************************************************************
+//==============================================================================
 RUN_CLANG_STATIC_ANALYZER                               =   NO
 
 CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION               =   YES

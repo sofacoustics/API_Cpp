@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFANcFile.cpp
  *   @brief      Class for NetCDF Files 
@@ -72,21 +70,11 @@ NetCDFFile::NetCDFFile(const std::string & path,
 
 /************************************************************************************/
 /*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-NetCDFFile::~NetCDFFile()
-{
-}
-
-/************************************************************************************/
-/*!
  *  @brief          Returns true if this is a valid netCDF file
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsValid() const
+bool NetCDFFile::IsValid() const
 {
     return sofa::NcUtils::IsValid( file );
 }
@@ -97,7 +85,7 @@ const bool NetCDFFile::IsValid() const
  *
  */
 /************************************************************************************/
-const std::string NetCDFFile::GetFilename() const
+const std::string & NetCDFFile::GetFilename() const
 {
     return filename;
 }
@@ -310,7 +298,7 @@ void NetCDFFile::PrintAllVariables(std::ostream & output) const
  *
  */
 /************************************************************************************/
-const unsigned int NetCDFFile::GetNumGlobalAttributes() const
+unsigned int NetCDFFile::GetNumGlobalAttributes() const
 {
     const int nattr = file.getAttCount();
     
@@ -323,7 +311,7 @@ const unsigned int NetCDFFile::GetNumGlobalAttributes() const
  *
  */
 /************************************************************************************/
-const unsigned int NetCDFFile::GetNumDimensions() const
+unsigned int NetCDFFile::GetNumDimensions() const
 {
     const int ndims = file.getDimCount();
     
@@ -336,7 +324,7 @@ const unsigned int NetCDFFile::GetNumDimensions() const
  *
  */
 /************************************************************************************/
-const unsigned int NetCDFFile::GetNumVariables() const
+unsigned int NetCDFFile::GetNumVariables() const
 {
     const int nvars = file.getVarCount();
     
@@ -350,7 +338,7 @@ const unsigned int NetCDFFile::GetNumVariables() const
  *
  */
 /************************************************************************************/
-const std::size_t NetCDFFile::GetDimension(const std::string &dimensionName) const
+std::size_t NetCDFFile::GetDimension(const std::string &dimensionName) const
 {
     if( HasDimension( dimensionName ) == false )
     {
@@ -370,7 +358,7 @@ const std::size_t NetCDFFile::GetDimension(const std::string &dimensionName) con
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::HasDimension(const std::string &dimensionName) const
+bool NetCDFFile::HasDimension(const std::string &dimensionName) const
 {
     const netCDF::NcDim dim = getDimension( dimensionName );
     
@@ -384,7 +372,7 @@ const bool NetCDFFile::HasDimension(const std::string &dimensionName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::HasVariable(const std::string &variableName) const
+bool NetCDFFile::HasVariable(const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     
@@ -399,7 +387,7 @@ const bool NetCDFFile::HasVariable(const std::string &variableName) const
  *
  */
 /************************************************************************************/
-const netCDF::NcType NetCDFFile::GetAttributeType(const std::string &attributeName) const
+netCDF::NcType NetCDFFile::GetAttributeType(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt att = getAttribute( attributeName );
     
@@ -414,7 +402,7 @@ const netCDF::NcType NetCDFFile::GetAttributeType(const std::string &attributeNa
  *
  */
 /************************************************************************************/
-const int NetCDFFile::GetVariableDimensionality(const std::string &variableName) const
+int NetCDFFile::GetVariableDimensionality(const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::GetDimensionality( var );
@@ -427,7 +415,7 @@ const int NetCDFFile::GetVariableDimensionality(const std::string &variableName)
  *
  */
 /************************************************************************************/
-const std::string NetCDFFile::GetVariableDimensionsNamesAsString(const std::string &variableName) const
+std::string NetCDFFile::GetVariableDimensionsNamesAsString(const std::string &variableName) const
 {
     std::vector< std::string > dims;
     GetVariableDimensionsNames( dims, variableName );
@@ -459,7 +447,7 @@ const std::string NetCDFFile::GetVariableDimensionsNamesAsString(const std::stri
  *
  */
 /************************************************************************************/
-const std::string NetCDFFile::GetVariableDimensionsAsString(const std::string &variableName) const
+std::string NetCDFFile::GetVariableDimensionsAsString(const std::string &variableName) const
 {
     std::vector< std::size_t > dims;
     GetVariableDimensions( dims, variableName );
@@ -519,7 +507,7 @@ void NetCDFFile::GetVariableDimensions(std::vector< std::size_t > &dims, const s
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::VariableIsScalar(const std::string &variableName) const
+bool NetCDFFile::VariableIsScalar(const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::IsScalar( var );
@@ -533,7 +521,7 @@ const bool NetCDFFile::VariableIsScalar(const std::string &variableName) const
  *
  */
 /************************************************************************************/
-const netCDF::NcType NetCDFFile::GetVariableType(const std::string &variableName) const
+netCDF::NcType NetCDFFile::GetVariableType(const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::GetType( var );
@@ -546,35 +534,45 @@ const netCDF::NcType NetCDFFile::GetVariableType(const std::string &variableName
  *
  */
 /************************************************************************************/
-const std::string NetCDFFile::GetVariableTypeName(const std::string &variableName) const
+std::string NetCDFFile::GetVariableTypeName(const std::string &variableName) const
 {
     const netCDF::NcType type_ = GetVariableType( variableName );
     return type_.getName();
 }
 
 
-const bool NetCDFFile::VariableHasDimension(const std::size_t dim,
-                                            const std::string &variableName) const
+bool NetCDFFile::VariableHasDimension(const std::size_t dim,
+                                      const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::HasDimension( dim, var );    
 }
 
-const bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
-                                             const std::size_t dim2,
-                                             const std::string &variableName) const
+bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
+                                       const std::size_t dim2,
+                                       const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::HasDimensions( dim1, dim2, var );    
 }
 
-const bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
-                                             const std::size_t dim2,
-                                             const std::size_t dim3,
-                                             const std::string &variableName) const
+bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
+                                       const std::size_t dim2,
+                                       const std::size_t dim3,
+                                       const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::HasDimensions( dim1, dim2, dim3, var );
+}
+
+bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
+                                       const std::size_t dim2,
+                                       const std::size_t dim3,
+                                       const std::size_t dim4,
+                                       const std::string &variableName) const
+{
+    const netCDF::NcVar var = getVariable( variableName );
+    return sofa::NcUtils::HasDimensions( dim1, dim2, dim3, dim4, var );
 }
 
 /************************************************************************************/
@@ -585,7 +583,7 @@ const bool NetCDFFile::VariableHasDimensions(const std::size_t dim1,
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const
+bool NetCDFFile::VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::HasAttribute( var, attributeName );
@@ -677,7 +675,7 @@ void NetCDFFile::GetVariablesAttributes(std::vector< std::string > &attributeNam
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const
+bool NetCDFFile::HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const
 {
     const netCDF::NcVar var = getVariable( variableName );
     return sofa::NcUtils::CheckType( var, type_ );    
@@ -690,7 +688,7 @@ const bool NetCDFFile::HasVariableType(const netCDF::NcType &type_, const std::s
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::HasAttribute(const std::string & attributeName) const
+bool NetCDFFile::HasAttribute(const std::string & attributeName) const
 {
     const netCDF::NcGroupAtt att = getAttribute( attributeName );
     
@@ -705,7 +703,7 @@ const bool NetCDFFile::HasAttribute(const std::string & attributeName) const
  *
  */
 /************************************************************************************/
-const std::string NetCDFFile::GetAttributeValueAsString(const std::string &attributeName) const
+std::string NetCDFFile::GetAttributeValueAsString(const std::string &attributeName) const
 {
     if( HasAttribute( attributeName ) == false )
     {
@@ -725,7 +723,7 @@ const std::string NetCDFFile::GetAttributeValueAsString(const std::string &attri
  *
  */
 /************************************************************************************/
-const netCDF::NcGroupAtt NetCDFFile::getAttribute(const std::string &attributeName) const
+netCDF::NcGroupAtt NetCDFFile::getAttribute(const std::string &attributeName) const
 {    
     if( attributeName.empty() == true )
     {
@@ -760,7 +758,7 @@ const netCDF::NcGroupAtt NetCDFFile::getAttribute(const std::string &attributeNa
  *
  */
 /************************************************************************************/
-const netCDF::NcDim NetCDFFile::getDimension(const std::string &dimensionName) const
+netCDF::NcDim NetCDFFile::getDimension(const std::string &dimensionName) const
 {
     if( dimensionName.empty() == true )
     {
@@ -796,7 +794,7 @@ const netCDF::NcDim NetCDFFile::getDimension(const std::string &dimensionName) c
  *
  */
 /************************************************************************************/
-const netCDF::NcVar NetCDFFile::getVariable(const std::string &variableName) const
+netCDF::NcVar NetCDFFile::getVariable(const std::string &variableName) const
 {
     if( variableName.empty() == true )
     {
@@ -833,7 +831,7 @@ const netCDF::NcVar NetCDFFile::getVariable(const std::string &variableName) con
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeFloat(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeFloat(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsFloat( attr );
@@ -848,7 +846,7 @@ const bool NetCDFFile::IsAttributeFloat(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeDouble(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeDouble(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsDouble( attr );
@@ -863,7 +861,7 @@ const bool NetCDFFile::IsAttributeDouble(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeByte(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeByte(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsByte( attr );
@@ -878,7 +876,7 @@ const bool NetCDFFile::IsAttributeByte(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeChar(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeChar(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsChar( attr );
@@ -893,7 +891,7 @@ const bool NetCDFFile::IsAttributeChar(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeShort(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeShort(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsShort( attr );
@@ -908,7 +906,7 @@ const bool NetCDFFile::IsAttributeShort(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeInt(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeInt(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsInt( attr );
@@ -923,7 +921,7 @@ const bool NetCDFFile::IsAttributeInt(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::IsAttributeInt64(const std::string &attributeName) const
+bool NetCDFFile::IsAttributeInt64(const std::string &attributeName) const
 {
     const netCDF::NcGroupAtt attr = getAttribute( attributeName );
     return sofa::NcUtils::IsInt64( attr );
@@ -941,10 +939,10 @@ const bool NetCDFFile::IsAttributeInt64(const std::string &attributeName) const
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::GetValues(double *values,
-                                 const std::size_t dim1,
-                                 const std::size_t dim2,
-                                 const std::string &variableName) const
+bool NetCDFFile::GetValues(double *values,
+                           const std::size_t dim1,
+                           const std::size_t dim2,
+                           const std::string &variableName) const
 {
     const netCDF::NcVar var = NetCDFFile::getVariable( variableName );
     
@@ -978,15 +976,15 @@ const bool NetCDFFile::GetValues(double *values,
  *  @param[in]      variableName : the named variable to query
  *  @param[in]      dim1 : first dimension of the array
  *  @param[in]      dim2 : second dimension of the array
- *  @param[in]      third : second dimension of the array
+ *  @param[in]      dim3 : third dimension of the array
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::GetValues(double *values,
-                                 const std::size_t dim1,
-                                 const std::size_t dim2,
-                                 const std::size_t dim3,
-                                 const std::string &variableName) const
+bool NetCDFFile::GetValues(double *values,
+                           const std::size_t dim1,
+                           const std::size_t dim2,
+                           const std::size_t dim3,
+                           const std::string &variableName) const
 {
     const netCDF::NcVar var = NetCDFFile::getVariable( variableName );
     
@@ -1012,6 +1010,50 @@ const bool NetCDFFile::GetValues(double *values,
 
 /************************************************************************************/
 /*!
+ *  @brief          Reads values of variable stored as a 3-dimensional array of double
+ *                  Returns true if everything goes well, false otherwise (not a valid variable,
+ *                  not a double variable, not the proper dimensions)
+ *  @param[out]     values :
+ *  @param[in]      variableName : the named variable to query
+ *  @param[in]      dim1 : first dimension of the array
+ *  @param[in]      dim2 : second dimension of the array
+ *  @param[in]      dim3 : third dimension of the array
+ *  @param[in]      dim4 : fourth dimension of the array
+ *
+ */
+/************************************************************************************/
+bool NetCDFFile::GetValues(double *values,
+                           const std::size_t dim1,
+                           const std::size_t dim2,
+                           const std::size_t dim3,
+                           const std::size_t dim4,
+                           const std::string &variableName) const
+{
+    const netCDF::NcVar var = NetCDFFile::getVariable( variableName );
+    
+    if( sofa::NcUtils::IsValid( var ) == false )
+    {
+        return false;
+    }
+    
+    if( sofa::NcUtils::IsDouble( var ) == false )
+    {
+        return false;
+    }
+    
+    if( sofa::NcUtils::HasDimensions( dim1, dim2, dim3, dim4, var ) == false )
+    {
+        return false;
+    }
+    
+    var.getVar( values );
+    
+    return true;
+}
+
+
+/************************************************************************************/
+/*!
  *  @brief          Reads values of named variable stored as a N-dimensional array of double
  *                  Returns true if everything goes well, false otherwise (not a valid variable,
  *                  not a double variable, not the proper dimensions)
@@ -1020,8 +1062,8 @@ const bool NetCDFFile::GetValues(double *values,
  *
  */
 /************************************************************************************/
-const bool NetCDFFile::GetValues(std::vector< double > &values,
-                                 const std::string &variableName) const
+bool NetCDFFile::GetValues(std::vector< double > &values,
+                           const std::string &variableName) const
 {
     const netCDF::NcVar var = NetCDFFile::getVariable( variableName );
     

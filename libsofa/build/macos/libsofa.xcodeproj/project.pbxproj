@@ -51,6 +51,10 @@
 		F8ABD5A71742AF6A00F18AD2 /* SOFAPoint3.h in Headers */ = {isa = PBXBuildFile; fileRef = F8ABD5A61742AF6A00F18AD2 /* SOFAPoint3.h */; };
 		F8ABD5AD1742B00900F18AD2 /* SOFAPoint3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8ABD5AC1742B00900F18AD2 /* SOFAPoint3.cpp */; };
 		F8B077B8179438750006CB90 /* SOFAExceptions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B077B6179437BB0006CB90 /* SOFAExceptions.cpp */; };
+		F8B3582D1EBCDD7900292FD6 /* SOFASingleRoomDRIR.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B3582C1EBCDD7900292FD6 /* SOFASingleRoomDRIR.h */; };
+		F8B3582F1EBCDD8700292FD6 /* SOFAGeneralFIRE.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B3582E1EBCDD8700292FD6 /* SOFAGeneralFIRE.cpp */; };
+		F8B358311EBCDD8B00292FD6 /* SOFAMultiSpeakerBRIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B358301EBCDD8B00292FD6 /* SOFAMultiSpeakerBRIR.cpp */; };
+		F8B358331EBCDD8F00292FD6 /* SOFASingleRoomDRIR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B358321EBCDD8F00292FD6 /* SOFASingleRoomDRIR.cpp */; };
 		F8B3F34C19F5627F00C8004D /* SOFAHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = F8B3F34B19F5627F00C8004D /* SOFAHelper.h */; };
 		F8B3F34E19F562FB00C8004D /* SOFAHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8B3F34D19F562FB00C8004D /* SOFAHelper.cpp */; };
 		F8D9B7A61AC05916007A1DE9 /* SOFASimpleFreeFieldSOS.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D9B7A51AC058D9007A1DE9 /* SOFASimpleFreeFieldSOS.h */; };
@@ -176,6 +180,12 @@
 		F8B0777F1794366E0006CB90 /* libsofa.changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = libsofa.changelog.txt; path = ../../doc/libsofa.changelog.txt; sourceTree = SOURCE_ROOT; };
 		F8B077B4179436DD0006CB90 /* SOFAExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAExceptions.h; sourceTree = "<group>"; };
 		F8B077B6179437BB0006CB90 /* SOFAExceptions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAExceptions.cpp; sourceTree = "<group>"; };
+		F8B3582A1EBCDD6900292FD6 /* SOFAGeneralFIRE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOFAGeneralFIRE.h; sourceTree = "<group>"; };
+		F8B3582B1EBCDD6F00292FD6 /* SOFAMultiSpeakerBRIR.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOFAMultiSpeakerBRIR.h; sourceTree = "<group>"; };
+		F8B3582C1EBCDD7900292FD6 /* SOFASingleRoomDRIR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFASingleRoomDRIR.h; sourceTree = "<group>"; };
+		F8B3582E1EBCDD8700292FD6 /* SOFAGeneralFIRE.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAGeneralFIRE.cpp; sourceTree = "<group>"; };
+		F8B358301EBCDD8B00292FD6 /* SOFAMultiSpeakerBRIR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAMultiSpeakerBRIR.cpp; sourceTree = "<group>"; };
+		F8B358321EBCDD8F00292FD6 /* SOFASingleRoomDRIR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFASingleRoomDRIR.cpp; sourceTree = "<group>"; };
 		F8B3F34B19F5627F00C8004D /* SOFAHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOFAHelper.h; sourceTree = "<group>"; };
 		F8B3F34D19F562FB00C8004D /* SOFAHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SOFAHelper.cpp; sourceTree = "<group>"; };
 		F8D9B7A51AC058D9007A1DE9 /* SOFASimpleFreeFieldSOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SOFASimpleFreeFieldSOS.h; sourceTree = "<group>"; };
@@ -309,6 +319,9 @@
 				F8ABD40C1742314100F18AD2 /* SOFASimpleFreeFieldHRIR.cpp */,
 				F8D9B7A71AC05925007A1DE9 /* SOFASimpleFreeFieldSOS.cpp */,
 				F8D9B7AB1AC05EBB007A1DE9 /* SOFASimpleHeadphoneIR.cpp */,
+				F8B3582E1EBCDD8700292FD6 /* SOFAGeneralFIRE.cpp */,
+				F8B358301EBCDD8B00292FD6 /* SOFAMultiSpeakerBRIR.cpp */,
+				F8B358321EBCDD8F00292FD6 /* SOFASingleRoomDRIR.cpp */,
 			);
 			name = conventions;
 			sourceTree = "<group>";
@@ -321,6 +334,9 @@
 				F8ABD4081742309200F18AD2 /* SOFASimpleFreeFieldHRIR.h */,
 				F8D9B7A51AC058D9007A1DE9 /* SOFASimpleFreeFieldSOS.h */,
 				F8D9B7A91AC05E6E007A1DE9 /* SOFASimpleHeadphoneIR.h */,
+				F8B3582A1EBCDD6900292FD6 /* SOFAGeneralFIRE.h */,
+				F8B3582B1EBCDD6F00292FD6 /* SOFAMultiSpeakerBRIR.h */,
+				F8B3582C1EBCDD7900292FD6 /* SOFASingleRoomDRIR.h */,
 			);
 			name = conventions;
 			sourceTree = "<group>";
@@ -391,6 +407,7 @@
 				F8D9B7AE1AC17819007A1DE9 /* SOFAGeneralFIR.h in Headers */,
 				F8ABD07017401C3700F18AD2 /* SOFAListener.h in Headers */,
 				F8ABD07E1740233600F18AD2 /* SOFAEmitter.h in Headers */,
+				F8B3582D1EBCDD7900292FD6 /* SOFASingleRoomDRIR.h in Headers */,
 				F8ABD08E1740239300F18AD2 /* SOFASource.h in Headers */,
 				F8ABD090174023BE00F18AD2 /* SOFAReceiver.h in Headers */,
 				F8D9B7B41AC17A78007A1DE9 /* SOFAGeneralTF.h in Headers */,
@@ -511,8 +528,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8B077B8179438750006CB90 /* SOFAExceptions.cpp in Sources */,
+				F8B358311EBCDD8B00292FD6 /* SOFAMultiSpeakerBRIR.cpp in Sources */,
 				F8D9B7AC1AC05EBB007A1DE9 /* SOFASimpleHeadphoneIR.cpp in Sources */,
 				F8D9B7A81AC05925007A1DE9 /* SOFASimpleFreeFieldSOS.cpp in Sources */,
+				F8B3582F1EBCDD8700292FD6 /* SOFAGeneralFIRE.cpp in Sources */,
 				F8ABCBEA173E9D4800F18AD2 /* SOFAAPI.cpp in Sources */,
 				F8ABCBE9173E9D4800F18AD2 /* SOFAFile.cpp in Sources */,
 				F8ABCDA5173ECE6B00F18AD2 /* SOFANcFile.cpp in Sources */,
@@ -524,6 +543,7 @@
 				F8ABCF3E173FF4E500F18AD2 /* SOFACoordinates.cpp in Sources */,
 				F8D9B7B01AC17877007A1DE9 /* SOFAGeneralFIR.cpp in Sources */,
 				F8ABD063174018A000F18AD2 /* SOFAPosition.cpp in Sources */,
+				F8B358331EBCDD8F00292FD6 /* SOFASingleRoomDRIR.cpp in Sources */,
 				F8ABD0B61740E6B100F18AD2 /* SOFAListener.cpp in Sources */,
 				F8ABD1061740EB4800F18AD2 /* SOFASource.cpp in Sources */,
 				F8ABD1331740EFEE00F18AD2 /* SOFAReceiver.cpp in Sources */,

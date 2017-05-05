@@ -1,0 +1,35 @@
+# NetCDF C Configuration Summary
+==============================
+
+# General
+-------
+NetCDF Version:		4.4.1
+Configured On:		Tue Jun 28 14:36:38 MDT 2016
+Host System:		i686-MINGW32_NT-6.2-1.0.18(0.48/3/2)
+Build Directory: 	G:/netcdf-c/all_builds/build_4.4.1-NC4-DAP-64
+Install Prefix:         C:/Program Files/netCDF
+
+# Compiling Options
+-----------------
+C Compiler:		C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/bin/x86_amd64/cl.exe
+CFLAGS:			 /DWIN32 /D_WINDOWS /W3 /D_DEBUG /MDd /Zi /Ob0 /Od /RTC1
+CPPFLAGS:		 
+LDFLAGS:		 /machine:x64 /LARGEADDRESSAWARE /STACK:40000000 /debug /INCREMENTAL
+AM_CFLAGS:		
+AM_CPPFLAGS:		
+AM_LDFLAGS:		
+Shared Library:		yes
+Static Library:		no
+Extra libraries:	-lhdf5-shared -lhdf5_hl-shared -lzlib -lcurl_imp
+
+# Features
+--------
+NetCDF-2 API:		yes
+HDF4 Support:		no
+NetCDF-4 API:		yes
+NC-4 Parallel Support:	no
+PNetCDF Support:	no
+DAP Support:		yes
+Diskless Support:	yes
+MMap Support:		no
+JNA Support:		no

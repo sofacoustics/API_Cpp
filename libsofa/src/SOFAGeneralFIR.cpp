@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAGeneralFIR.cpp
  *   @brief      Class for SOFA files with GeneralFIR convention
@@ -49,10 +47,10 @@
  */
 /************************************************************************************/
 #include "../src/SOFAGeneralFIR.h"
+#include "../src/SOFAExceptions.h"
 #include "../src/SOFAUtils.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAPoint3.h"
 #include "../src/SOFAListener.h"
 
 using namespace sofa;
@@ -60,7 +58,7 @@ using namespace sofa;
 const unsigned int GeneralFIR::ConventionVersionMajor  =   1;
 const unsigned int GeneralFIR::ConventionVersionMinor  =   0;
 
-const std::string GeneralFIR::GetConventionVersion()
+std::string GeneralFIR::GetConventionVersion()
 {
     return sofa::String::Int2String( GeneralFIR::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( GeneralFIR::ConventionVersionMinor );
 }
@@ -79,33 +77,13 @@ GeneralFIR::GeneralFIR(const std::string &path,
 {
 }
 
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-GeneralFIR::~GeneralFIR()
-{
-}
-
-const bool GeneralFIR::checkGlobalAttributes() const
+bool GeneralFIR::checkGlobalAttributes() const
 {
     sofa::Attributes attributes;
     GetGlobalAttributes( attributes );
     
-    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "GeneralFIR" )
-    {
-        SOFA_THROW( "Not a 'GeneralFIR' SOFAConvention" );
-        return false;
-    }
-    
-    /// the value of DataType shall be 'FIR'
-    if( attributes.Get( sofa::Attributes::kDataType ) != "FIR" )
-    {
-        SOFA_THROW( "invalid 'DataType'" );
-        return false;
-    }
+    sofa::File::ensureSOFAConvention( "GeneralFIR" );
+    sofa::File::ensureDataType( "FIR" );
     
     return true;
 }
@@ -116,7 +94,7 @@ const bool GeneralFIR::checkGlobalAttributes() const
  *
  */
 /************************************************************************************/
-const bool GeneralFIR::IsValid() const
+bool GeneralFIR::IsValid() const
 {
     if( sofa::File::IsValid() == false )
     {
@@ -138,5 +116,89 @@ const bool GeneralFIR::IsValid() const
     SOFA_ASSERT( GetDimension( "C" ) == 3 );
     
     return true;
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          In case Data.SamplingRate is of dimension [I], this function returns
+ *                  its value. In case Data.SamplingRate is of dimension [M], an error is thrown
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool GeneralFIR::GetSamplingRate(double &value) const
+{
+    SOFA_ASSERT( GeneralFIR::IsValid() == true );
+    
+    return sofa::File::getSamplingRate( value );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the units of the Data.SamplingRate variable
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool GeneralFIR::GetSamplingRateUnits(sofa::Units::Type &units) const
+{
+    return sofa::File::getSamplingRateUnits( units );
+}
+
+
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.IR values
+ *  @param[in]      values : array containing the values.
+ *                  The array must be allocated large enough
+ *  @param[in]      dim1 : first dimension (M)
+ *  @param[in]      dim2 : second dimension (R)
+ *  @param[in]      dim3 : third dimension (N)
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool GeneralFIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+{
+    /// Data.IR is [ M R N ]
+    
+    return sofa::File::getDataIR( values, dim1, dim2, dim3 );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.IR values
+ *  @param[in]      values : the array is resized if needed
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool GeneralFIR::GetDataIR(std::vector< double > &values) const
+{
+    /// Data.IR is [ M R N ]
+    
+    return sofa::File::getDataIR( values );
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.Delay values
+ *  @param[in]      values : the array is resized if needed
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool GeneralFIR::GetDataDelay(std::vector< double > &values) const
+{
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values );
+}
+
+bool GeneralFIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+{
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values, dim1, dim2 );
 }
 

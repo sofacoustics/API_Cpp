@@ -1,6 +1,4 @@
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       sofainfo.cpp
  *   @brief      Prints informations for SimpleFreeFieldHRIR file
@@ -11,6 +9,7 @@
  */
 /************************************************************************************/
 #include "../src/SOFA.h"
+#include "../src/SOFAString.h"
 
 static void DisplayHelp(std::ostream & output = std::cout)
 {
@@ -63,6 +62,8 @@ static void PrintEmitter(const sofa::File &theFile,
     sofa::Units::Type units;
     const bool ok = theFile.GetEmitterPosition( coordinates, units );
     
+    SOFA_ASSERT( ok == true );
+    
     output << sofa::String::PadWith( "EmitterPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
     output << sofa::String::PadWith( "EmitterPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
     
@@ -104,6 +105,8 @@ static void PrintReceiver(const sofa::File &theFile,
     sofa::Coordinates::Type coordinates;
     sofa::Units::Type units;
     const bool ok = theFile.GetReceiverPosition( coordinates, units );
+    
+    SOFA_ASSERT( ok == true );
     
     output << sofa::String::PadWith( "ReceiverPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
     output << sofa::String::PadWith( "ReceiverPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
@@ -148,6 +151,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerPosition( coordinates, units );
         
+        SOFA_ASSERT( ok == true );
+        
         output << sofa::String::PadWith( "ListenerPosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
         output << sofa::String::PadWith( "ListenerPosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
@@ -182,6 +187,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerView( coordinates, units );
         
+        SOFA_ASSERT( ok == true );
+        
         output << sofa::String::PadWith( "ListenerView:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
         output << sofa::String::PadWith( "ListenerView:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
         
@@ -215,6 +222,8 @@ static void PrintListener(const sofa::File &theFile,
         sofa::Coordinates::Type coordinates;
         sofa::Units::Type units;
         const bool ok = theFile.GetListenerUp( coordinates, units );
+        
+        SOFA_ASSERT( ok == true );
         
         output << sofa::String::PadWith( "ListenerUp:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
         output << sofa::String::PadWith( "ListenerUp:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
@@ -256,6 +265,8 @@ static void PrintSource(const sofa::File &theFile,
     sofa::Coordinates::Type coordinates;
     sofa::Units::Type units;
     const bool ok = theFile.GetSourcePosition( coordinates, units );
+    
+    SOFA_ASSERT( ok == true );
     
     output << sofa::String::PadWith( "SourcePosition:Type" ) << " = " << sofa::Coordinates::GetName( coordinates ) << std::endl;
     output << sofa::String::PadWith( "SourcePosition:Units" ) << " = " << sofa::Units::GetName( units ) << std::endl;
@@ -430,14 +441,9 @@ int main(int argc, char *argv[])
         }
         
     }
-    catch( sofa::Exception &e )
-    {
-        /// the description of the exception will be printed when raised
-        exit(1);
-    }
     catch( std::exception &e )
     {
-        std::cerr << "unknown exception occured : " << e.what() << std::endl;
+        std::cerr << "exception occured : " << e.what() << std::endl;
         exit(1);
     }
     catch( ... )

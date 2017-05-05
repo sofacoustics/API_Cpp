@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAExceptions.h
  *   @brief      Exception handling
@@ -68,26 +66,26 @@ namespace sofa
     {
     public:
         static void LogToCerr(const bool value);
-        static const bool IsLoggedToCerr();
+        static bool IsLoggedToCerr();
         
     public:
         Exception(const std::string &text    = "unknown exception",
                   const std::string &file    = "",
-                  const unsigned long line_    = 0,
+                  const unsigned long line_  = 0,
                   const bool exitAfterException = false);
         
-        virtual ~Exception() SOFA_NOEXCEPT;
+        virtual ~Exception() SOFA_NOEXCEPT {};
         virtual const char* what() const SOFA_NOEXCEPT SOFA_OVERRIDE;
         
-        const std::string GetFile() const;        
-        const unsigned long GetLine() const;
+        const std::string & GetFile() const;
+        unsigned long GetLine() const;
         
-    protected:
-        static const std::string getFileName(const std::string & fullfilename);
+    private:
+        static std::string getFileName(const std::string & fullfilename);
         
         static bool logToCerr;
         
-    protected:
+    private:
         const std::string filename;            ///< name of the file where the exception occured
         const std::string description;        ///< description of the exception
         const unsigned long line;            ///< line number where the exception ocurred        

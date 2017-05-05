@@ -1,8 +1,6 @@
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
- *   @file       sofainfo.cpp
+ *   @file       sofamisc.cpp
  *   @brief      Prints some informations about the current API and the related SOFA convention/specifications
  *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  *
@@ -11,9 +9,9 @@
  */
 /************************************************************************************/
 #include "../src/SOFA.h"
+#include "../src/SOFAString.h"
 
 static const std::string verticalSeparator       = " ";
-const std::string horizontalSeparator            = "_";
 
 /************************************************************************************/
 /*!

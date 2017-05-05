@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAUnits.cpp
  *   @brief      SOFA units systems
@@ -57,8 +55,6 @@ using namespace sofa;
 
 namespace UnitsHelper
 {
-    static std::map< std::string, sofa::Units::Type > typeMap;
-    
     /************************************************************************************/
     /*!
      *  @brief          Creates a mapping between units type and their names
@@ -73,8 +69,10 @@ namespace UnitsHelper
      *
      */
     /************************************************************************************/
-    static void initTypeMap()
+    static const std::map< std::string, sofa::Units::Type > & getTypeMap()
     {
+        static std::map< std::string, sofa::Units::Type > typeMap;
+        
         if( typeMap.empty() == true )
         {
             typeMap["metres"]                       = sofa::Units::kMeter;
@@ -125,11 +123,13 @@ namespace UnitsHelper
             typeMap["degrees kelvin"]               = sofa::Units::kKelvin;
 
         }
+        
+        return typeMap;
     }
 }
 
 
-const std::string sofa::Units::GetName(const sofa::Units::Type &type_)
+std::string sofa::Units::GetName(const sofa::Units::Type &type_)
 {
     /// Writing applications shall use SI spellings in lower case.
     
@@ -147,14 +147,14 @@ const std::string sofa::Units::GetName(const sofa::Units::Type &type_)
     }
 }
 
-const sofa::Units::Type sofa::Units::GetType(const std::string &name)
+sofa::Units::Type sofa::Units::GetType(const std::string &name)
 {
-    UnitsHelper::initTypeMap();
+    const std::map< std::string, sofa::Units::Type > & typeMap = UnitsHelper::getTypeMap();
     
     /// Reading applications should be case insensitive and include aliases from alternative spellings of the following units 
     const std::string nameLowerCase = sofa::String::ToLowerCase( name );
     
-    if( UnitsHelper::typeMap.count( nameLowerCase ) == 0 )
+    if( typeMap.count( nameLowerCase ) == 0 )
     {        
         SOFA_ASSERT( false );
         
@@ -162,18 +162,18 @@ const sofa::Units::Type sofa::Units::GetType(const std::string &name)
     }
     else
     {
-        return UnitsHelper::typeMap[ nameLowerCase ];
+        return typeMap.at( nameLowerCase );
     }
 }
 
-const bool sofa::Units::IsValid(const std::string &name)
+bool sofa::Units::IsValid(const std::string &name)
 {
     /// AES69-2015 : Reading applications should be case insensitive    
     const std::string name_ = sofa::String::ToLowerCase( name );
     
-    UnitsHelper::initTypeMap();
+    const std::map< std::string, sofa::Units::Type > & typeMap = UnitsHelper::getTypeMap();
     
-    return ( UnitsHelper::typeMap.count( name_ ) != 0 );
+    return ( typeMap.count( name_ ) != 0 );
 }
 
 /************************************************************************************/
@@ -183,7 +183,7 @@ const bool sofa::Units::IsValid(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsValid(const netCDF::NcAtt & attr)
+bool sofa::Units::IsValid(const netCDF::NcAtt & attr)
 {
     if( sofa::NcUtils::IsValid( attr ) == false )
     {
@@ -212,7 +212,7 @@ const bool sofa::Units::IsValid(const netCDF::NcAtt & attr)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsDistanceUnit(const sofa::Units::Type &type_)
+bool sofa::Units::IsDistanceUnit(const sofa::Units::Type &type_)
 {
     switch( type_ )
     {
@@ -228,7 +228,7 @@ const bool sofa::Units::IsDistanceUnit(const sofa::Units::Type &type_)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
+bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
 {
     switch( type_ )
     {
@@ -244,7 +244,7 @@ const bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsTimeUnit(const sofa::Units::Type &type_)
+bool sofa::Units::IsTimeUnit(const sofa::Units::Type &type_)
 {
     switch( type_ )
     {
@@ -260,7 +260,7 @@ const bool sofa::Units::IsTimeUnit(const sofa::Units::Type &type_)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsDistanceUnit(const std::string &name)
+bool sofa::Units::IsDistanceUnit(const std::string &name)
 {
     const sofa::Units::Type type_ = sofa::Units::GetType( name );
     return IsDistanceUnit( type_ );
@@ -273,7 +273,7 @@ const bool sofa::Units::IsDistanceUnit(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsFrequencyUnit(const std::string &name)
+bool sofa::Units::IsFrequencyUnit(const std::string &name)
 {
     const sofa::Units::Type type_ = sofa::Units::GetType( name );
     return IsFrequencyUnit( type_ );
@@ -286,7 +286,7 @@ const bool sofa::Units::IsFrequencyUnit(const std::string &name)
  *
  */
 /************************************************************************************/
-const bool sofa::Units::IsTimeUnit(const std::string &name)
+bool sofa::Units::IsTimeUnit(const std::string &name)
 {
     const sofa::Units::Type type_ = sofa::Units::GetType( name );
     return IsTimeUnit( type_ );

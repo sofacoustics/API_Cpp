@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFACoordinates.h
  *   @brief      SOFA Coordinates systems
@@ -78,15 +76,15 @@ namespace sofa
         };
         
     public:
-        static const std::string GetName(const sofa::Coordinates::Type &type_);
-        static const sofa::Coordinates::Type GetType(const std::string &name);
+        static std::string GetName(const sofa::Coordinates::Type &type_);
+        static sofa::Coordinates::Type GetType(const std::string &name);
         
-        static const bool IsValid(const std::string &name);
+        static bool IsValid(const std::string &name);
         
-        static const bool IsValid(const netCDF::NcAtt & attr);
+        static bool IsValid(const netCDF::NcAtt & attr);
         
-    protected:
-        Coordinates();
+    private:
+        Coordinates() SOFA_DELETED_FUNCTION;
     };
     
 }

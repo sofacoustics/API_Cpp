@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAUnits.h
  *   @brief      SOFA units systems
@@ -81,24 +79,23 @@ namespace sofa
         };
         
     public:
-        static const std::string GetName(const sofa::Units::Type &type_);
-        static const sofa::Units::Type GetType(const std::string &name);
+        static std::string GetName(const sofa::Units::Type &type_);
+        static sofa::Units::Type GetType(const std::string &name);
         
-        static const bool IsDistanceUnit(const sofa::Units::Type &type_);
-        static const bool IsFrequencyUnit(const sofa::Units::Type &type_);
-        static const bool IsTimeUnit(const sofa::Units::Type &type_);
+        static bool IsDistanceUnit(const sofa::Units::Type &type_);
+        static bool IsFrequencyUnit(const sofa::Units::Type &type_);
+        static bool IsTimeUnit(const sofa::Units::Type &type_);
         
-        static const bool IsDistanceUnit(const std::string &name);
-        static const bool IsFrequencyUnit(const std::string &name);
-        static const bool IsTimeUnit(const std::string &name);
+        static bool IsDistanceUnit(const std::string &name);
+        static bool IsFrequencyUnit(const std::string &name);
+        static bool IsTimeUnit(const std::string &name);
+                
+        static bool IsValid(const std::string &name);
         
-        
-        static const bool IsValid(const std::string &name);
-        
-        static const bool IsValid(const netCDF::NcAtt &attr);
+        static bool IsValid(const netCDF::NcAtt &attr);
         
     protected:
-        Units();
+        Units() SOFA_DELETED_FUNCTION;
     };
     
 }

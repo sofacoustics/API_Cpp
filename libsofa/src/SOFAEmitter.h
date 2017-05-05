@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAEmitter.h
  *   @brief      Represents a sofa emitter
@@ -79,18 +77,18 @@ namespace sofa
                 const netCDF::NcVar & varEmitterUp,
                 const netCDF::NcVar & varEmitterView);
         
-        ~Emitter();
+        ~Emitter() {};
         
-        const bool IsValid() const;
+        bool IsValid() const;
         
-        const bool HasEmitterUpVariable() const;
-        const bool HasEmitterViewVariable() const;
+        bool HasEmitterUpVariable() const;
+        bool HasEmitterViewVariable() const;
         
-        const bool EmitterPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool EmitterUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        const bool EmitterViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool EmitterPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool EmitterUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool EmitterViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
         
-    protected:
+    private:
         const sofa::PositionVariable EmitterPosition;
         const sofa::PositionVariable EmitterUp;
         const sofa::PositionVariable EmitterView;
@@ -100,9 +98,7 @@ namespace sofa
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        Emitter( const Emitter &other );
-        const Emitter & operator= ( const Emitter &other );
-        
+        SOFA_AVOID_COPY_CONSTRUCTOR( Emitter );
     };
     
 }

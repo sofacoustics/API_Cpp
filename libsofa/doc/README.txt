@@ -27,12 +27,17 @@ The Linux pre-compiled libraries are built for x86_64 architecture.
 They were built and tested on Red Hat 4.1.2-54 (kernel version 2.6.18-371.1.2.el5).
 gcc version 4.1.2
 
-
-
 Besides the main SOFA library, there is also 'sofainfo' which is a command line utility
 that prints informations about sofa files.
 The 'sofainfo.cpp' is thus a basic example on how to use the API, especially for 
 a SimpleFreeFieldHRIR file.
+
+
+The repository also includes additional contributions from Hagen Jaeger and Christian Hoene.
+This includes:
+- a sofa/json converter based on the json-c library
+- cmake file for Win32 / 64 MinGW build
+
 
 
 

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAPosition.cpp
  *   @brief      Represents a sofa position variable
@@ -75,7 +73,7 @@ PositionVariable::~PositionVariable()
 {
 }
 
-const sofa::Units::Type PositionVariable::GetUnits() const
+sofa::Units::Type PositionVariable::GetUnits() const
 {
     /// Position:Units attribute
     const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute( var, "Units" );
@@ -93,7 +91,7 @@ const sofa::Units::Type PositionVariable::GetUnits() const
     }    
 }
 
-const sofa::Coordinates::Type PositionVariable::GetCoordinates() const
+sofa::Coordinates::Type PositionVariable::GetCoordinates() const
 {
     /// Position:Type attribute
     const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute( var, "Type" );
@@ -111,24 +109,24 @@ const sofa::Coordinates::Type PositionVariable::GetCoordinates() const
     }
 }
 
-const unsigned int PositionVariable::GetDimensionality() const
+unsigned int PositionVariable::GetDimensionality() const
 {
     const int dimensionality = sofa::NcUtils::GetDimensionality( var );
     
     return (unsigned int) sofa::smax( (int) 0, dimensionality );
 }
 
-const bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2) const
+bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2) const
 {
     return sofa::NcUtils::HasDimensions( dim1, dim2, var );
 }
 
-const bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const
+bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const
 {
     return sofa::NcUtils::HasDimensions( dim1, dim2, dim3, var );    
 }
 
-const bool PositionVariable::HasUnits() const
+bool PositionVariable::HasUnits() const
 {
     SOFA_ASSERT( sofa::NcUtils::IsValid( var ) == true );
     SOFA_ASSERT( sofa::NcUtils::IsDouble( var ) == true );
@@ -138,7 +136,7 @@ const bool PositionVariable::HasUnits() const
     return sofa::Coordinates::IsValid( attrType );
 }
 
-const bool PositionVariable::HasCoordinates() const
+bool PositionVariable::HasCoordinates() const
 {
     SOFA_ASSERT( sofa::NcUtils::IsValid( var ) == true );
     SOFA_ASSERT( sofa::NcUtils::IsDouble( var ) == true );
@@ -164,7 +162,7 @@ const bool PositionVariable::HasCoordinates() const
  *  @n                
  */
 /************************************************************************************/
-const bool PositionVariable::IsValid(const bool shouldHaveTypeAndUnits) const
+bool PositionVariable::IsValid(const bool shouldHaveTypeAndUnits) const
 {
     if( sofa::NcUtils::IsValid( var ) == false )
     {

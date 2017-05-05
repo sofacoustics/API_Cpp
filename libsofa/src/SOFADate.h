@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFADate.h
  *   @brief      Useful methods to represent and manipulate date and time
@@ -67,15 +65,15 @@ namespace sofa
     class SOFA_API Date
     {
     public:
-        static const Date GetCurrentDate();
+        static Date GetCurrentDate();
         
-        static const long long GetCurrentSystemTime();
+        static long long GetCurrentSystemTime();
         
-        static const bool IsValid(const std::string &iso8601);
+        static bool IsValid(const std::string &iso8601);
         
     public:
         Date();
-        ~Date();
+        ~Date() {};
         
         Date(const std::string &iso8601);
         
@@ -92,27 +90,26 @@ namespace sofa
         
         explicit Date(const long long millisecondsSinceEpoch);
         
-        const long long GetMillisecondsSinceEpoch() const;
+        long long GetMillisecondsSinceEpoch() const;
         
         //==============================================================================
-        const unsigned int GetYear() const;
-        const unsigned int GetMonth() const;
-        const unsigned int GetDay() const;
-        const unsigned int GetHours() const;
-        const unsigned int GetMinutes() const;
-        const unsigned int GetSeconds() const;
-        const unsigned int GetMilliSeconds() const;
+        unsigned int GetYear() const;
+        unsigned int GetMonth() const;
+        unsigned int GetDay() const;
+        unsigned int GetHours() const;
+        unsigned int GetMinutes() const;
+        unsigned int GetSeconds() const;
+        unsigned int GetMilliSeconds() const;
         
-        const std::string ToISO8601() const;
+        std::string ToISO8601() const;
         
-        const bool IsValid() const;
-        
-    protected:
-        static const unsigned long long getMillisecondsSinceStartup();
+        bool IsValid() const;
         
     private:
-        long long millisSinceEpoch;
+        static unsigned long long getMillisecondsSinceStartup();
         
+    private:
+        long long millisSinceEpoch;        
     };
     
 }

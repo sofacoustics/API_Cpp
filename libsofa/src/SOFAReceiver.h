@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAReceiver.h
  *   @brief      Represents a sofa receiver
@@ -78,18 +76,18 @@ namespace sofa
                  const netCDF::NcVar & varReceiverUp,
                  const netCDF::NcVar & varReceiverView);
         
-        ~Receiver();
+        ~Receiver() {};
         
-        const bool IsValid() const;
+        bool IsValid() const;
         
-        const bool HasReceiverUpVariable() const;
-        const bool HasReceiverViewVariable() const;
+        bool HasReceiverUpVariable() const;
+        bool HasReceiverViewVariable() const;
         
-        const bool ReceiverPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;        
-        const bool ReceiverUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;        
-        const bool ReceiverViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;    
+        bool ReceiverPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool ReceiverUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
+        bool ReceiverViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
         
-    protected:
+    private:
         const sofa::PositionVariable ReceiverPosition;
         const sofa::PositionVariable ReceiverUp;
         const sofa::PositionVariable ReceiverView;
@@ -99,9 +97,7 @@ namespace sofa
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        Receiver( const Receiver &other );                    
-        const Receiver & operator= ( const Receiver &other );
-        
+        SOFA_AVOID_COPY_CONSTRUCTOR( Receiver );
     };
     
 }

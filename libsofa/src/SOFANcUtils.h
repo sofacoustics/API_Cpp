@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFANcUtils.h
  *   @brief      Utility functions to manipulate NetCDF elements (NcAtt, NcVar, NcDim, ...)
@@ -72,7 +70,7 @@ namespace sofa
          */
         /************************************************************************************/  
         template< typename NetCDFType >
-        inline const bool IsValid(const NetCDFType &ncStuff)
+        bool IsValid(const NetCDFType &ncStuff)
         {
             return ( ncStuff.isNull() == false );
         }
@@ -86,8 +84,8 @@ namespace sofa
          */
         /************************************************************************************/ 
         template< typename NetCDFType >
-        inline const bool CheckType(const NetCDFType &ncStuff,
-                                    const netCDF::NcType &type_)
+        bool CheckType(const NetCDFType &ncStuff,
+                       const netCDF::NcType &type_)
         {
             return ( IsValid( ncStuff ) == true && ncStuff.getType() == type_ );
         }
@@ -100,7 +98,7 @@ namespace sofa
          */
         /************************************************************************************/  
         template< typename NetCDFType >
-        inline const bool IsFloat(const NetCDFType & ncStuff)
+        bool IsFloat(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_FLOAT );
         }
@@ -113,7 +111,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsDouble(const NetCDFType & ncStuff)
+        bool IsDouble(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_DOUBLE );
         }
@@ -126,7 +124,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsByte(const NetCDFType & ncStuff)
+        bool IsByte(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_BYTE );
         }
@@ -139,7 +137,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsChar(const NetCDFType & ncStuff)
+        bool IsChar(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_CHAR );
         }
@@ -152,7 +150,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsShort(const NetCDFType & ncStuff)
+        bool IsShort(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_SHORT );
         }
@@ -165,7 +163,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsInt(const NetCDFType & ncStuff)
+        bool IsInt(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_INT );
         }
@@ -178,7 +176,7 @@ namespace sofa
          */
         /************************************************************************************/
         template< typename NetCDFType >
-        inline const bool IsInt64(const NetCDFType & ncStuff)
+        bool IsInt64(const NetCDFType & ncStuff)
         {
             return CheckType( ncStuff, netCDF::NcType::nc_INT64 );
         }
@@ -191,7 +189,7 @@ namespace sofa
          *
          */
         /************************************************************************************/ 
-        inline const std::string GetAttributeValueAsString(const netCDF::NcAtt & attr)
+        inline std::string GetAttributeValueAsString(const netCDF::NcAtt & attr)
         {
             if( IsChar( attr ) == false )
             {
@@ -214,7 +212,7 @@ namespace sofa
          */
         /************************************************************************************/  
         template< typename NetCDFType >
-        inline const std::string GetName(const NetCDFType & ncStuff)
+        std::string GetName(const NetCDFType & ncStuff)
         {
             if( IsValid( ncStuff ) == false )
             {
@@ -235,7 +233,7 @@ namespace sofa
          */
         /************************************************************************************/  
         template< typename NetCDFType >
-        inline const netCDF::NcType GetType(const NetCDFType & ncStuff)
+        netCDF::NcType GetType(const NetCDFType & ncStuff)
         {
             if( IsValid( ncStuff ) == false )
             {
@@ -256,7 +254,7 @@ namespace sofa
          *
          */
         /************************************************************************************/  
-        inline const int GetDimensionality(const netCDF::NcVar & ncStuff)
+        inline int GetDimensionality(const netCDF::NcVar & ncStuff)
         {
             if( IsValid( ncStuff ) == false )
             {
@@ -275,7 +273,7 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool IsScalar(const netCDF::NcVar & ncStuff)
+        inline bool IsScalar(const netCDF::NcVar & ncStuff)
         {
             if( GetDimensionality( ncStuff ) != 1 )
             {
@@ -299,7 +297,7 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool GetValue(double &value, const netCDF::NcVar & ncStuff)
+        inline bool GetValue(double &value, const netCDF::NcVar & ncStuff)
         {
             if( IsScalar( ncStuff ) == true && IsDouble( ncStuff ) == true )
             {
@@ -391,9 +389,9 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool GetValues(double * values,
-                                    const std::size_t numValues,
-                                    const netCDF::NcVar & ncStuff)
+        inline bool GetValues(double * values,
+                              const std::size_t numValues,
+                              const netCDF::NcVar & ncStuff)
         {
             
             if( IsValid( ncStuff ) == true && IsDouble( ncStuff ) == true  )
@@ -449,8 +447,8 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool HasAttribute(const netCDF::NcVar & var,
-                                       const std::string & attributeName)
+        inline bool HasAttribute(const netCDF::NcVar & var,
+                                 const std::string & attributeName)
         {
             if( IsValid( var ) == false )
             {
@@ -485,8 +483,8 @@ namespace sofa
          *
          */
         /************************************************************************************/ 
-        inline const netCDF::NcVarAtt GetAttribute(const netCDF::NcVar & var,
-                                                   const std::string & attributeName)
+        inline netCDF::NcVarAtt GetAttribute(const netCDF::NcVar & var,
+                                             const std::string & attributeName)
         {
             if( IsValid( var ) == false )
             {
@@ -517,7 +515,7 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool HasDimension(const std::size_t dim, const netCDF::NcVar & var)
+        inline bool HasDimension(const std::size_t dim, const netCDF::NcVar & var)
         {
             if( GetDimensionality( var ) != 1 )
             {
@@ -543,9 +541,9 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool HasDimensions(const std::size_t dim1,
-                                        const std::size_t dim2,
-                                        const netCDF::NcVar & var)
+        inline bool HasDimensions(const std::size_t dim1,
+                                  const std::size_t dim2,
+                                  const netCDF::NcVar & var)
         {
             if( GetDimensionality( var ) != 2 )
             {
@@ -572,10 +570,10 @@ namespace sofa
          *
          */
         /************************************************************************************/
-        inline const bool HasDimensions(const std::size_t dim1,
-                                        const std::size_t dim2,
-                                        const std::size_t dim3,
-                                        const netCDF::NcVar & var)
+        inline bool HasDimensions(const std::size_t dim1,
+                                  const std::size_t dim2,
+                                  const std::size_t dim3,
+                                  const netCDF::NcVar & var)
         {
             if( GetDimensionality( var ) != 3 )
             {
@@ -590,6 +588,37 @@ namespace sofa
             return ( dims[0] == dim1 && dims[1] == dim2 && dims[2] == dim3 );
         }
         
+        /************************************************************************************/
+        /*!
+         *  @brief          Checks if a NcVar has four dimensions and if these dimensions match (dim1, dim2, dim3, dim4)
+         *                  Returns false if an error occured, if the NcVar is not valid, if the variable has
+         *                  not the appropriate dimensionality or if the dimensions do not match
+         *  @param[in]      var : the Nc variable to query
+         *  @param[in]      dim1 : the first dimension to check
+         *  @param[in]      dim2 : the second dimension to check
+         *  @param[in]      dim3 : the third dimension to check
+         *  @param[in]      dim4 : the fourth dimension to check
+         *
+         */
+        /************************************************************************************/
+        inline bool HasDimensions(const std::size_t dim1,
+                                  const std::size_t dim2,
+                                  const std::size_t dim3,
+                                  const std::size_t dim4,
+                                  const netCDF::NcVar & var)
+        {
+            if( GetDimensionality( var ) != 4 )
+            {
+                return false;
+            }
+            
+            std::vector< std::size_t > dims;
+            GetDimensions( dims, var );
+            
+            SOFA_ASSERT( dims.size() == 4 );
+            
+            return ( dims[0] == dim1 && dims[1] == dim2 && dims[2] == dim3 && dims[3] == dim4 );
+        }
         
     }
 }

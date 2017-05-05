@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAPoint3.cpp
  *   @brief      Represents one point in 3D
@@ -68,16 +66,6 @@ Point3::Point3()
     data[0] = 0.0;
     data[1] = 0.0;
     data[2] = 0.0;
-}
-
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Point3::~Point3()
-{
 }
 
 /************************************************************************************/
@@ -114,12 +102,12 @@ const Point3 & Point3::operator= ( const Point3 &other )
     return *this;
 }
 
-const sofa::Units::Type Point3::GetUnits() const
+sofa::Units::Type Point3::GetUnits() const
 {
     return units;
 }
 
-const sofa::Coordinates::Type Point3::GetCoordinates() const
+sofa::Coordinates::Type Point3::GetCoordinates() const
 {
     return coordinates;
 }
@@ -141,7 +129,7 @@ void Point3::Set(const double data_[3])
     data[2] = data_[2];
 }
 
-const double Point3::operator[](const unsigned int index) const
+double Point3::operator[](const unsigned int index) const
 {
     switch( index )
     {
@@ -183,7 +171,7 @@ void Point3::ConvertTo(const sofa::Coordinates::Type &newCoordinate, const sofa:
 }
  */
 
-const bool sofa::GetPoint3(sofa::Point3 &point3, const netCDF::NcVar & variable)
+bool sofa::GetPoint3(sofa::Point3 &point3, const netCDF::NcVar & variable)
 {
     const sofa::PositionVariable var( variable );
     if( var.IsValid() == false )

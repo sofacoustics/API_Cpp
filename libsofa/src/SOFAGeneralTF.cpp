@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAGeneralTF.cpp
  *   @brief      Class for SOFA files with GeneralTF convention
@@ -49,10 +47,10 @@
  */
 /************************************************************************************/
 #include "../src/SOFAGeneralTF.h"
+#include "../src/SOFAExceptions.h"
 #include "../src/SOFAUtils.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAPoint3.h"
 #include "../src/SOFAListener.h"
 
 using namespace sofa;
@@ -60,7 +58,7 @@ using namespace sofa;
 const unsigned int GeneralTF::ConventionVersionMajor  =   1;
 const unsigned int GeneralTF::ConventionVersionMinor  =   0;
 
-const std::string GeneralTF::GetConventionVersion()
+std::string GeneralTF::GetConventionVersion()
 {
     return sofa::String::Int2String( GeneralTF::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( GeneralTF::ConventionVersionMinor );
 }
@@ -79,33 +77,13 @@ GeneralTF::GeneralTF(const std::string &path,
 {
 }
 
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-GeneralTF::~GeneralTF()
-{
-}
-
-const bool GeneralTF::checkGlobalAttributes() const
+bool GeneralTF::checkGlobalAttributes() const
 {
     sofa::Attributes attributes;
     GetGlobalAttributes( attributes );
     
-    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "GeneralTF" )
-    {
-        SOFA_THROW( "Not a 'GeneralTF' SOFAConvention" );
-        return false;
-    }
-    
-    /// the value of DataType shall be 'TF'
-    if( attributes.Get( sofa::Attributes::kDataType ) != "TF" )
-    {
-        SOFA_THROW( "invalid 'DataType'" );
-        return false;
-    }
+    sofa::File::ensureSOFAConvention( "GeneralTF" );
+    sofa::File::ensureDataType( "TF" );
     
     return true;
 }
@@ -116,7 +94,7 @@ const bool GeneralTF::checkGlobalAttributes() const
  *
  */
 /************************************************************************************/
-const bool GeneralTF::IsValid() const
+bool GeneralTF::IsValid() const
 {
     if( sofa::File::IsValid() == false )
     {

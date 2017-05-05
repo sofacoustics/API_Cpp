@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAAPI.h
  *   @brief      Informations about this API
@@ -69,41 +67,49 @@ namespace sofa
         //==============================================================================
         // API
         //==============================================================================
-        static const std::string GetAPIName();
+        static std::string GetAPIName();
         
-        static const std::string GetAPIVersion();
+        static std::string GetAPIVersion();
         
-        static const unsigned int GetAPIVersionMinor();
-        static const unsigned int GetAPIVersionMajor();
-        static const unsigned int GetAPIVersionRelease();
+        static unsigned int GetAPIVersionMinor();
+        static unsigned int GetAPIVersionMajor();
+        static unsigned int GetAPIVersionRelease();
         
-        static const std::string GetAPICopyright();
+        static std::string GetAPICopyright();
         
         //==============================================================================
         // Specifications
         //==============================================================================
-        static const std::string GetSpecificationsVersion();
+        static std::string GetSpecificationsVersion();
         
-        static const unsigned int GetSpecificationsVersionMinor();
-        static const unsigned int GetSpecificationsVersionMajor();
+        static unsigned int GetSpecificationsVersionMinor();
+        static unsigned int GetSpecificationsVersionMajor();
                 
         //==============================================================================
         // Conventions
         //==============================================================================
-        static const std::string GetSimpleFreeFieldHRIRConventionVersion();
-        static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
-        static const unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
+        static std::string GetSimpleFreeFieldHRIRConventionVersion();
+        static unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
+        static unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
 
-        static const std::string GetSimpleFreeFieldSOSConventionVersion();
-        static const unsigned int GetSimpleFreeFieldSOSConventionVersionMajor();
-        static const unsigned int GetSimpleFreeFieldSOSConventionVersionMinor();
+        static std::string GetSimpleFreeFieldSOSConventionVersion();
+        static unsigned int GetSimpleFreeFieldSOSConventionVersionMajor();
+        static unsigned int GetSimpleFreeFieldSOSConventionVersionMinor();
 
-        static const std::string GetSimpleHeadphoneIRConventionVersion();
-        static const unsigned int GetSimpleHeadphoneIRConventionVersionMajor();
-        static const unsigned int GetSimpleHeadphoneIRConventionVersionMinor();
+        static std::string GetSimpleHeadphoneIRConventionVersion();
+        static unsigned int GetSimpleHeadphoneIRConventionVersionMajor();
+        static unsigned int GetSimpleHeadphoneIRConventionVersionMinor();
         
-    protected:
-        ApiInfos();
+        static std::string GetMultiSpeakerBRIRConventionVersion();
+        static unsigned int GetMultiSpeakerBRIRConventionVersionMajor();
+        static unsigned int GetMultiSpeakerBRIRConventionVersionMinor();
+        
+        static std::string GetGeneralFIRConventionVersion();
+        static unsigned int GetGeneralFIRConventionVersionMajor();
+        static unsigned int GetGeneralFIRConventionVersionMinor();
+        
+    private:
+        ApiInfos() SOFA_DELETED_FUNCTION;
     };
     
 }

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFASimpleHeadphoneIR.cpp
  *   @brief      Class for SOFA files with SimpleHeadphoneIR convention
@@ -49,18 +47,18 @@
  */
 /************************************************************************************/
 #include "../src/SOFASimpleHeadphoneIR.h"
+#include "../src/SOFAExceptions.h"
 #include "../src/SOFAUtils.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAPoint3.h"
 #include "../src/SOFAListener.h"
 
 using namespace sofa;
 
 const unsigned int SimpleHeadphoneIR::ConventionVersionMajor  =   0;
-const unsigned int SimpleHeadphoneIR::ConventionVersionMinor  =   1;
+const unsigned int SimpleHeadphoneIR::ConventionVersionMinor  =   2;
 
-const std::string SimpleHeadphoneIR::GetConventionVersion()
+std::string SimpleHeadphoneIR::GetConventionVersion()
 {
     return sofa::String::Int2String( SimpleHeadphoneIR::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( SimpleHeadphoneIR::ConventionVersionMinor );
 }
@@ -79,60 +77,13 @@ SimpleHeadphoneIR::SimpleHeadphoneIR(const std::string &path,
 {
 }
 
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-SimpleHeadphoneIR::~SimpleHeadphoneIR()
-{
-}
-
-const bool SimpleHeadphoneIR::hasDatabaseName() const
-{
-    const netCDF::NcGroupAtt att = getAttribute( "DatabaseName" );
-    
-    return sofa::NcUtils::IsChar( att );
-}
-
-const bool SimpleHeadphoneIR::hasSourceModel() const
-{
-    const netCDF::NcGroupAtt att = getAttribute( "SourceModel" );
-    
-    return sofa::NcUtils::IsChar( att );
-}
-
-const bool SimpleHeadphoneIR::hasSourceManufacturer() const
-{
-    const netCDF::NcGroupAtt att = getAttribute( "SourceManufacturer" );
-    
-    return sofa::NcUtils::IsChar( att );
-}
-
-const bool SimpleHeadphoneIR::hasSourceURI() const
-{
-    const netCDF::NcGroupAtt att = getAttribute( "SourceURI" );
-    
-    return sofa::NcUtils::IsChar( att );
-}
-
-const bool SimpleHeadphoneIR::checkGlobalAttributes() const
+bool SimpleHeadphoneIR::checkGlobalAttributes() const
 {
     sofa::Attributes attributes;
     GetGlobalAttributes( attributes );
     
-    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "SimpleHeadphoneIR" )
-    {
-        SOFA_THROW( "Not a 'SimpleHeadphoneIR' SOFAConvention" );
-        return false;
-    }
-    
-    if( attributes.Get( sofa::Attributes::kDataType ) != "FIR" )
-    {
-        SOFA_THROW( "invalid 'DataType'" );
-        return false;
-    }
+    sofa::File::ensureSOFAConvention( "SimpleHeadphoneIR" );
+    sofa::File::ensureDataType( "FIR" );
     
     if( attributes.Get( sofa::Attributes::kRoomType ) != "free field" )
     {
@@ -141,10 +92,16 @@ const bool SimpleHeadphoneIR::checkGlobalAttributes() const
         return false;
     }
     
+    /// mandatory attributes for SimpleHeadphoneIR v0.2
+    sofa::File::ensureGlobalAttribute( sofa::Attributes::kListenerShortName );
+    sofa::File::ensureGlobalAttribute( sofa::Attributes::kListenerDescription );
+    sofa::File::ensureGlobalAttribute( sofa::Attributes::kSourceDescription );
+    sofa::File::ensureGlobalAttribute( sofa::Attributes::kEmitterDescription );
+    
     return true;
 }
 
-const bool SimpleHeadphoneIR::checkListenerVariables() const
+bool SimpleHeadphoneIR::checkListenerVariables() const
 {
     const long I = GetDimension( "I" );
     if( I != 1 )
@@ -180,7 +137,7 @@ const bool SimpleHeadphoneIR::checkListenerVariables() const
     }
     
     if( listener.ListenerPositionHasDimensions(  I,  C ) == false
-       && listener.ListenerPositionHasDimensions(  M,  C ) == false )
+     && listener.ListenerPositionHasDimensions(  M,  C ) == false )
     {
         SOFA_THROW( "invalid 'ListenerPosition' dimensions" );
         return false;
@@ -192,7 +149,7 @@ const bool SimpleHeadphoneIR::checkListenerVariables() const
         /// but if it is present, is should be [ I C ] or [ M C ]
         
         if( listener.ListenerUpHasDimensions(  I,  C ) == false
-           && listener.ListenerUpHasDimensions(  M,  C ) == false )
+         && listener.ListenerUpHasDimensions(  M,  C ) == false )
         {
             SOFA_THROW( "invalid 'ListenerUp' dimensions" );
             return false;
@@ -206,7 +163,7 @@ const bool SimpleHeadphoneIR::checkListenerVariables() const
         /// but if it is present, is should be [ I C ] or [ M C ]
         
         if( listener.ListenerViewHasDimensions(  I,  C ) == false
-           && listener.ListenerViewHasDimensions(  M,  C ) == false )
+         && listener.ListenerViewHasDimensions(  M,  C ) == false )
         {
             SOFA_THROW( "invalid 'ListenerView' dimensions" );
             return false;
@@ -224,36 +181,17 @@ const bool SimpleHeadphoneIR::checkListenerVariables() const
  *
  */
 /************************************************************************************/
-const bool SimpleHeadphoneIR::IsValid() const
+bool SimpleHeadphoneIR::IsValid() const
 {
     if( sofa::File::IsValid() == false )
     {
         return false;
     }
-    
-    if( hasDatabaseName() == false )
-    {
-        SOFA_THROW( "missing 'DatabaseName' global attribute" );
-        return false;
-    }
-    
-    if( hasSourceModel() == false )
-    {
-        SOFA_THROW( "missing 'SourceModel' global attribute" );
-        return false;
-    }
-    
-    if( hasSourceManufacturer() == false )
-    {
-        SOFA_THROW( "missing 'SourceManufacturer' global attribute" );
-        return false;
-    }
-    
-    if( hasSourceURI() == false )
-    {
-        SOFA_THROW( "missing 'SourceURI' global attribute" );
-        return false;
-    }
+        
+    sofa::File::ensureGlobalAttribute( "DatabaseName" );
+    sofa::File::ensureGlobalAttribute( "SourceModel" );
+    sofa::File::ensureGlobalAttribute( "SourceManufacturer" );
+    sofa::File::ensureGlobalAttribute( "SourceURI" );
     
     if( IsFIRDataType() == false )
     {
@@ -278,7 +216,7 @@ const bool SimpleHeadphoneIR::IsValid() const
     /// SamplingRate is a scalar
     {
         ///@n the AES69-2015 standard is not completely clear on that point.
-        /// I tend to think that Data.SamplingRate shall be a scalar in the SimpleFreeFieldHRIR convention
+        /// I tend to think that Data.SamplingRate shall be a scalar in the SimpleHeadphoneIR convention
         /// (sofaconventions.org confirms that), but it's not 100% clear
         
         if( VariableIsScalar( "Data.SamplingRate" ) == false )
@@ -309,41 +247,17 @@ const bool SimpleHeadphoneIR::IsValid() const
 
 /************************************************************************************/
 /*!
- *  @brief          The Data.SamplingRate variable can be either [I] or [M],
- *                  according to the specifications.
- *                  This function returns true if Data.SamplingRate is [I]
- *
- */
-/************************************************************************************/
-const bool SimpleHeadphoneIR::isSamplingRateScalar() const
-{
-    return VariableIsScalar( "Data.SamplingRate" ) == true
-    && HasVariableType( netCDF::NcType::nc_DOUBLE, "Data.SamplingRate");
-}
-
-/************************************************************************************/
-/*!
  *  @brief          In case Data.SamplingRate is of dimension [I], this function returns
  *                  its value. In case Data.SamplingRate is of dimension [M], an error is thrown
  *  @return         true on success
  *
  */
 /************************************************************************************/
-const bool SimpleHeadphoneIR::GetSamplingRate(double &value) const
+bool SimpleHeadphoneIR::GetSamplingRate(double &value) const
 {
     SOFA_ASSERT( SimpleHeadphoneIR::IsValid() == true );
     
-    if( isSamplingRateScalar() == true )
-    {
-        const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
-        
-        return sofa::NcUtils::GetValue( value, var );
-    }
-    else
-    {
-        SOFA_THROW( "'Data.SamplingRate' is not a scalar" );
-        return false;
-    }
+    return sofa::File::getSamplingRate( value );
 }
 
 /************************************************************************************/
@@ -353,16 +267,9 @@ const bool SimpleHeadphoneIR::GetSamplingRate(double &value) const
  *
  */
 /************************************************************************************/
-const bool SimpleHeadphoneIR::GetSamplingRateUnits(sofa::Units::Type &units) const
+bool SimpleHeadphoneIR::GetSamplingRateUnits(sofa::Units::Type &units) const
 {
-    const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
-    
-    const netCDF::NcVarAtt attNUnits    = sofa::NcUtils::GetAttribute( var, "Units" );
-    const std::string unitsName         = sofa::NcUtils::GetAttributeValueAsString( attNUnits );
-    
-    units = sofa::Units::GetType( unitsName );
-    
-    return true;
+    return sofa::File::getSamplingRateUnits( units );
 }
 
 /************************************************************************************/
@@ -377,9 +284,11 @@ const bool SimpleHeadphoneIR::GetSamplingRateUnits(sofa::Units::Type &units) con
  *
  */
 /************************************************************************************/
-const bool SimpleHeadphoneIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+bool SimpleHeadphoneIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.IR" );
+    /// Data.IR is [ M R N ]
+    
+    return sofa::File::getDataIR( values, dim1, dim2, dim3 );
 }
 
 /************************************************************************************/
@@ -390,27 +299,32 @@ const bool SimpleHeadphoneIR::GetDataIR(double *values, const unsigned long dim1
  *
  */
 /************************************************************************************/
-const bool SimpleHeadphoneIR::GetDataIR(std::vector< double > &values) const
+bool SimpleHeadphoneIR::GetDataIR(std::vector< double > &values) const
 {
-    const long M = GetNumMeasurements();
-    const long R = GetNumReceivers();
-    const long N = GetNumDataSamples();
+    /// Data.IR is [ M R N ]
     
-    SOFA_ASSERT( M > 0 );
-    SOFA_ASSERT( R > 0 );
-    SOFA_ASSERT( N > 0 );
-    
-    const std::size_t size_ = M * R * N;
-    
-    values.resize( size_ );
-    
-    SOFA_ASSERT( values.empty() == false );
-    
-    return GetDataIR( &values[0], M, R, N );
+    return sofa::File::getDataIR( values );
 }
 
-const bool SimpleHeadphoneIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.Delay values
+ *  @param[in]      values : the array is resized if needed
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool SimpleHeadphoneIR::GetDataDelay(std::vector< double > &values) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, "Data.Delay" );
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values );
+}
+
+bool SimpleHeadphoneIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+{
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values, dim1, dim2 );
 }
 

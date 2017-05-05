@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAHostArchitecture.h
  *   @brief      
@@ -46,8 +44,6 @@ http://www.sofaconventions.org
  *
  *   @date       10/05/2013
  * 
- *   @details
- *   @n
  */
 /************************************************************************************/
 #ifndef _SOFA_HOST_ARCHITECTURE_H__
@@ -62,7 +58,7 @@ http://www.sofaconventions.org
     #undef SOFA_MAC
     #undef SOFA_WINDOWS
 
-#elif ( defined(macintosh) || defined(__MACH__) || defined(__APPLE__) )
+#elif ( defined(macintosh) || defined(__MACH__) || defined(__APPLE__) || defined (__APPLE_CPP__) || defined(__APPLE_CC__) )
 
     //==============================================================================
     /// MAC OS
@@ -85,7 +81,5 @@ http://www.sofaconventions.org
     #error "Unknown host architecture"
 
 #endif
-
-
 
 #endif /* _SOFA_HOST_ARCHITECTURE_H__ */

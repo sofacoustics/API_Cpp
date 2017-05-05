@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAString.h
  *   @brief      Useful functions to manipulate strings
@@ -62,12 +60,12 @@ namespace sofa
     namespace String
     {
     
-        inline const int String2Int(const std::string &str)
+        inline int String2Int(const std::string &str)
         {
             return atoi( str.c_str() );
         }
         
-        inline const std::string ToLowerCase(const std::string &str)
+        inline std::string ToLowerCase(const std::string &str)
         {
             std::string result = str;
             std::transform( result.begin(), result.end(), result.begin(), ::tolower);
@@ -75,31 +73,31 @@ namespace sofa
             return result;
         }
         
-        inline const std::string Int2String(const int value)
+        inline std::string Int2String(const int value)
         {
             std::ostringstream str;
             str << value;
             return str.str();
         }
         
-        inline const bool IsInt(const char c)
+        inline bool IsInt(const char c)
         {
             return ( c >= '0' && c <= '9' );
         }    
         
-        inline const std::string bool2string(const bool value)
+        inline std::string bool2string(const bool value)
         {
             return ( value == true ) ? ("true") : ("false");
         }
 
-        inline const std::string bool2yesorno(const bool value)
+        inline std::string bool2yesorno(const bool value)
         {
             return ( value == true ) ? ("yes") : ("no");
         }
         
-        const std::string PadWith(const std::string &src,
-                                  const std::size_t totalLength     = 30,
-                                  const std::string &pad            = " ");
+        std::string PadWith(const std::string &src,
+                            const std::size_t totalLength     = 30,
+                            const std::string &pad            = " ");
         
         void PrintSeparationLine(std::ostream & output = std::cout);
     }

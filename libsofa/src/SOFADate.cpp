@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFADate.cpp
  *   @brief      Useful methods to represent and manipulate date and time
@@ -50,6 +48,7 @@ http://www.sofaconventions.org
 /************************************************************************************/
 #include "../src/SOFADate.h"
 #include "../src/SOFAString.h"
+#include "../src/SOFAHostArchitecture.h"
 #include <sstream>
 #include <iostream>
 
@@ -68,7 +67,9 @@ using namespace sofa;
 
 
 #if ( SOFA_WINDOWS == 1 )
-    #include <sys/timeb.h>
+	#include <windows.h>
+    #include <time.h>
+    #include <sys/timeb.h>    
     #define literal64bit(longLiteral)     ((__int64) longLiteral)
 #else
     #define literal64bit(longLiteral)     (longLiteral##LL)
@@ -81,7 +82,11 @@ namespace DateHelper
     static struct tm ConvertMillisecondsToLocalTime (const long long millis) 
     {
         struct tm result;
+#if ( SOFA_WINDOWS == 1 )
+        const __int64 seconds = millis / 1000;
+#else
         const long long seconds = millis / 1000;
+#endif
         
         if (seconds < literal64bit (86400) || seconds >= literal64bit (2145916800))
         {
@@ -146,7 +151,7 @@ namespace DateHelper
 
 
 
-const Date Date::GetCurrentDate() 
+Date Date::GetCurrentDate()
 {
     return Date( Date::GetCurrentSystemTime() );
 }
@@ -161,16 +166,6 @@ const Date Date::GetCurrentDate()
 /************************************************************************************/
 Date::Date()
 : millisSinceEpoch( 0 )
-{
-}
-
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Date::~Date()
 {
 }
 
@@ -210,7 +205,7 @@ Date::Date(const long long millisecondsSinceEpoch)
 {
 }
 
-const long long Date::GetMillisecondsSinceEpoch() const
+long long Date::GetMillisecondsSinceEpoch() const
 {
     return millisSinceEpoch;
 }
@@ -224,8 +219,6 @@ const long long Date::GetMillisecondsSinceEpoch() const
  *  @param[in, out] -
  *  @return         -
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 Date::Date(const std::string &iso8601) 
@@ -255,7 +248,7 @@ Date::Date(const std::string &iso8601)
             SOFA_ASSERT( false );
         }
         
-        sofa::Date tmp( year, month, day, hours, minutes, seconds );
+        const sofa::Date tmp( year, month, day, hours, minutes, seconds );
         
         *this = tmp;
     }
@@ -330,11 +323,11 @@ Date::Date (const unsigned int year,
 }
 
 
-const unsigned long long Date::getMillisecondsSinceStartup()
+unsigned long long Date::getMillisecondsSinceStartup()
 {    
 #if( SOFA_WINDOWS == 1 ) 
     
-    return (unsigned long long) GetTickCount();
+    return (unsigned long long) timeGetTime();
     
 #elif( SOFA_MAC == 1 )
     const int64_t kOneMillion = 1000 * 1000;
@@ -368,7 +361,7 @@ const unsigned long long Date::getMillisecondsSinceStartup()
  *  @details        Returns the number of milliseconds since midnight jan 1st 1970
  */
 /************************************************************************************/
-const long long Date::GetCurrentSystemTime() 
+long long Date::GetCurrentSystemTime()
 {
     static unsigned int lastCounterResult = 0xffffffff;
     static long long correction = 0;
@@ -406,43 +399,43 @@ const long long Date::GetCurrentSystemTime()
 }
 
 
-const unsigned int Date::GetYear() const 
+unsigned int Date::GetYear() const
 {
     return DateHelper::ConvertMillisecondsToLocalTime( this->millisSinceEpoch ).tm_year + 1900;
 }
 
-const unsigned int Date::GetMonth() const 
+unsigned int Date::GetMonth() const
 {
     ///@n returns month in the range [1-12]
     return DateHelper::ConvertMillisecondsToLocalTime( this->millisSinceEpoch ).tm_mon + 1;
 }
 
-const unsigned int Date::GetDay() const 
+unsigned int Date::GetDay() const
 {
     return DateHelper::ConvertMillisecondsToLocalTime( this->millisSinceEpoch ).tm_mday;
 }
 
-const unsigned int Date::GetHours() const 
+unsigned int Date::GetHours() const
 {
     return DateHelper::ConvertMillisecondsToLocalTime( this->millisSinceEpoch ).tm_hour;
 }
 
-const unsigned int Date::GetMinutes() const 
+unsigned int Date::GetMinutes() const
 {
     return DateHelper::ConvertMillisecondsToLocalTime( this->millisSinceEpoch ).tm_min;
 }
 
-const unsigned int Date::GetSeconds() const 
+unsigned int Date::GetSeconds() const
 {
     return DateHelper::extendedModulo ( this->millisSinceEpoch / 1000, 60 );
 }
 
-const unsigned int Date::GetMilliSeconds() const 
+unsigned int Date::GetMilliSeconds() const
 {
     return DateHelper::extendedModulo( this->millisSinceEpoch, 1000 );
 }
 
-const std::string Date::ToISO8601() const
+std::string Date::ToISO8601() const
 {
     const unsigned int yyyy = GetYear();
     const unsigned int mm    = GetMonth();
@@ -492,7 +485,7 @@ const std::string Date::ToISO8601() const
     return str.str();
 }
 
-const bool Date::IsValid() const
+bool Date::IsValid() const
 {
     const unsigned int d = GetDay();
     const unsigned int m = GetMonth();
@@ -554,11 +547,9 @@ const bool Date::IsValid() const
  *  @param[in, out] -
  *  @return         -
  *
- *  @details
- *  @n              
  */
 /************************************************************************************/
-const bool Date::IsValid(const std::string &iso8601)
+bool Date::IsValid(const std::string &iso8601)
 {
     const std::size_t length = iso8601.length();
     
@@ -612,11 +603,11 @@ const bool Date::IsValid(const std::string &iso8601)
     const std::string sec  = iso8601.substr( 17, 2 );
     
     const int year        =    sofa::String::String2Int( yyyy );
-    const int month     =    sofa::String::String2Int( mm );
-    const int day        =    sofa::String::String2Int( dd );
-    const int hours        =    sofa::String::String2Int( hh );
-    const int minutes    =    sofa::String::String2Int( min );
-    const int seconds    =    sofa::String::String2Int( sec );
+    const int month       =    sofa::String::String2Int( mm );
+    const int day         =    sofa::String::String2Int( dd );
+    const int hours       =    sofa::String::String2Int( hh );
+    const int minutes     =    sofa::String::String2Int( min );
+    const int seconds     =    sofa::String::String2Int( sec );
     
     if( year < 0 || month < 0 || day < 0 || hours < 0 || minutes < 0 || seconds < 0)
     {

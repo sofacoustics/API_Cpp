@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
  
  Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAHelper.h
  *   @brief      Helper functions
@@ -66,7 +64,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidNetCDFFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidNetCDFFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -78,7 +76,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidSOFAFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidSOFAFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -90,7 +88,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidSimpleFreeFieldHRIRFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -102,7 +100,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidSimpleFreeFieldSOSFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -114,7 +112,7 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidSimpleHeadphoneIRFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -126,7 +124,19 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidGeneralFIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid GeneralFIRE file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    bool IsValidGeneralFIREFile(const std::string &filename) SOFA_NOEXCEPT;
     
     /************************************************************************************/
     /*!
@@ -138,8 +148,31 @@ namespace sofa
      *
      */
     /************************************************************************************/
-    const bool IsValidGeneralTFFile(const std::string &filename) SOFA_NOEXCEPT;
+    bool IsValidGeneralTFFile(const std::string &filename) SOFA_NOEXCEPT;
     
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid MultiSpeakerBRIR file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    bool IsValidMultiSpeakerBRIRFile(const std::string &filename) SOFA_NOEXCEPT;
+    
+    /************************************************************************************/
+    /*!
+     *  @brief          Returns true if the file is a valid SingleRoomDRIR file
+     *  @param[in]      filename : full path to a local file, or an OpenDAP URL
+     *                  (e.g. http://bili1.ircam.fr/opendap/hyrax/listen/irc_1002.sofa)
+     *
+     *  @details        This method wont raise any exception
+     *
+     */
+    /************************************************************************************/
+    bool IsValidSingleRoomDRIRFile(const std::string &filename) SOFA_NOEXCEPT;
 }
 
 #endif /* _SOFA_HELPER_H__ */

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAListener.cpp
  *   @brief      Represents a sofa listener
@@ -74,16 +72,6 @@ Listener::Listener(const netCDF::NcVar & varListenerPosition,
 
 /************************************************************************************/
 /*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Listener::~Listener()
-{
-}
-
-/************************************************************************************/
-/*!
  *  @brief          Checks if the NcVar corresponds to 
  *                    ListenerPosition 
  *                        ListenerPosition:Type
@@ -104,7 +92,7 @@ Listener::~Listener()
  *  @n                some of the tests are redundant, but anyway they should be rather fast
  */
 /************************************************************************************/
-const bool Listener::IsValid() const
+bool Listener::IsValid() const
 {
     /// ListenerPosition    
     if( ListenerPosition.IsValid() == false )
@@ -154,7 +142,7 @@ const bool Listener::IsValid() const
  *
  */
 /************************************************************************************/
-const bool Listener::HasListenerUp() const
+bool Listener::HasListenerUp() const
 {
     if( hasVarListenerUp == true )
     {
@@ -177,7 +165,7 @@ const bool Listener::HasListenerUp() const
  *
  */
 /************************************************************************************/
-const bool Listener::HasListenerView() const
+bool Listener::HasListenerView() const
 {
     if( hasVarListenerView == true )
     {
@@ -189,20 +177,20 @@ const bool Listener::HasListenerView() const
     }
 }
 
-const bool Listener::ListenerPositionHasDimensions(const unsigned long dim1,
-                                                   const unsigned long dim2) const
+bool Listener::ListenerPositionHasDimensions(const unsigned long dim1,
+                                             const unsigned long dim2) const
 {
     return ListenerPosition.HasDimensions( dim1, dim2 );
 }
 
-const bool Listener::ListenerUpHasDimensions(const unsigned long dim1,
-                                             const unsigned long dim2) const
+bool Listener::ListenerUpHasDimensions(const unsigned long dim1,
+                                       const unsigned long dim2) const
 {
     return ListenerUp.HasDimensions( dim1, dim2 );
 }
 
-const bool Listener::ListenerViewHasDimensions(const unsigned long dim1,
-                                               const unsigned long dim2) const
+bool Listener::ListenerViewHasDimensions(const unsigned long dim1,
+                                         const unsigned long dim2) const
 {
     return ListenerView.HasDimensions( dim1, dim2 );
 }

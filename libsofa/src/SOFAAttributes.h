@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAAttributes.h
  *   @brief      General metadata are represented as global attributes in netCDF
@@ -69,6 +67,7 @@ namespace sofa
     {
     public:
         
+        //==============================================================================
         /**
          Global attributes according to SOFA Specifications
          */
@@ -114,35 +113,37 @@ namespace sofa
             kNumAttributes          =    31
         };
 
-        static const bool IsRequired(const sofa::Attributes::Type &type_);
-        static const bool IsRequired(const std::string &name);
+        //==============================================================================
+        static bool IsRequired(const sofa::Attributes::Type &type_);
+        static bool IsRequired(const std::string &name);
         
-        static const bool IsReadOnly(const sofa::Attributes::Type &type_);
-        static const bool IsReadOnly(const std::string &name);
+        static bool IsReadOnly(const sofa::Attributes::Type &type_);
+        static bool IsReadOnly(const std::string &name);
         
-        static const bool HasDefaultValue(const sofa::Attributes::Type &type_);
-        static const bool HasDefaultValue(const std::string &name);
+        static bool HasDefaultValue(const sofa::Attributes::Type &type_);
+        static bool HasDefaultValue(const std::string &name);
         
-        static const std::string GetDefaultValue(const sofa::Attributes::Type &type_);
-        static const std::string GetDefaultValue(const std::string &name);
+        static std::string GetDefaultValue(const sofa::Attributes::Type &type_);
+        static std::string GetDefaultValue(const std::string &name);
         
-        static const std::string GetName(const sofa::Attributes::Type &type_);
-        static const sofa::Attributes::Type GetType(const std::string &name);
-        
+        static std::string GetName(const sofa::Attributes::Type &type_);
+        static sofa::Attributes::Type GetType(const std::string &name);
         
     public:
+        //==============================================================================
         Attributes();
-        ~Attributes();
+        ~Attributes() {};
         
         void ResetToDefault();
         
         void Print(std::ostream & output = std::cout,
                    const bool withPadding = false) const;
         
-        const std::string Get(const sofa::Attributes::Type &type_) const;
+        std::string Get(const sofa::Attributes::Type &type_) const;
         void Set(const sofa::Attributes::Type &type_, const std::string &value);
         
-    protected:        
+    private:
+        //==============================================================================
         std::string Conventions;
         std::string Version;
         std::string SOFAConventions;

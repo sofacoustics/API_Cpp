@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFANcFile.h
  *   @brief      Class for NetCDF Files (essentially this class wraps the NcFile class)
@@ -52,7 +50,6 @@ http://www.sofaconventions.org
 #define _SOFA_NC_FILE_H__
 
 #include "../src/SOFAPlatform.h"
-#include "../src/SOFAExceptions.h"
 #include "netcdf.h"
 #include "ncFile.h"
 
@@ -73,29 +70,29 @@ namespace sofa
         NetCDFFile(const std::string &path,
                    const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
         
-        virtual ~NetCDFFile();
+        virtual ~NetCDFFile() {};
         
-        const std::string GetFilename() const;
+        const std::string & GetFilename() const;
         
-        virtual const bool IsValid() const;
+        virtual bool IsValid() const;
         
         //==============================================================================
         // netCDF Attributes
         //==============================================================================
-        const unsigned int GetNumGlobalAttributes() const;
-        const bool HasAttribute(const std::string &attributeName) const;
+        unsigned int GetNumGlobalAttributes() const;
+        bool HasAttribute(const std::string &attributeName) const;
         
-        const netCDF::NcType GetAttributeType(const std::string &attributeName) const;
+        netCDF::NcType GetAttributeType(const std::string &attributeName) const;
         
-        const bool IsAttributeFloat(const std::string &attributeName) const;        
-        const bool IsAttributeDouble(const std::string &attributeName) const;            
-        const bool IsAttributeByte(const std::string &attributeName) const;    
-        const bool IsAttributeChar(const std::string &attributeName) const;    
-        const bool IsAttributeShort(const std::string &attributeName) const;    
-        const bool IsAttributeInt(const std::string &attributeName) const;    
-        const bool IsAttributeInt64(const std::string &attributeName) const;    
+        bool IsAttributeFloat(const std::string &attributeName) const;
+        bool IsAttributeDouble(const std::string &attributeName) const;
+        bool IsAttributeByte(const std::string &attributeName) const;
+        bool IsAttributeChar(const std::string &attributeName) const;
+        bool IsAttributeShort(const std::string &attributeName) const;
+        bool IsAttributeInt(const std::string &attributeName) const;
+        bool IsAttributeInt64(const std::string &attributeName) const;
         
-        const std::string GetAttributeValueAsString(const std::string &attributeName) const;
+        std::string GetAttributeValueAsString(const std::string &attributeName) const;
         
         void GetAllCharAttributes(std::vector< std::string > &attributeNames,
                                   std::vector< std::string > &attributeValues) const;
@@ -109,9 +106,9 @@ namespace sofa
         //==============================================================================
         // netCDF Dimensions
         //==============================================================================
-        const unsigned int GetNumDimensions() const;
-        const std::size_t GetDimension(const std::string &dimensionName) const;
-        const bool HasDimension(const std::string &dimensionName) const;
+        unsigned int GetNumDimensions() const;
+        std::size_t GetDimension(const std::string &dimensionName) const;
+        bool HasDimension(const std::string &dimensionName) const;
         
         void GetAllDimensionsNames(std::vector< std::string > &dimensionNames) const;
         
@@ -121,63 +118,75 @@ namespace sofa
         //==============================================================================
         // netCDF Variables
         //==============================================================================
-        const unsigned int GetNumVariables() const;
-        const bool HasVariable(const std::string &variableName) const;
+        unsigned int GetNumVariables() const;
+        bool HasVariable(const std::string &variableName) const;
         
         void GetAllVariablesNames(std::vector< std::string > &variableNames) const;
         
-        const netCDF::NcType GetVariableType(const std::string &variableName) const;
-        const std::string GetVariableTypeName(const std::string &variableName) const;
+        netCDF::NcType GetVariableType(const std::string &variableName) const;
+        std::string GetVariableTypeName(const std::string &variableName) const;
         
-        const bool HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const;
+        bool HasVariableType(const netCDF::NcType &type_, const std::string &variableName) const;
         
-        const int GetVariableDimensionality(const std::string &variableName) const;
+        int GetVariableDimensionality(const std::string &variableName) const;
         void GetVariableDimensions(std::vector< std::size_t > &dims, const std::string &variableName) const;
         void GetVariableDimensionsNames(std::vector< std::string > &dims, const std::string &variableName) const;
-        const std::string GetVariableDimensionsNamesAsString(const std::string &variableName) const;
-        const std::string GetVariableDimensionsAsString(const std::string &variableName) const;
+        std::string GetVariableDimensionsNamesAsString(const std::string &variableName) const;
+        std::string GetVariableDimensionsAsString(const std::string &variableName) const;
         
-        const bool VariableIsScalar(const std::string &variableName) const;
+        bool VariableIsScalar(const std::string &variableName) const;
         
-        const bool VariableHasDimension(const std::size_t dim, 
-                                        const std::string &variableName) const;
-        const bool VariableHasDimensions(const std::size_t dim1,
-                                         const std::size_t dim2,
-                                         const std::string &variableName) const;
-        const bool VariableHasDimensions(const std::size_t dim1,
-                                         const std::size_t dim2,
-                                         const std::size_t dim3,
-                                         const std::string &variableName) const;
-        
+        bool VariableHasDimension(const std::size_t dim,
+                                  const std::string &variableName) const;
+        bool VariableHasDimensions(const std::size_t dim1,
+                                   const std::size_t dim2,
+                                   const std::string &variableName) const;
+        bool VariableHasDimensions(const std::size_t dim1,
+                                   const std::size_t dim2,
+                                   const std::size_t dim3,
+                                   const std::string &variableName) const;
+        bool VariableHasDimensions(const std::size_t dim1,
+                                   const std::size_t dim2,
+                                   const std::size_t dim3,
+                                   const std::size_t dim4,
+                                   const std::string &variableName) const;
         
         void GetVariablesAttributes(std::vector< std::string > &attributeNames, const std::string &variableName) const;
         void GetVariablesAttributes(std::vector< std::string > &attributeNames,
                                     std::vector< std::string > &attributeValues,
                                     const std::string &variableName) const;
-        const bool VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const;
+        bool VariableHasAttribute(const std::string &attributeName, const std::string &variableName) const;
         
         void PrintAllVariables(std::ostream & output = std::cout) const;
         
-        const bool GetValues(double *values,
-                             const std::size_t dim1,
-                             const std::size_t dim2,
-                             const std::string &variableName) const;
+        bool GetValues(double *values,
+                       const std::size_t dim1,
+                       const std::size_t dim2,
+                       const std::string &variableName) const;
         
-        const bool GetValues(double *values,
-                             const std::size_t dim1,
-                             const std::size_t dim2,
-                             const std::size_t dim3,
-                             const std::string &variableName) const;
+        bool GetValues(double *values,
+                       const std::size_t dim1,
+                       const std::size_t dim2,
+                       const std::size_t dim3,
+                       const std::string &variableName) const;
         
-        const bool GetValues(std::vector< double > &values,
-                             const std::string &variableName) const;
+        bool GetValues(double *values,
+                       const std::size_t dim1,
+                       const std::size_t dim2,
+                       const std::size_t dim3,
+                       const std::size_t dim4,
+                       const std::string &variableName) const;
+        
+        bool GetValues(std::vector< double > &values,
+                       const std::string &variableName) const;
         
     protected:
-        const netCDF::NcGroupAtt getAttribute(const std::string &attributeName) const;
+        //==============================================================================
+        netCDF::NcGroupAtt getAttribute(const std::string &attributeName) const;
         
-        const netCDF::NcDim getDimension(const std::string &dimensionName) const;
+        netCDF::NcDim getDimension(const std::string &dimensionName) const;
         
-        const netCDF::NcVar getVariable(const std::string &variableName) const;
+        netCDF::NcVar getVariable(const std::string &variableName) const;
         
 
     protected:
@@ -187,8 +196,7 @@ namespace sofa
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        NetCDFFile( const NetCDFFile &other );                    
-        const NetCDFFile & operator= ( const NetCDFFile &other ); 
+        SOFA_AVOID_COPY_CONSTRUCTOR( NetCDFFile );         
     };
     
 }

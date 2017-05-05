@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAExceptions.cpp
  *   @brief      Exception handling
@@ -50,11 +48,6 @@ http://www.sofaconventions.org
 /************************************************************************************/
 #include "../src/SOFAExceptions.h"
 #include <iostream>
-
-#if ( SOFA_MAC == 1 )
-    #include <sstream>
-    #include <syslog.h>
-#endif
 
 using namespace sofa;
 
@@ -75,7 +68,7 @@ void sofa::Exception::LogToCerr(const bool value)
     sofa::Exception::logToCerr = value;
 }
 
-const bool sofa::Exception::IsLoggedToCerr()
+bool sofa::Exception::IsLoggedToCerr()
 {
     return sofa::Exception::logToCerr;
 }
@@ -84,12 +77,7 @@ const bool sofa::Exception::IsLoggedToCerr()
 /*!
  *  @brief          Class constructor
  *  @param[in]      -
- *  @param[out]     -
- *  @param[in, out] -
- *  @return         -
  *
- *  @details
- *  @n  
  */
 /************************************************************************************/
 Exception::Exception(const std::string &text,
@@ -101,40 +89,16 @@ Exception::Exception(const std::string &text,
 , description( text )
 , line( line_ )
 {
-/*
-#if ( SOFA_MAC == 1 )
-    
-    std::ostringstream msg;
-    msg << "Exception occured in : " << file << " at line " << line << " : " << std::endl;
-    msg << "  " << description << std::endl;
-    openlog("sofa", LOG_PID | LOG_NDELAY | LOG_CONS | LOG_PERROR, LOG_USER);
-    setlogmask(LOG_UPTO(LOG_NOTICE));
-    syslog(LOG_NOTICE, "%s", msg.str().c_str());
-    closelog();
-    
-#else
- */
+
     if( sofa::Exception::logToCerr == true )
     {
         std::cerr << "Exception occured (in file " << Exception::getFileName( file ) << " at line " << line << ") : " << std::endl;
         std::cerr << "        " << description << std::endl;
     }
-//#endif
-    
     if( exitAfterException == true )
     {
         exit(1);
     }
-}
-
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-Exception::~Exception() SOFA_NOEXCEPT
-{
 }
 
 /************************************************************************************/
@@ -154,7 +118,7 @@ const char* Exception::what() const SOFA_NOEXCEPT
  *
  */
 /************************************************************************************/
-const std::string Exception::GetFile() const
+const std::string & Exception::GetFile() const
 {
     return filename;
 }
@@ -165,7 +129,7 @@ const std::string Exception::GetFile() const
  *
  */
 /************************************************************************************/
-const unsigned long Exception::GetLine() const
+unsigned long Exception::GetLine() const
 {
     return line;
 }
@@ -176,7 +140,7 @@ const unsigned long Exception::GetLine() const
  *
  */
 /************************************************************************************/
-const std::string Exception::getFileName(const std::string & fullfilename)
+std::string Exception::getFileName(const std::string & fullfilename)
 {
 #if (SOFA_MAC == 1 || SOFA_UNIX == 1 )
     const char separator = '/';

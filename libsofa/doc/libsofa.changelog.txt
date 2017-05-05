@@ -1,14 +1,23 @@
 /************************************************************************************/
-/*  FILE DESCRIPTION																*/
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       libsofa.changelog.txt
  *   @brief      Changelog for libsofa library
  *   @author     Thibaut Carpentier
- *   @version    $(PRODUCT_VERSION)
  *   @date       15/07/2013
  *
 /************************************************************************************/
+
+****************************************************************
+@version    1.1.4
+@author     Thibaut Carpentier
+@date       04/2017
+
+* lots of code cleanup and cosmetic improvements
+* added GeneralFIRE convention
+* added MultiSpeakerBRIR convention
+* added SingleRoomDRIR convention
+* added Windows projects + precompiled dependencies for Windows (32/64 bits)
+* added pull requests from Christian Hoene (sofa/json converter) and Hagen Jaeger (cmake file for Win32 / 64 MinGW build)
 
 ****************************************************************
 @version    1.0.4

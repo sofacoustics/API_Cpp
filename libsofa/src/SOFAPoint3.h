@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAPoint3.h
  *   @brief      Represents one point in 3D
@@ -69,15 +67,15 @@ namespace sofa
     {
     public:
         Point3();
-        ~Point3();
+        ~Point3() {};
         
         Point3( const Point3 &other );                    
         const Point3 & operator= ( const Point3 &other );
         
-        const double operator[](const unsigned int index) const;
+        double operator[](const unsigned int index) const;
         
-        const sofa::Units::Type GetUnits() const;
-        const sofa::Coordinates::Type GetCoordinates() const;
+        sofa::Units::Type GetUnits() const;
+        sofa::Coordinates::Type GetCoordinates() const;
         
         void Set(const sofa::Units::Type &type_);
         void Set(const sofa::Coordinates::Type &type_);                
@@ -97,7 +95,7 @@ namespace sofa
         sofa::Coordinates::Type coordinates;
     };
     
-    const bool GetPoint3(sofa::Point3 &point3, const netCDF::NcVar & variable);
+    bool GetPoint3(sofa::Point3 &point3, const netCDF::NcVar & variable);
     
 }
 

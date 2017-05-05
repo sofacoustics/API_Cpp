@@ -1,6 +1,4 @@
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       sofawrite.cpp
  *   @brief      Various code examples... Just adapt these pieces of code to your needs...
@@ -11,8 +9,9 @@
  */
 /************************************************************************************/
 #include "../src/SOFA.h"
-#include "NcDim.h"
-#include "NcVar.h"
+#include "../src/SOFAString.h"
+#include "ncDim.h"
+#include "ncVar.h"
 
 /************************************************************************************/
 /*!
@@ -31,7 +30,10 @@ static void TestFileConvention(const std::string & filename,
     const bool validSimpleFreeFieldSOS      = sofa::IsValidSimpleFreeFieldSOSFile( filename );
     const bool validSimpleHeadphoneIR       = sofa::IsValidSimpleHeadphoneIRFile( filename );
     const bool validGeneralFIR              = sofa::IsValidGeneralFIRFile( filename );
+    const bool validGeneralFIRE             = sofa::IsValidGeneralFIREFile( filename );
     const bool validGeneralTF               = sofa::IsValidGeneralTFFile( filename );
+    const bool validMultiSpeakerBRIR        = sofa::IsValidMultiSpeakerBRIRFile( filename );
+    const bool validSingleRoomDRIR          = sofa::IsValidSingleRoomDRIRFile( filename );
     
     output << "netCDF               = " << sofa::String::bool2yesorno( validnetCDF ) << std::endl;
     output << "SOFA                 = " << sofa::String::bool2yesorno( validSOFA ) << std::endl;
@@ -39,7 +41,10 @@ static void TestFileConvention(const std::string & filename,
     output << "SimpleFreeFieldSOS   = " << sofa::String::bool2yesorno( validSimpleFreeFieldSOS ) << std::endl;
     output << "SimpleHeadphoneIR    = " << sofa::String::bool2yesorno( validSimpleHeadphoneIR ) << std::endl;
     output << "GeneralFIR           = " << sofa::String::bool2yesorno( validGeneralFIR ) << std::endl;
+    output << "GeneralFIRE          = " << sofa::String::bool2yesorno( validGeneralFIRE ) << std::endl;
     output << "GeneralTF            = " << sofa::String::bool2yesorno( validGeneralTF ) << std::endl;
+    output << "MultiSpeakerBRIR     = " << sofa::String::bool2yesorno( validMultiSpeakerBRIR ) << std::endl;
+    output << "SingleRoomDRIR       = " << sofa::String::bool2yesorno( validSingleRoomDRIR ) << std::endl;
 }
 
 /************************************************************************************/
@@ -381,7 +386,10 @@ static void CreateSimpleFreeFieldHRIRFile()
 int main(int argc, char *argv[])
 {
     ///@todo : change this !
-    const std::string filename = "/Users/tcarpent/Desktop/sofa_files/BTDEI-hp_H010-subj_S115-Set02_BEC-RAW.sofa";
+    //const std::string filename = "/Users/tcarpent/Desktop/sofa_files/BTDEI-hp_H010-subj_S115-Set02_BEC-RAW.sofa";
+    //const std::string filename = "/Users/tcarpent/Desktop/drir.sofa";
+    const std::string filename = "/Users/tcarpent/Desktop/BRIRcut/studio1_olivier_P00.sofa";
+    //const std::string filename = "/Users/tcarpent/Desktop/BRIR_AddAbsorbers_ArrayCentre_Emitters1to64.sofa";
     //"/Users/tcarpent/Desktop/sofa_files/subject_003.sofa";
     //"/Users/tcarpent/Downloads/ClubFritz_SH_BM_01.sofa";
     //"/Users/tcarpent/Desktop/sofa_files/hpir_nh2.sofa";

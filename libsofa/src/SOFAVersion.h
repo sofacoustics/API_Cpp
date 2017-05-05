@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAVersion.h
  *   @brief      API Version
@@ -56,10 +54,10 @@ http://www.sofaconventions.org
 #define SOFA_VERSION_MAJOR   1
 
 /* minor version of sofa library */
-#define SOFA_VERSION_MINOR   0
+#define SOFA_VERSION_MINOR   1
 
 /* release number of current version of sofa library */
-#define SOFA_VERSION_RELEASE 4
+#define SOFA_VERSION_RELEASE 0
 
 
 //==============================================================================

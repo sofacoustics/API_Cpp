@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFASimpleFreeFieldHRIR.cpp
  *   @brief      Class for SOFA files with SimpleFreeFieldHRIR convention
@@ -49,10 +47,10 @@ http://www.sofaconventions.org
  */
 /************************************************************************************/
 #include "../src/SOFASimpleFreeFieldHRIR.h"
+#include "../src/SOFAExceptions.h"
 #include "../src/SOFAUtils.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAPoint3.h"
 #include "../src/SOFAListener.h"
 
 using namespace sofa;
@@ -60,7 +58,7 @@ using namespace sofa;
 const unsigned int SimpleFreeFieldHRIR::ConventionVersionMajor  =   1;
 const unsigned int SimpleFreeFieldHRIR::ConventionVersionMinor  =   0;
 
-const std::string SimpleFreeFieldHRIR::GetConventionVersion()
+std::string SimpleFreeFieldHRIR::GetConventionVersion()
 {
     return sofa::String::Int2String( SimpleFreeFieldHRIR::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( SimpleFreeFieldHRIR::ConventionVersionMinor );
 }
@@ -79,39 +77,13 @@ SimpleFreeFieldHRIR::SimpleFreeFieldHRIR(const std::string &path,
 {
 }
 
-/************************************************************************************/
-/*!
- *  @brief          Class destructor
- *
- */
-/************************************************************************************/
-SimpleFreeFieldHRIR::~SimpleFreeFieldHRIR()
-{
-}
-
-const bool SimpleFreeFieldHRIR::hasDatabaseName() const
-{
-    const netCDF::NcGroupAtt att = getAttribute( "DatabaseName" );
-    
-    return sofa::NcUtils::IsChar( att );
-}
-
-const bool SimpleFreeFieldHRIR::checkGlobalAttributes() const
+bool SimpleFreeFieldHRIR::checkGlobalAttributes() const
 {
     sofa::Attributes attributes;
     GetGlobalAttributes( attributes );
     
-    if( attributes.Get( sofa::Attributes::kSOFAConventions ) != "SimpleFreeFieldHRIR" )
-    {
-        SOFA_THROW( "Not a 'SimpleFreeFieldHRIR' SOFAConvention" );
-        return false;
-    }
-    
-    if( attributes.Get( sofa::Attributes::kDataType ) != "FIR" )
-    {
-        SOFA_THROW( "invalid 'DataType'" );
-        return false;
-    }
+    sofa::File::ensureSOFAConvention( "SimpleFreeFieldHRIR" );
+    sofa::File::ensureDataType( "FIR" );
     
     if( attributes.Get( sofa::Attributes::kRoomType ) != "free field" )
     {
@@ -119,10 +91,12 @@ const bool SimpleFreeFieldHRIR::checkGlobalAttributes() const
         return false;
     }
     
+    sofa::File::ensureGlobalAttribute( sofa::Attributes::kListenerShortName );
+    
     return true;
 }
 
-const bool SimpleFreeFieldHRIR::checkListenerVariables() const
+bool SimpleFreeFieldHRIR::checkListenerVariables() const
 {
     const long I = GetDimension( "I" );
     if( I != 1 )
@@ -158,7 +132,7 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
     }
     
     if( listener.ListenerPositionHasDimensions(  I,  C ) == false
-       && listener.ListenerPositionHasDimensions(  M,  C ) == false )
+     && listener.ListenerPositionHasDimensions(  M,  C ) == false )
     {
         SOFA_THROW( "invalid 'ListenerPosition' dimensions" );
         return false;
@@ -170,7 +144,7 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
         /// but if it is present, is should be [ I C ] or [ M C ]
         
         if( listener.ListenerUpHasDimensions(  I,  C ) == false
-           && listener.ListenerUpHasDimensions(  M,  C ) == false )
+         && listener.ListenerUpHasDimensions(  M,  C ) == false )
         {
             SOFA_THROW( "invalid 'ListenerUp' dimensions" );
             return false;
@@ -188,7 +162,7 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
         /// but if it is present, is should be [ I C ] or [ M C ]
         
         if( listener.ListenerViewHasDimensions(  I,  C ) == false
-           && listener.ListenerViewHasDimensions(  M,  C ) == false )
+         && listener.ListenerViewHasDimensions(  M,  C ) == false )
         {
             SOFA_THROW( "invalid 'ListenerView' dimensions" );
             return false;
@@ -210,19 +184,15 @@ const bool SimpleFreeFieldHRIR::checkListenerVariables() const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::IsValid() const
+bool SimpleFreeFieldHRIR::IsValid() const
 {
     if( sofa::File::IsValid() == false )
     {
         return false;
     }
     
-    if( hasDatabaseName() == false )
-    {
-        SOFA_THROW( "missing 'DatabaseName' global attribute" );
-        return false;
-    }
-    
+    sofa::File::ensureGlobalAttribute( "DatabaseName" );
+        
     if( IsFIRDataType() == false )
     {
         SOFA_THROW( "'DataType' shall be FIR" );
@@ -277,41 +247,17 @@ const bool SimpleFreeFieldHRIR::IsValid() const
 
 /************************************************************************************/
 /*!
- *  @brief          The Data.SamplingRate variable can be either [I] or [M],
- *                  according to the specifications.
- *                  This function returns true if Data.SamplingRate is [I]
- *
- */
-/************************************************************************************/
-const bool SimpleFreeFieldHRIR::isSamplingRateScalar() const
-{
-    return VariableIsScalar( "Data.SamplingRate" ) == true
-    && HasVariableType( netCDF::NcType::nc_DOUBLE, "Data.SamplingRate");
-}
-
-/************************************************************************************/
-/*!
  *  @brief          In case Data.SamplingRate is of dimension [I], this function returns
  *                  its value. In case Data.SamplingRate is of dimension [M], an error is thrown
  *  @return         true on success
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
+bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
 {
     SOFA_ASSERT( SimpleFreeFieldHRIR::IsValid() == true );
     
-    if( isSamplingRateScalar() == true )
-    {
-        const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
-            
-        return sofa::NcUtils::GetValue( value, var );
-    }
-    else
-    {
-        SOFA_THROW( "'Data.SamplingRate' is not a scalar" );
-        return false;
-    }
+    return sofa::File::getSamplingRate( value );
 }
 
 /************************************************************************************/
@@ -321,16 +267,9 @@ const bool SimpleFreeFieldHRIR::GetSamplingRate(double &value) const
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) const
+bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) const
 {
-    const netCDF::NcVar var = getVariable( "Data.SamplingRate" );
-    
-    const netCDF::NcVarAtt attNUnits    = sofa::NcUtils::GetAttribute( var, "Units" );
-    const std::string unitsName         = sofa::NcUtils::GetAttributeValueAsString( attNUnits );
-    
-    units = sofa::Units::GetType( unitsName );
-    
-    return true;
+    return sofa::File::getSamplingRateUnits( units );
 }
 
 /************************************************************************************/
@@ -345,9 +284,11 @@ const bool SimpleFreeFieldHRIR::GetSamplingRateUnits(sofa::Units::Type &units) c
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
+bool SimpleFreeFieldHRIR::GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, dim3, "Data.IR" );
+    /// Data.IR is [ M R N ]
+    
+    return sofa::File::getDataIR( values, dim1, dim2, dim3 );
 }
 
 /************************************************************************************/
@@ -358,27 +299,32 @@ const bool SimpleFreeFieldHRIR::GetDataIR(double *values, const unsigned long di
  *
  */
 /************************************************************************************/
-const bool SimpleFreeFieldHRIR::GetDataIR(std::vector< double > &values) const
+bool SimpleFreeFieldHRIR::GetDataIR(std::vector< double > &values) const
 {
-    const long M = GetNumMeasurements();
-    const long R = GetNumReceivers();
-    const long N = GetNumDataSamples();
+    /// Data.IR is [ M R N ]
     
-    SOFA_ASSERT( M > 0 );
-    SOFA_ASSERT( R > 0 );
-    SOFA_ASSERT( N > 0 );
-    
-    const std::size_t size_ = M * R * N;
-    
-    values.resize( size_ );
-    
-    SOFA_ASSERT( values.empty() == false );
-    
-    return GetDataIR( &values[0], M, R, N );
+    return sofa::File::getDataIR( values );
 }
 
-const bool SimpleFreeFieldHRIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+/************************************************************************************/
+/*!
+ *  @brief          Retrieves the Data.Delay values
+ *  @param[in]      values : the array is resized if needed
+ *  @return         true on success
+ *
+ */
+/************************************************************************************/
+bool SimpleFreeFieldHRIR::GetDataDelay(std::vector< double > &values) const
 {
-    return NetCDFFile::GetValues( values, dim1, dim2, "Data.Delay" );
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values );
+}
+
+bool SimpleFreeFieldHRIR::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const
+{
+    /// Data.Delay is [ I R ] or [ M R ]
+    
+    return sofa::File::getDataDelay( values, dim1, dim2 );
 }
 

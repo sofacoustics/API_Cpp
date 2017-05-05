@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2013-2014, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,8 +37,6 @@ http://www.sofaconventions.org
 
 
 /************************************************************************************/
-/*  FILE DESCRIPTION                                                                */
-/*----------------------------------------------------------------------------------*/
 /*!
  *   @file       SOFAListener.h
  *   @brief      Represents a sofa listener
@@ -71,18 +69,18 @@ namespace sofa
                  const netCDF::NcVar &varListenerUp,
                  const netCDF::NcVar &varListenerView);
         
-        ~Listener();
+        ~Listener() {};
                 
-        const bool IsValid() const;
+        bool IsValid() const;
         
-        const bool HasListenerUp() const;
-        const bool HasListenerView() const;
+        bool HasListenerUp() const;
+        bool HasListenerView() const;
         
-        const bool ListenerPositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;        
-        const bool ListenerUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;        
-        const bool ListenerViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;        
+        bool ListenerPositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
+        bool ListenerUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
+        bool ListenerViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;        
         
-    protected:    
+    private:    
         const sofa::PositionVariable ListenerPosition;
         const sofa::PositionVariable ListenerUp;
         const sofa::PositionVariable ListenerView;
@@ -93,9 +91,7 @@ namespace sofa
     private:
         //==============================================================================
         /// avoid shallow and copy constructor
-        Listener( const Listener &other );                    
-        const Listener & operator= ( const Listener &other );
-
+        SOFA_AVOID_COPY_CONSTRUCTOR( Listener );
     };
     
 }
