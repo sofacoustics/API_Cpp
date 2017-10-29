@@ -119,8 +119,8 @@ static void DisplayInformations(const std::string & filename,
             
             output << tabSeparator << name << std::endl;
             output << tabSeparator << tabSeparator << sofa::String::PadWith( "Datatype: " ) << typeName << std::endl;
-            output << tabSeparator << tabSeparator << sofa::String::PadWith( "Dimensions: ") << dimsNames << std::endl;;
-            output << tabSeparator << tabSeparator << sofa::String::PadWith( "Size: ") << dims << std::endl;;
+            output << tabSeparator << tabSeparator << sofa::String::PadWith( "Dimensions: ") << dimsNames << std::endl;
+            output << tabSeparator << tabSeparator << sofa::String::PadWith( "Size: ") << dims << std::endl;
             
             std::vector< std::string > attributeNames;
             std::vector< std::string > attributeValues;
@@ -130,7 +130,7 @@ static void DisplayInformations(const std::string & filename,
             
             if( attributeNames.size() > 0 )
             {
-                output << tabSeparator << tabSeparator << sofa::String::PadWith( "Attributes: ") << dims << std::endl;;
+                output << tabSeparator << tabSeparator << sofa::String::PadWith( "Attributes: ") << dims << std::endl;
             }
             
             for( std::size_t j = 0; j < attributeNames.size(); j++ )
