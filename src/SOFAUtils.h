@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAUtils.h
  *   @brief      Standard utility functions
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_UTILS_H__
@@ -52,65 +52,53 @@ http://www.sofaconventions.org
 #include "../src/SOFAPlatform.h"
 #include <cmath>
 
-namespace sofa
-{
-    /************************************************************************************/
-    /*!
-     *  @brief          Absolute value, single precision
-     *  @param[in]      x
-     *  @return         abs( x )
-     *
-     */
-    /************************************************************************************/
-    inline float FAbs(const float x) SOFA_NOEXCEPT
-    {
-        return fabsf(x);
-    }
-    
-    /************************************************************************************/
-    /*!
-     *  @brief          Absolute value, double precision
-     *  @param[in]      x
-     *  @return         abs( x )
-     *
-     */
-    /************************************************************************************/
-    inline double FAbs(const double x) SOFA_NOEXCEPT
-    {
-        return fabs(x);
-    }
-    
-    /************************************************************************************/
-    /*!
-     *  @brief          template binary minimum function
-     *  @param[in]      a
-     *  @param[in]      b
-     *  @return         min of a and b
-     *
-     */
-    /************************************************************************************/    
-    template< typename Type >
-    Type smin(const Type &a, const Type &b) SOFA_NOEXCEPT
-    {
-        return ( a < b ) ? a : b;
-    }
-    
-    /************************************************************************************/
-    /*!
-     *  @brief          template binary maximum function
-     *  @param[in]      a
-     *  @param[in]      b
-     *  @return         max of a and b
-     *
-     */
-    /************************************************************************************/  
-    template< typename Type >
-    Type smax(const Type &a, const Type &b) SOFA_NOEXCEPT
-    {
-        return ( a > b ) ? a : b;
-    }
-    
+namespace sofa {
+/************************************************************************************/
+/*!
+ *  @brief          Absolute value, single precision
+ *  @param[in]      x
+ *  @return         abs( x )
+ *
+ */
+/************************************************************************************/
+inline float FAbs(const float x) SOFA_NOEXCEPT { return fabsf(x); }
+
+/************************************************************************************/
+/*!
+ *  @brief          Absolute value, double precision
+ *  @param[in]      x
+ *  @return         abs( x )
+ *
+ */
+/************************************************************************************/
+inline double FAbs(const double x) SOFA_NOEXCEPT { return fabs(x); }
+
+/************************************************************************************/
+/*!
+ *  @brief          template binary minimum function
+ *  @param[in]      a
+ *  @param[in]      b
+ *  @return         min of a and b
+ *
+ */
+/************************************************************************************/
+template <typename Type> Type smin(const Type &a, const Type &b) SOFA_NOEXCEPT {
+  return (a < b) ? a : b;
 }
 
-#endif /* _SOFA_UTILS_H__ */ 
+/************************************************************************************/
+/*!
+ *  @brief          template binary maximum function
+ *  @param[in]      a
+ *  @param[in]      b
+ *  @return         max of a and b
+ *
+ */
+/************************************************************************************/
+template <typename Type> Type smax(const Type &a, const Type &b) SOFA_NOEXCEPT {
+  return (a > b) ? a : b;
+}
 
+} // namespace sofa
+
+#endif /* _SOFA_UTILS_H__ */

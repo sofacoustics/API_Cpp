@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAUnits.cpp
  *   @brief      SOFA units systems
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAUnits.h"
@@ -53,127 +53,130 @@ http://www.sofaconventions.org
 
 using namespace sofa;
 
-namespace UnitsHelper
-{
-    /************************************************************************************/
-    /*!
-     *  @brief          Creates a mapping between units type and their names
-     *
-     *  @details        This standard assumes that the spelling of units is consistent with the International System of Units (SI). 
-     *                  However variants exist, most notably in the US version of SI published by NIST 
-     *                  that includes some Americanized spellings. 
-     *                  It may also be prudent to recognise plural unit names, although this usage is deprecated in SI.
-     *
-     *                  Writing applications shall use SI spellings. 
-     *                  Reading applications should include aliases from alternative spellings of the following units (table 8).
-     *
-     */
-    /************************************************************************************/
-    static const std::map< std::string, sofa::Units::Type > & getTypeMap()
-    {
-        static std::map< std::string, sofa::Units::Type > typeMap;
-        
-        if( typeMap.empty() == true )
-        {
-            typeMap["metres"]                       = sofa::Units::kMeter;
-            typeMap["meters"]                       = sofa::Units::kMeter;
-            typeMap["metre"]                        = sofa::Units::kMeter;
-            typeMap["meter"]                        = sofa::Units::kMeter;
-            
-            typeMap["cubic meter"]                  = sofa::Units::kCubicMeter;
-            typeMap["cubic meters"]                 = sofa::Units::kCubicMeter;
-            typeMap["cubic metre"]                  = sofa::Units::kCubicMeter;
-            typeMap["cubic metres"]                 = sofa::Units::kCubicMeter;
-            
-            typeMap["hertz"]                        = sofa::Units::kHertz;
-            typeMap["samples"]                      = sofa::Units::kSamples;
-            
-            typeMap["degree, degree, meter"]        = sofa::Units::kSphericalUnits;
-            typeMap["degree, degree, metre"]        = sofa::Units::kSphericalUnits;
-            typeMap["degree, degree, metres"]       = sofa::Units::kSphericalUnits;
-            typeMap["degree, degree, meters"]       = sofa::Units::kSphericalUnits;
-            typeMap["degrees, degrees, meter"]      = sofa::Units::kSphericalUnits;
-            typeMap["degrees, degrees, metre"]      = sofa::Units::kSphericalUnits;
-            typeMap["degrees, degrees, metres"]     = sofa::Units::kSphericalUnits;
-            typeMap["degrees, degrees, meters"]     = sofa::Units::kSphericalUnits;
-            
-            typeMap["degree,degree,meter"]          = sofa::Units::kSphericalUnits;
-            typeMap["degree,degree,metre"]          = sofa::Units::kSphericalUnits;
-            typeMap["degree,degree,metres"]         = sofa::Units::kSphericalUnits;
-            typeMap["degree,degree,meters"]         = sofa::Units::kSphericalUnits;
-            typeMap["degrees,degrees,meter"]        = sofa::Units::kSphericalUnits;
-            typeMap["degrees,degrees,metre"]        = sofa::Units::kSphericalUnits;
-            typeMap["degrees,degrees,metres"]       = sofa::Units::kSphericalUnits;
-            typeMap["degrees,degrees,meters"]       = sofa::Units::kSphericalUnits;
-            
-            typeMap["degree degree meter"]          = sofa::Units::kSphericalUnits;
-            typeMap["degree degree metre"]          = sofa::Units::kSphericalUnits;
-            typeMap["degree degree metres"]         = sofa::Units::kSphericalUnits;
-            typeMap["degree degree meters"]         = sofa::Units::kSphericalUnits;
-            typeMap["degrees degrees meter"]        = sofa::Units::kSphericalUnits;
-            typeMap["degrees degrees metre"]        = sofa::Units::kSphericalUnits;
-            typeMap["degrees degrees metres"]       = sofa::Units::kSphericalUnits;
-            typeMap["degrees degrees meters"]       = sofa::Units::kSphericalUnits;
-            
-            typeMap["kelvin"]                       = sofa::Units::kKelvin;
-            typeMap["Kelvin"]                       = sofa::Units::kKelvin;
-            typeMap["degree Kelvin"]                = sofa::Units::kKelvin;
-            typeMap["degrees Kelvin"]               = sofa::Units::kKelvin;
-            typeMap["degree kelvin"]                = sofa::Units::kKelvin;
-            typeMap["degrees kelvin"]               = sofa::Units::kKelvin;
+namespace UnitsHelper {
+/************************************************************************************/
+/*!
+ *  @brief          Creates a mapping between units type and their names
+ *
+ *  @details        This standard assumes that the spelling of units is
+ * consistent with the International System of Units (SI). However variants
+ * exist, most notably in the US version of SI published by NIST that includes
+ * some Americanized spellings. It may also be prudent to recognise plural unit
+ * names, although this usage is deprecated in SI.
+ *
+ *                  Writing applications shall use SI spellings.
+ *                  Reading applications should include aliases from alternative
+ * spellings of the following units (table 8).
+ *
+ */
+/************************************************************************************/
+static const std::map<std::string, sofa::Units::Type> &getTypeMap() {
+  static std::map<std::string, sofa::Units::Type> typeMap;
 
-        }
-        
-        return typeMap;
-    }
+  if (typeMap.empty() == true) {
+    typeMap["metres"] = sofa::Units::kMeter;
+    typeMap["meters"] = sofa::Units::kMeter;
+    typeMap["metre"] = sofa::Units::kMeter;
+    typeMap["meter"] = sofa::Units::kMeter;
+
+    typeMap["cubic meter"] = sofa::Units::kCubicMeter;
+    typeMap["cubic meters"] = sofa::Units::kCubicMeter;
+    typeMap["cubic metre"] = sofa::Units::kCubicMeter;
+    typeMap["cubic metres"] = sofa::Units::kCubicMeter;
+
+    typeMap["hertz"] = sofa::Units::kHertz;
+    typeMap["samples"] = sofa::Units::kSamples;
+
+    typeMap["degree, degree, meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degree, degree, metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degree, degree, metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degree, degree, meters"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees, degrees, meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees, degrees, metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees, degrees, metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees, degrees, meters"] = sofa::Units::kSphericalUnits;
+
+    typeMap["degree,degree,meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degree,degree,metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degree,degree,metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degree,degree,meters"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees,degrees,meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees,degrees,metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees,degrees,metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees,degrees,meters"] = sofa::Units::kSphericalUnits;
+
+    typeMap["degree degree meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degree degree metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degree degree metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degree degree meters"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees degrees meter"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees degrees metre"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees degrees metres"] = sofa::Units::kSphericalUnits;
+    typeMap["degrees degrees meters"] = sofa::Units::kSphericalUnits;
+
+    typeMap["kelvin"] = sofa::Units::kKelvin;
+    typeMap["Kelvin"] = sofa::Units::kKelvin;
+    typeMap["degree Kelvin"] = sofa::Units::kKelvin;
+    typeMap["degrees Kelvin"] = sofa::Units::kKelvin;
+    typeMap["degree kelvin"] = sofa::Units::kKelvin;
+    typeMap["degrees kelvin"] = sofa::Units::kKelvin;
+  }
+
+  return typeMap;
+}
+} // namespace UnitsHelper
+
+std::string sofa::Units::GetName(const sofa::Units::Type &type_) {
+  /// Writing applications shall use SI spellings in lower case.
+
+  switch (type_) {
+  case sofa::Units::kMeter:
+    return "metre";
+  case sofa::Units::kCubicMeter:
+    return "cubic metre";
+  case sofa::Units::kHertz:
+    return "hertz";
+  case sofa::Units::kSamples:
+    return "samples";
+  case sofa::Units::kSphericalUnits:
+    return "degree, degree, metre"; ///< multiple units shall be comma separated
+  case sofa::Units::kKelvin:
+    return "kelvin";
+
+  default:
+    SOFA_ASSERT(false);
+    return "";
+  case sofa::Units::kNumUnitsTypes:
+    SOFA_ASSERT(false);
+    return "";
+  }
 }
 
+sofa::Units::Type sofa::Units::GetType(const std::string &name) {
+  const std::map<std::string, sofa::Units::Type> &typeMap =
+      UnitsHelper::getTypeMap();
 
-std::string sofa::Units::GetName(const sofa::Units::Type &type_)
-{
-    /// Writing applications shall use SI spellings in lower case.
-    
-    switch( type_ )
-    {
-        case sofa::Units::kMeter                : return "metre";
-        case sofa::Units::kCubicMeter           : return "cubic metre";
-        case sofa::Units::kHertz                : return "hertz";
-        case sofa::Units::kSamples              : return "samples";
-        case sofa::Units::kSphericalUnits       : return "degree, degree, metre";   ///< multiple units shall be comma separated
-        case sofa::Units::kKelvin               : return "kelvin";
-            
-        default                                 : SOFA_ASSERT( false ); return "";    
-        case sofa::Units::kNumUnitsTypes        : SOFA_ASSERT( false ); return "";    
-    }
+  /// Reading applications should be case insensitive and include aliases from
+  /// alternative spellings of the following units
+  const std::string nameLowerCase = sofa::String::ToLowerCase(name);
+
+  if (typeMap.count(nameLowerCase) == 0) {
+    SOFA_ASSERT(false);
+
+    return sofa::Units::kNumUnitsTypes;
+  } else {
+    return typeMap.at(nameLowerCase);
+  }
 }
 
-sofa::Units::Type sofa::Units::GetType(const std::string &name)
-{
-    const std::map< std::string, sofa::Units::Type > & typeMap = UnitsHelper::getTypeMap();
-    
-    /// Reading applications should be case insensitive and include aliases from alternative spellings of the following units 
-    const std::string nameLowerCase = sofa::String::ToLowerCase( name );
-    
-    if( typeMap.count( nameLowerCase ) == 0 )
-    {        
-        SOFA_ASSERT( false );
-        
-        return sofa::Units::kNumUnitsTypes;
-    }
-    else
-    {
-        return typeMap.at( nameLowerCase );
-    }
-}
+bool sofa::Units::IsValid(const std::string &name) {
+  /// AES69-2015 : Reading applications should be case insensitive
+  const std::string name_ = sofa::String::ToLowerCase(name);
 
-bool sofa::Units::IsValid(const std::string &name)
-{
-    /// AES69-2015 : Reading applications should be case insensitive    
-    const std::string name_ = sofa::String::ToLowerCase( name );
-    
-    const std::map< std::string, sofa::Units::Type > & typeMap = UnitsHelper::getTypeMap();
-    
-    return ( typeMap.count( name_ ) != 0 );
+  const std::map<std::string, sofa::Units::Type> &typeMap =
+      UnitsHelper::getTypeMap();
+
+  return (typeMap.count(name_) != 0);
 }
 
 /************************************************************************************/
@@ -183,58 +186,57 @@ bool sofa::Units::IsValid(const std::string &name)
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsValid(const netCDF::NcAtt & attr)
-{
-    if( sofa::NcUtils::IsValid( attr ) == false )
-    {
-        return false;
-    }
-    
-    if( sofa::NcUtils::IsChar( attr ) == false )
-    {
-        return false;
-    }
-    
-    const std::string positionUnits = sofa::NcUtils::GetAttributeValueAsString( attr );
-    
-    if( sofa::Units::IsValid( positionUnits ) == false )
-    {
-        return false;
-    }
-    
+bool sofa::Units::IsValid(const netCDF::NcAtt &attr) {
+  if (sofa::NcUtils::IsValid(attr) == false) {
+    return false;
+  }
+
+  if (sofa::NcUtils::IsChar(attr) == false) {
+    return false;
+  }
+
+  const std::string positionUnits =
+      sofa::NcUtils::GetAttributeValueAsString(attr);
+
+  if (sofa::Units::IsValid(positionUnits) == false) {
+    return false;
+  }
+
+  return true;
+}
+
+/************************************************************************************/
+/*!
+ *  @brief          Returns true if a given unit corresponds to a distance
+ * metric
+ *  @param[in]      type_ : the sofa units
+ *
+ */
+/************************************************************************************/
+bool sofa::Units::IsDistanceUnit(const sofa::Units::Type &type_) {
+  switch (type_) {
+  case sofa::Units::kMeter:
     return true;
+  default:
+    return false;
+  }
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if a given unit corresponds to a distance metric
+ *  @brief          Returns true if a given unit corresponds to a frequency
+ * metric
  *  @param[in]      type_ : the sofa units
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsDistanceUnit(const sofa::Units::Type &type_)
-{
-    switch( type_ )
-    {
-        case sofa::Units::kMeter    : return true;
-        default                     : return false;
-    }
-}
-
-/************************************************************************************/
-/*!
- *  @brief          Returns true if a given unit corresponds to a frequency metric
- *  @param[in]      type_ : the sofa units
- *
- */
-/************************************************************************************/
-bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
-{
-    switch( type_ )
-    {
-        case sofa::Units::kHertz    : return true;
-        default                     : return false;
-    }
+bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_) {
+  switch (type_) {
+  case sofa::Units::kHertz:
+    return true;
+  default:
+    return false;
+  }
 }
 
 /************************************************************************************/
@@ -244,39 +246,39 @@ bool sofa::Units::IsFrequencyUnit(const sofa::Units::Type &type_)
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsTimeUnit(const sofa::Units::Type &type_)
-{
-    switch( type_ )
-    {
-        case sofa::Units::kSamples    : return true;
-        default                       : return false;
-    }    
+bool sofa::Units::IsTimeUnit(const sofa::Units::Type &type_) {
+  switch (type_) {
+  case sofa::Units::kSamples:
+    return true;
+  default:
+    return false;
+  }
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if a given unit corresponds to a distance metric
+ *  @brief          Returns true if a given unit corresponds to a distance
+ * metric
  *  @param[in]      name : the sofa units, as a astring
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsDistanceUnit(const std::string &name)
-{
-    const sofa::Units::Type type_ = sofa::Units::GetType( name );
-    return IsDistanceUnit( type_ );
+bool sofa::Units::IsDistanceUnit(const std::string &name) {
+  const sofa::Units::Type type_ = sofa::Units::GetType(name);
+  return IsDistanceUnit(type_);
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if a given unit corresponds to a frequency metric
+ *  @brief          Returns true if a given unit corresponds to a frequency
+ * metric
  *  @param[in]      name : the sofa units, as a astring
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsFrequencyUnit(const std::string &name)
-{
-    const sofa::Units::Type type_ = sofa::Units::GetType( name );
-    return IsFrequencyUnit( type_ );
+bool sofa::Units::IsFrequencyUnit(const std::string &name) {
+  const sofa::Units::Type type_ = sofa::Units::GetType(name);
+  return IsFrequencyUnit(type_);
 }
 
 /************************************************************************************/
@@ -286,9 +288,7 @@ bool sofa::Units::IsFrequencyUnit(const std::string &name)
  *
  */
 /************************************************************************************/
-bool sofa::Units::IsTimeUnit(const std::string &name)
-{
-    const sofa::Units::Type type_ = sofa::Units::GetType( name );
-    return IsTimeUnit( type_ );
+bool sofa::Units::IsTimeUnit(const std::string &name) {
+  const sofa::Units::Type type_ = sofa::Units::GetType(name);
+  return IsTimeUnit(type_);
 }
-

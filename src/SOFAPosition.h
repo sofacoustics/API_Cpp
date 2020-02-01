@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAPosition.h
  *   @brief      Represents a sofa position variable
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_POSITION_H__
@@ -53,47 +53,46 @@ http://www.sofaconventions.org
 #include "../src/SOFAUnits.h"
 #include "ncVar.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          PositionVariable 
-     *  @brief          Represents a sofa position variable
-     *
-     *  @details        Within SOFA, Position variables are represented by a variable (2 or 3 dimensions)
-     *                  which has two attributes : coordinate type and unit
-     */
-    /************************************************************************************/
-    class SOFA_API PositionVariable
-    {        
-    public:
-        PositionVariable(const netCDF::NcVar & variable);
-        ~PositionVariable();
-        
-        bool IsValid(const bool shouldHaveTypeAndUnits = true) const;
-        
-        bool HasUnits() const;
-        bool HasCoordinates() const;
-        
-        sofa::Units::Type GetUnits() const;
-        sofa::Coordinates::Type GetCoordinates() const;
-        
-        unsigned int GetDimensionality() const;
-        
-        bool HasDimensions(const std::size_t dim1, const std::size_t dim2) const;
-        bool HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const;
-                        
-    private:        
-        const netCDF::NcVar var;                ///< the NcVar is not hold
-        
-    private:
-        //==============================================================================
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( PositionVariable );
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_POSITION_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          PositionVariable
+ *  @brief          Represents a sofa position variable
+ *
+ *  @details        Within SOFA, Position variables are represented by a
+ * variable (2 or 3 dimensions) which has two attributes : coordinate type and
+ * unit
+ */
+/************************************************************************************/
+class SOFA_API PositionVariable {
+public:
+  PositionVariable(const netCDF::NcVar &variable);
+  ~PositionVariable();
 
+  bool IsValid(const bool shouldHaveTypeAndUnits = true) const;
+
+  bool HasUnits() const;
+  bool HasCoordinates() const;
+
+  sofa::Units::Type GetUnits() const;
+  sofa::Coordinates::Type GetCoordinates() const;
+
+  unsigned int GetDimensionality() const;
+
+  bool HasDimensions(const std::size_t dim1, const std::size_t dim2) const;
+  bool HasDimensions(const std::size_t dim1, const std::size_t dim2,
+                     const std::size_t dim3) const;
+
+private:
+  const netCDF::NcVar var; ///< the NcVar is not hold
+
+private:
+  //==============================================================================
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(PositionVariable);
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_POSITION_H__ */

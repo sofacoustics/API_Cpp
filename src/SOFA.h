@@ -27,30 +27,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFA.h
  *   @brief      Spatially Oriented Format for Acoustics
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  *
  *   @see        "Spatially Oriented Format for Acoustics:
- *               A Data Exchange Format Representing Head-Related Transfer Functions"
- *                 
- *               Piotr Majdak, Yukio Iwaya, Thibaut Carpentier, Rozenn Nicol, Matthieu Parmentier,
- *                 Agnieszka Roginska, Yôiti Suzuki, Kanji Watanabe, Hagen Wierstorf, Harald Ziegelwanger, and Markus Noisternig
- *                 
+ *               A Data Exchange Format Representing Head-Related Transfer
+ * Functions"
+ *
+ *               Piotr Majdak, Yukio Iwaya, Thibaut Carpentier, Rozenn Nicol,
+ * Matthieu Parmentier, Agnieszka Roginska, Yôiti Suzuki, Kanji Watanabe, Hagen
+ * Wierstorf, Harald Ziegelwanger, and Markus Noisternig
+ *
  *               Presented at the 134th Audio Engineering Society Convention,
  *                 2013 May 4–7 Rome, Italy
  */
@@ -65,19 +67,19 @@ http://www.sofaconventions.org
 #include "../src/SOFAAttributes.h"
 #include "../src/SOFACoordinates.h"
 #include "../src/SOFAFile.h"
+#include "../src/SOFAGeneralFIR.h"
+#include "../src/SOFAGeneralFIRE.h"
+#include "../src/SOFAGeneralTF.h"
+#include "../src/SOFAHelper.h"
+#include "../src/SOFAMultiSpeakerBRIR.h"
 #include "../src/SOFANcFile.h"
 #include "../src/SOFAPlatform.h"
 #include "../src/SOFASimpleFreeFieldHRIR.h"
 #include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFASimpleHeadphoneIR.h"
-#include "../src/SOFAMultiSpeakerBRIR.h"
-#include "../src/SOFAGeneralFIR.h"
-#include "../src/SOFAGeneralFIRE.h"
-#include "../src/SOFAGeneralTF.h"
 #include "../src/SOFASingleRoomDRIR.h"
 #include "../src/SOFAUnits.h"
 #include "../src/SOFAVersion.h"
-#include "../src/SOFAHelper.h"
 
 //==============================================================================
 /// private files
@@ -95,4 +97,3 @@ http://www.sofaconventions.org
 //#include "../src/SOFAUtils.h"
 
 #endif /* _SOFA_H__ */
-

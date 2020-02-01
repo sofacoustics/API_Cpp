@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFACoordinates.cpp
  *   @brief      SOFA Coordinates systems
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFACoordinates.h"
@@ -52,28 +52,24 @@ http://www.sofaconventions.org
 
 using namespace sofa;
 
+namespace CoordinatesHelper {
+/************************************************************************************/
+/*!
+ *  @brief          Creates a mapping between coordinates type and their names
+ *
+ */
+/************************************************************************************/
+static const std::map<std::string, sofa::Coordinates::Type> &getTypeMap() {
+  static std::map<std::string, sofa::Coordinates::Type> typeMap;
 
-namespace CoordinatesHelper
-{
-    /************************************************************************************/
-    /*!
-     *  @brief          Creates a mapping between coordinates type and their names
-     *
-     */
-    /************************************************************************************/
-    static const std::map< std::string, sofa::Coordinates::Type > & getTypeMap()
-    {
-        static std::map< std::string, sofa::Coordinates::Type > typeMap;
-        
-        if( typeMap.empty() == true )
-        {    
-            typeMap["cartesian"]                    = sofa::Coordinates::kCartesian;
-            typeMap["spherical"]                    = sofa::Coordinates::kSpherical;
-        }
-        
-        return typeMap;
-    }
+  if (typeMap.empty() == true) {
+    typeMap["cartesian"] = sofa::Coordinates::kCartesian;
+    typeMap["spherical"] = sofa::Coordinates::kSpherical;
+  }
+
+  return typeMap;
 }
+} // namespace CoordinatesHelper
 
 /************************************************************************************/
 /*!
@@ -82,84 +78,82 @@ namespace CoordinatesHelper
  *
  */
 /************************************************************************************/
-std::string sofa::Coordinates::GetName(const sofa::Coordinates::Type &type_)
-{
-    switch( type_ )
-    {
-        case sofa::Coordinates::kCartesian              : return "cartesian";
-        case sofa::Coordinates::kSpherical              : return "spherical";
-            
-        default                                         : SOFA_ASSERT( false ); return "";    
-        case sofa::Coordinates::kNumCoordinatesTypes    : SOFA_ASSERT( false ); return "";    
-    }
+std::string sofa::Coordinates::GetName(const sofa::Coordinates::Type &type_) {
+  switch (type_) {
+  case sofa::Coordinates::kCartesian:
+    return "cartesian";
+  case sofa::Coordinates::kSpherical:
+    return "spherical";
+
+  default:
+    SOFA_ASSERT(false);
+    return "";
+  case sofa::Coordinates::kNumCoordinatesTypes:
+    SOFA_ASSERT(false);
+    return "";
+  }
 }
 
 /************************************************************************************/
 /*!
  *  @brief          Returns the coordinate system based on its name
- *                  Returns 'sofa::Coordinates::kNumCoordinatesTypes' in case the string does not 
- *                  correspond to a valid coordinate system
+ *                  Returns 'sofa::Coordinates::kNumCoordinatesTypes' in case
+ * the string does not correspond to a valid coordinate system
  *  @param[in]      name : the string to query
  *
  */
 /************************************************************************************/
-sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name)
-{
-    const std::map< std::string, sofa::Coordinates::Type > & typeMap = CoordinatesHelper::getTypeMap();
-    
-    if( typeMap.count( name ) == 0 )
-    {        
-        SOFA_ASSERT( false );
-        
-        return sofa::Coordinates::kNumCoordinatesTypes;
-    }
-    else
-    {
-        return typeMap.at( name );
-    }
+sofa::Coordinates::Type sofa::Coordinates::GetType(const std::string &name) {
+  const std::map<std::string, sofa::Coordinates::Type> &typeMap =
+      CoordinatesHelper::getTypeMap();
+
+  if (typeMap.count(name) == 0) {
+    SOFA_ASSERT(false);
+
+    return sofa::Coordinates::kNumCoordinatesTypes;
+  } else {
+    return typeMap.at(name);
+  }
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if the string corresponds to a valid coordinate system
+ *  @brief          Returns true if the string corresponds to a valid coordinate
+ * system
  *  @param[in]      name : the string to query
  *
  */
 /************************************************************************************/
-bool sofa::Coordinates::IsValid(const std::string &name)
-{
-    const std::map< std::string, sofa::Coordinates::Type > & typeMap = CoordinatesHelper::getTypeMap();
-    
-    return ( typeMap.count( name ) != 0 );
+bool sofa::Coordinates::IsValid(const std::string &name) {
+  const std::map<std::string, sofa::Coordinates::Type> &typeMap =
+      CoordinatesHelper::getTypeMap();
+
+  return (typeMap.count(name) != 0);
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if a NcAtt properly represents a SOFA Coordinates
+ *  @brief          Returns true if a NcAtt properly represents a SOFA
+ * Coordinates
  *  @param[in]      attr : the Nc attribute to query
  *
  */
 /************************************************************************************/
-bool sofa::Coordinates::IsValid(const netCDF::NcAtt & attr)
-{
-    if( sofa::NcUtils::IsValid( attr ) == false )
-    {
-        return false;
-    }
-    
-    if( sofa::NcUtils::IsChar( attr ) == false )
-    {
-        return false;
-    }
-    
-    const std::string positionType = sofa::NcUtils::GetAttributeValueAsString( attr );
-    
-    if( sofa::Coordinates::IsValid( positionType ) == false )
-    {
-        return false;
-    }
-    
-    return true;
+bool sofa::Coordinates::IsValid(const netCDF::NcAtt &attr) {
+  if (sofa::NcUtils::IsValid(attr) == false) {
+    return false;
+  }
+
+  if (sofa::NcUtils::IsChar(attr) == false) {
+    return false;
+  }
+
+  const std::string positionType =
+      sofa::NcUtils::GetAttributeValueAsString(attr);
+
+  if (sofa::Coordinates::IsValid(positionType) == false) {
+    return false;
+  }
+
+  return true;
 }
-
-

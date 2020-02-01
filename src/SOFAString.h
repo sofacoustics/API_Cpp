@@ -27,81 +27,67 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAString.h
  *   @brief      Useful functions to manipulate strings
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_STRING_H__
 #define _SOFA_STRING_H__
 
 #include "../src/SOFAPlatform.h"
-#include <sstream>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <sstream>
 
-namespace sofa
-{
-    
-    namespace String
-    {
-    
-        inline int String2Int(const std::string &str)
-        {
-            return atoi( str.c_str() );
-        }
-        
-        inline std::string ToLowerCase(const std::string &str)
-        {
-            std::string result = str;
-            std::transform( result.begin(), result.end(), result.begin(), ::tolower);
-            
-            return result;
-        }
-        
-        inline std::string Int2String(const int value)
-        {
-            std::ostringstream str;
-            str << value;
-            return str.str();
-        }
-        
-        inline bool IsInt(const char c)
-        {
-            return ( c >= '0' && c <= '9' );
-        }    
-        
-        inline std::string bool2string(const bool value)
-        {
-            return ( value == true ) ? ("true") : ("false");
-        }
+namespace sofa {
 
-        inline std::string bool2yesorno(const bool value)
-        {
-            return ( value == true ) ? ("yes") : ("no");
-        }
-        
-        std::string PadWith(const std::string &src,
-                            const std::size_t totalLength     = 30,
-                            const std::string &pad            = " ");
-        
-        void PrintSeparationLine(std::ostream & output = std::cout);
-    }
+namespace String {
+
+inline int String2Int(const std::string &str) { return atoi(str.c_str()); }
+
+inline std::string ToLowerCase(const std::string &str) {
+  std::string result = str;
+  std::transform(result.begin(), result.end(), result.begin(), ::tolower);
+
+  return result;
 }
 
-#endif /* _SOFA_STRING_H__ */ 
+inline std::string Int2String(const int value) {
+  std::ostringstream str;
+  str << value;
+  return str.str();
+}
 
+inline bool IsInt(const char c) { return (c >= '0' && c <= '9'); }
+
+inline std::string bool2string(const bool value) {
+  return (value == true) ? ("true") : ("false");
+}
+
+inline std::string bool2yesorno(const bool value) {
+  return (value == true) ? ("yes") : ("no");
+}
+
+std::string PadWith(const std::string &src, const std::size_t totalLength = 30,
+                    const std::string &pad = " ");
+
+void PrintSeparationLine(std::ostream &output = std::cout);
+} // namespace String
+} // namespace sofa
+
+#endif /* _SOFA_STRING_H__ */

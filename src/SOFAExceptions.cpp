@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAExceptions.cpp
  *   @brief      Exception handling
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAExceptions.h"
@@ -57,21 +57,17 @@ bool sofa::Exception::logToCerr = true;
 
 /************************************************************************************/
 /*!
- *  @brief          Enables or disables the logging of sofa::Exception on the standard error.
- *                  Use this with great care !
- *                  This affects globaly all sofa exceptions
+ *  @brief          Enables or disables the logging of sofa::Exception on the
+ * standard error. Use this with great care ! This affects globaly all sofa
+ * exceptions
  *
  */
 /************************************************************************************/
-void sofa::Exception::LogToCerr(const bool value)
-{
-    sofa::Exception::logToCerr = value;
+void sofa::Exception::LogToCerr(const bool value) {
+  sofa::Exception::logToCerr = value;
 }
 
-bool sofa::Exception::IsLoggedToCerr()
-{
-    return sofa::Exception::logToCerr;
-}
+bool sofa::Exception::IsLoggedToCerr() { return sofa::Exception::logToCerr; }
 
 /************************************************************************************/
 /*!
@@ -80,25 +76,18 @@ bool sofa::Exception::IsLoggedToCerr()
  *
  */
 /************************************************************************************/
-Exception::Exception(const std::string &text,
-                     const std::string &file,
-                     const unsigned long line_,
-                     const bool exitAfterException)
-: std::exception()
-, filename( file )
-, description( text )
-, line( line_ )
-{
+Exception::Exception(const std::string &text, const std::string &file,
+                     const unsigned long line_, const bool exitAfterException)
+    : std::exception(), filename(file), description(text), line(line_) {
 
-    if( sofa::Exception::logToCerr == true )
-    {
-        std::cerr << "Exception occured (in file " << Exception::getFileName( file ) << " at line " << line << ") : " << std::endl;
-        std::cerr << "        " << description << std::endl;
-    }
-    if( exitAfterException == true )
-    {
-        exit(1);
-    }
+  if (sofa::Exception::logToCerr == true) {
+    std::cerr << "Exception occured (in file " << Exception::getFileName(file)
+              << " at line " << line << ") : " << std::endl;
+    std::cerr << "        " << description << std::endl;
+  }
+  if (exitAfterException == true) {
+    exit(1);
+  }
 }
 
 /************************************************************************************/
@@ -107,32 +96,27 @@ Exception::Exception(const std::string &text,
  *
  */
 /************************************************************************************/
-const char* Exception::what() const SOFA_NOEXCEPT
-{
-    return description.c_str();
+const char *Exception::what() const SOFA_NOEXCEPT {
+  return description.c_str();
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns the name of the source file where the exception occured
+ *  @brief          Returns the name of the source file where the exception
+ * occured
  *
  */
 /************************************************************************************/
-const std::string & Exception::GetFile() const
-{
-    return filename;
-}
+const std::string &Exception::GetFile() const { return filename; }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns the line number of the source file where the exception occured
+ *  @brief          Returns the line number of the source file where the
+ * exception occured
  *
  */
 /************************************************************************************/
-unsigned long Exception::GetLine() const
-{
-    return line;
-}
+unsigned long Exception::GetLine() const { return line; }
 
 /************************************************************************************/
 /*!
@@ -140,23 +124,18 @@ unsigned long Exception::GetLine() const
  *
  */
 /************************************************************************************/
-std::string Exception::getFileName(const std::string & fullfilename)
-{
-#if (SOFA_MAC == 1 || SOFA_UNIX == 1 )
-    const char separator = '/';
+std::string Exception::getFileName(const std::string &fullfilename) {
+#if (SOFA_MAC == 1 || SOFA_UNIX == 1)
+  const char separator = '/';
 #else
-    const char separator = '\\';
+  const char separator = '\\';
 #endif
-    
-    const std::size_t found = fullfilename.find_last_of( separator );
-    
-    if( found != std::string::npos )
-    {        
-        return fullfilename.substr( found+1, std::string::npos );
-    }
-    else 
-    {
-        return fullfilename;
-    }        
-}
 
+  const std::size_t found = fullfilename.find_last_of(separator);
+
+  if (found != std::string::npos) {
+    return fullfilename.substr(found + 1, std::string::npos);
+  } else {
+    return fullfilename;
+  }
+}

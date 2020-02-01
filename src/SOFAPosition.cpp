@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAPosition.cpp
  *   @brief      Represents a sofa position variable
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAPosition.h"
@@ -58,10 +58,8 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-PositionVariable::PositionVariable(const netCDF::NcVar & variable)
-: var( variable )
-{
-}
+PositionVariable::PositionVariable(const netCDF::NcVar &variable)
+    : var(variable) {}
 
 /************************************************************************************/
 /*!
@@ -69,88 +67,79 @@ PositionVariable::PositionVariable(const netCDF::NcVar & variable)
  *
  */
 /************************************************************************************/
-PositionVariable::~PositionVariable()
-{
+PositionVariable::~PositionVariable() {}
+
+sofa::Units::Type PositionVariable::GetUnits() const {
+  /// Position:Units attribute
+  const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute(var, "Units");
+
+  if (sofa::Units::IsValid(attrUnits) == false) {
+    ///@todo A VERIFIER
+    return sofa::Units::kNumUnitsTypes;
+  } else {
+    const std::string unitsName =
+        sofa::NcUtils::GetAttributeValueAsString(attrUnits);
+    const sofa::Units::Type units = sofa::Units::GetType(unitsName);
+    return units;
+  }
 }
 
-sofa::Units::Type PositionVariable::GetUnits() const
-{
-    /// Position:Units attribute
-    const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute( var, "Units" );
-    
-    if( sofa::Units::IsValid( attrUnits ) == false )
-    {
-        ///@todo A VERIFIER
-        return sofa::Units::kNumUnitsTypes;
-    }
-    else
-    {
-        const std::string unitsName   = sofa::NcUtils::GetAttributeValueAsString( attrUnits );
-        const sofa::Units::Type units = sofa::Units::GetType( unitsName );
-        return units;
-    }    
+sofa::Coordinates::Type PositionVariable::GetCoordinates() const {
+  /// Position:Type attribute
+  const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute(var, "Type");
+
+  if (sofa::Coordinates::IsValid(attrType) == false) {
+    ///@todo A VERIFIER
+    return sofa::Coordinates::kNumCoordinatesTypes;
+  } else {
+    const std::string coordinatesName =
+        sofa::NcUtils::GetAttributeValueAsString(attrType);
+    const sofa::Coordinates::Type coordinates =
+        sofa::Coordinates::GetType(coordinatesName);
+    return coordinates;
+  }
 }
 
-sofa::Coordinates::Type PositionVariable::GetCoordinates() const
-{
-    /// Position:Type attribute
-    const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute( var, "Type" );
-    
-    if( sofa::Coordinates::IsValid( attrType ) == false )
-    {
-        ///@todo A VERIFIER
-        return sofa::Coordinates::kNumCoordinatesTypes;
-    }
-    else
-    {
-        const std::string coordinatesName = sofa::NcUtils::GetAttributeValueAsString( attrType );
-        const sofa::Coordinates::Type coordinates = sofa::Coordinates::GetType( coordinatesName );
-        return coordinates;
-    }
+unsigned int PositionVariable::GetDimensionality() const {
+  const int dimensionality = sofa::NcUtils::GetDimensionality(var);
+
+  return (unsigned int)sofa::smax((int)0, dimensionality);
 }
 
-unsigned int PositionVariable::GetDimensionality() const
-{
-    const int dimensionality = sofa::NcUtils::GetDimensionality( var );
-    
-    return (unsigned int) sofa::smax( (int) 0, dimensionality );
+bool PositionVariable::HasDimensions(const std::size_t dim1,
+                                     const std::size_t dim2) const {
+  return sofa::NcUtils::HasDimensions(dim1, dim2, var);
 }
 
-bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2) const
-{
-    return sofa::NcUtils::HasDimensions( dim1, dim2, var );
+bool PositionVariable::HasDimensions(const std::size_t dim1,
+                                     const std::size_t dim2,
+                                     const std::size_t dim3) const {
+  return sofa::NcUtils::HasDimensions(dim1, dim2, dim3, var);
 }
 
-bool PositionVariable::HasDimensions(const std::size_t dim1, const std::size_t dim2, const std::size_t dim3) const
-{
-    return sofa::NcUtils::HasDimensions( dim1, dim2, dim3, var );    
+bool PositionVariable::HasUnits() const {
+  SOFA_ASSERT(sofa::NcUtils::IsValid(var) == true);
+  SOFA_ASSERT(sofa::NcUtils::IsDouble(var) == true);
+
+  const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute(var, "Type");
+
+  return sofa::Coordinates::IsValid(attrType);
 }
 
-bool PositionVariable::HasUnits() const
-{
-    SOFA_ASSERT( sofa::NcUtils::IsValid( var ) == true );
-    SOFA_ASSERT( sofa::NcUtils::IsDouble( var ) == true );
-    
-    const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute( var, "Type" );
-    
-    return sofa::Coordinates::IsValid( attrType );
-}
+bool PositionVariable::HasCoordinates() const {
+  SOFA_ASSERT(sofa::NcUtils::IsValid(var) == true);
+  SOFA_ASSERT(sofa::NcUtils::IsDouble(var) == true);
 
-bool PositionVariable::HasCoordinates() const
-{
-    SOFA_ASSERT( sofa::NcUtils::IsValid( var ) == true );
-    SOFA_ASSERT( sofa::NcUtils::IsDouble( var ) == true );
+  const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute(var, "Units");
 
-    const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute( var, "Units" );
-    
-    return sofa::Units::IsValid( attrUnits );
+  return sofa::Units::IsValid(attrUnits);
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Checks if the NcVar corresponds to a valid NcVar, of type double, of dimensionality 2 or 3
- *                  with valid "Type" and "Units" attributes
- *                    
+ *  @brief          Checks if the NcVar corresponds to a valid NcVar, of type
+ * double, of dimensionality 2 or 3 with valid "Type" and "Units" attributes
+ *
  *                  Returns true if everything is conform to the specifications
  *                  False otherwise or if any error occured
  *  @param[in]      -
@@ -159,74 +148,60 @@ bool PositionVariable::HasCoordinates() const
  *  @return         -
  *
  *  @details
- *  @n                
+ *  @n
  */
 /************************************************************************************/
-bool PositionVariable::IsValid(const bool shouldHaveTypeAndUnits) const
-{
-    if( sofa::NcUtils::IsValid( var ) == false )
-    {
-        return false;
-    }
-    
-    if( sofa::NcUtils::IsDouble( var ) == false )
-    {
-        return false;
-    }
-    
-    const int dimensionality = sofa::NcUtils::GetDimensionality( var );
-    if( dimensionality != 2 && dimensionality != 3 )
-    {
-        /// all SOFA elements must have a dimensionality of 2 or 3
-        return false;
-    }
-    
-    if( shouldHaveTypeAndUnits == true )
-    {
-        /// Position:Type attribute
-        const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute( var, "Type" );
-        
-        if( sofa::Coordinates::IsValid( attrType ) == false )
-        {
-            return false;
-        }
-        
-        /// Position:Units attribute
-        const netCDF::NcVarAtt attrUnits = sofa::NcUtils::GetAttribute( var, "Units" );
-        
-        if( sofa::Units::IsValid( attrUnits ) == false )
-        {
-            return false;
-        }
-        
-        /// if Type is Cartesian, the Unit should be meter
-        /// if Type is Spherical, the Unit should be 'degree, degree, meter'
-        
-        const sofa::Coordinates::Type type  = sofa::Coordinates::GetType( sofa::NcUtils::GetAttributeValueAsString( attrType ) );
-        const sofa::Units::Type units       = sofa::Units::GetType( sofa::NcUtils::GetAttributeValueAsString( attrUnits ) );
-        
-        if( type == sofa::Coordinates::kCartesian )
-        {
-            if( units != sofa::Units::kMeter )
-            {
-                return false;
-            }
-        }
-        else if( type == sofa::Coordinates::kSpherical )
-        {
-            if( units != sofa::Units::kSphericalUnits )
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-        
-    }
-    
-    
-    return true;
-}
+bool PositionVariable::IsValid(const bool shouldHaveTypeAndUnits) const {
+  if (sofa::NcUtils::IsValid(var) == false) {
+    return false;
+  }
 
+  if (sofa::NcUtils::IsDouble(var) == false) {
+    return false;
+  }
+
+  const int dimensionality = sofa::NcUtils::GetDimensionality(var);
+  if (dimensionality != 2 && dimensionality != 3) {
+    /// all SOFA elements must have a dimensionality of 2 or 3
+    return false;
+  }
+
+  if (shouldHaveTypeAndUnits == true) {
+    /// Position:Type attribute
+    const netCDF::NcVarAtt attrType = sofa::NcUtils::GetAttribute(var, "Type");
+
+    if (sofa::Coordinates::IsValid(attrType) == false) {
+      return false;
+    }
+
+    /// Position:Units attribute
+    const netCDF::NcVarAtt attrUnits =
+        sofa::NcUtils::GetAttribute(var, "Units");
+
+    if (sofa::Units::IsValid(attrUnits) == false) {
+      return false;
+    }
+
+    /// if Type is Cartesian, the Unit should be meter
+    /// if Type is Spherical, the Unit should be 'degree, degree, meter'
+
+    const sofa::Coordinates::Type type = sofa::Coordinates::GetType(
+        sofa::NcUtils::GetAttributeValueAsString(attrType));
+    const sofa::Units::Type units = sofa::Units::GetType(
+        sofa::NcUtils::GetAttributeValueAsString(attrUnits));
+
+    if (type == sofa::Coordinates::kCartesian) {
+      if (units != sofa::Units::kMeter) {
+        return false;
+      }
+    } else if (type == sofa::Coordinates::kSpherical) {
+      if (units != sofa::Units::kSphericalUnits) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  return true;
+}

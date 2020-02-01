@@ -27,53 +27,53 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAAPI.cpp
  *   @brief      Informations about this API
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAAPI.h"
+#include "../src/SOFAGeneralFIR.h"
+#include "../src/SOFAMultiSpeakerBRIR.h"
 #include "../src/SOFASimpleFreeFieldHRIR.h"
 #include "../src/SOFASimpleFreeFieldSOS.h"
 #include "../src/SOFASimpleHeadphoneIR.h"
-#include "../src/SOFAMultiSpeakerBRIR.h"
-#include "../src/SOFAGeneralFIR.h"
 #include <sstream>
 
 using namespace sofa;
 
 #ifndef SOFA_VERSION_MAJOR
-    #error "Macro SOFA_VERSION_MAJOR not defined"
+#error "Macro SOFA_VERSION_MAJOR not defined"
 #endif
 
 #ifndef SOFA_VERSION_MINOR
-    #error "Macro SOFA_VERSION_MINOR not defined"
+#error "Macro SOFA_VERSION_MINOR not defined"
 #endif
 
 #ifndef SOFA_VERSION_RELEASE
-    #error "Macro SOFA_VERSION_RELEASE not defined"
+#error "Macro SOFA_VERSION_RELEASE not defined"
 #endif
 
 #ifndef SOFA_SPECIFICATIONS_MAJOR
-    #error "Macro SOFA_SPECIFICATIONS_MAJOR not defined"
+#error "Macro SOFA_SPECIFICATIONS_MAJOR not defined"
 #endif
 
 #ifndef SOFA_SPECIFICATIONS_MINOR
-    #error "Macro SOFA_SPECIFICATIONS_MINOR not defined"
+#error "Macro SOFA_SPECIFICATIONS_MINOR not defined"
 #endif
 
 /************************************************************************************/
@@ -82,38 +82,34 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-std::string sofa::ApiInfos::GetAPIName()
-{
-    return "SOFA C++ API";
-}
+std::string sofa::ApiInfos::GetAPIName() { return "SOFA C++ API"; }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns a std::string like : x.y.z 
+ *  @brief          Returns a std::string like : x.y.z
  *                    where x is the API version major
  *                    y is the API version minor
  *                    z is the API version release
  *
  */
 /************************************************************************************/
-std::string sofa::ApiInfos::GetAPIVersion()
-{    
-    const int major     = (int) GetAPIVersionMajor();
-    const int minor     = (int) GetAPIVersionMinor();
-    const int release   = (int) GetAPIVersionRelease();
-    
-    SOFA_ASSERT( major >= 0 );
-    SOFA_ASSERT( minor >= 0 );
-    SOFA_ASSERT( release >= 0 );
-    
-    std::ostringstream version;
-    version << major;
-    version << ".";
-    version << minor;
-    version << ".";
-    version << release;
-    
-    return version.str();
+std::string sofa::ApiInfos::GetAPIVersion() {
+  const int major = (int)GetAPIVersionMajor();
+  const int minor = (int)GetAPIVersionMinor();
+  const int release = (int)GetAPIVersionRelease();
+
+  SOFA_ASSERT(major >= 0);
+  SOFA_ASSERT(minor >= 0);
+  SOFA_ASSERT(release >= 0);
+
+  std::ostringstream version;
+  version << major;
+  version << ".";
+  version << minor;
+  version << ".";
+  version << release;
+
+  return version.str();
 }
 
 /************************************************************************************/
@@ -122,13 +118,12 @@ std::string sofa::ApiInfos::GetAPIVersion()
  *
  */
 /************************************************************************************/
-unsigned int sofa::ApiInfos::GetAPIVersionMinor()
-{
-    const int minor     = (int) SOFA_VERSION_MINOR;
-    
-    SOFA_ASSERT( minor >= 0 );
-    
-    return (unsigned int) minor;
+unsigned int sofa::ApiInfos::GetAPIVersionMinor() {
+  const int minor = (int)SOFA_VERSION_MINOR;
+
+  SOFA_ASSERT(minor >= 0);
+
+  return (unsigned int)minor;
 }
 
 /************************************************************************************/
@@ -137,13 +132,12 @@ unsigned int sofa::ApiInfos::GetAPIVersionMinor()
  *
  */
 /************************************************************************************/
-unsigned int sofa::ApiInfos::GetAPIVersionMajor()
-{
-    const int major     = (int) SOFA_VERSION_MAJOR;
-    
-    SOFA_ASSERT( major >= 0 );
-    
-    return (unsigned int) major;
+unsigned int sofa::ApiInfos::GetAPIVersionMajor() {
+  const int major = (int)SOFA_VERSION_MAJOR;
+
+  SOFA_ASSERT(major >= 0);
+
+  return (unsigned int)major;
 }
 
 /************************************************************************************/
@@ -152,13 +146,12 @@ unsigned int sofa::ApiInfos::GetAPIVersionMajor()
  *
  */
 /************************************************************************************/
-unsigned int sofa::ApiInfos::GetAPIVersionRelease()
-{
-    const int release   = (int) SOFA_VERSION_RELEASE;
-    
-    SOFA_ASSERT( release >= 0 );
-    
-    return (unsigned int) release;
+unsigned int sofa::ApiInfos::GetAPIVersionRelease() {
+  const int release = (int)SOFA_VERSION_RELEASE;
+
+  SOFA_ASSERT(release >= 0);
+
+  return (unsigned int)release;
 }
 
 /************************************************************************************/
@@ -169,20 +162,19 @@ unsigned int sofa::ApiInfos::GetAPIVersionRelease()
  *
  */
 /************************************************************************************/
-std::string sofa::ApiInfos::GetSpecificationsVersion()
-{
-    const int major     = (int) GetSpecificationsVersionMajor();
-    const int minor     = (int) GetSpecificationsVersionMinor();
-    
-    SOFA_ASSERT( major >= 0 );
-    SOFA_ASSERT( minor >= 0 );
-    
-    std::ostringstream version;
-    version << major;
-    version << ".";
-    version << minor;
-    
-    return version.str();
+std::string sofa::ApiInfos::GetSpecificationsVersion() {
+  const int major = (int)GetSpecificationsVersionMajor();
+  const int minor = (int)GetSpecificationsVersionMinor();
+
+  SOFA_ASSERT(major >= 0);
+  SOFA_ASSERT(minor >= 0);
+
+  std::ostringstream version;
+  version << major;
+  version << ".";
+  version << minor;
+
+  return version.str();
 }
 
 /************************************************************************************/
@@ -191,13 +183,12 @@ std::string sofa::ApiInfos::GetSpecificationsVersion()
  *
  */
 /************************************************************************************/
-unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor()
-{
-    const int major     = (int) SOFA_SPECIFICATIONS_MINOR;
-    
-    SOFA_ASSERT( major >= 0 );
-    
-    return (unsigned int) major;
+unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor() {
+  const int major = (int)SOFA_SPECIFICATIONS_MINOR;
+
+  SOFA_ASSERT(major >= 0);
+
+  return (unsigned int)major;
 }
 
 /************************************************************************************/
@@ -206,92 +197,72 @@ unsigned int sofa::ApiInfos::GetSpecificationsVersionMinor()
  *
  */
 /************************************************************************************/
-unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor()
-{
-    const int major     = (int) SOFA_SPECIFICATIONS_MAJOR;
-    
-    SOFA_ASSERT( major >= 0 );
-    
-    return (unsigned int) major;
+unsigned int sofa::ApiInfos::GetSpecificationsVersionMajor() {
+  const int major = (int)SOFA_SPECIFICATIONS_MAJOR;
+
+  SOFA_ASSERT(major >= 0);
+
+  return (unsigned int)major;
 }
 
-std::string sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersion()
-{
-    return sofa::SimpleFreeFieldHRIR::GetConventionVersion();
+std::string sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersion() {
+  return sofa::SimpleFreeFieldHRIR::GetConventionVersion();
 }
 
-unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMajor()
-{
-    return sofa::SimpleFreeFieldHRIR::ConventionVersionMajor;
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMajor() {
+  return sofa::SimpleFreeFieldHRIR::ConventionVersionMajor;
 }
 
-unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor()
-{
-    return sofa::SimpleFreeFieldHRIR::ConventionVersionMinor;
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldHRIRConventionVersionMinor() {
+  return sofa::SimpleFreeFieldHRIR::ConventionVersionMinor;
 }
 
-
-std::string sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersion()
-{
-    return sofa::SimpleFreeFieldSOS::GetConventionVersion();
+std::string sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersion() {
+  return sofa::SimpleFreeFieldSOS::GetConventionVersion();
 }
 
-unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMajor()
-{
-    return sofa::SimpleFreeFieldSOS::ConventionVersionMajor;
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMajor() {
+  return sofa::SimpleFreeFieldSOS::ConventionVersionMajor;
 }
 
-unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMinor()
-{
-    return sofa::SimpleFreeFieldSOS::ConventionVersionMinor;
+unsigned int sofa::ApiInfos::GetSimpleFreeFieldSOSConventionVersionMinor() {
+  return sofa::SimpleFreeFieldSOS::ConventionVersionMinor;
 }
 
-
-std::string sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersion()
-{
-    return sofa::SimpleHeadphoneIR::GetConventionVersion();
+std::string sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersion() {
+  return sofa::SimpleHeadphoneIR::GetConventionVersion();
 }
 
-unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMajor()
-{
-    return sofa::SimpleHeadphoneIR::ConventionVersionMajor;
+unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMajor() {
+  return sofa::SimpleHeadphoneIR::ConventionVersionMajor;
 }
 
-unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor()
-{
-    return sofa::SimpleHeadphoneIR::ConventionVersionMinor;
+unsigned int sofa::ApiInfos::GetSimpleHeadphoneIRConventionVersionMinor() {
+  return sofa::SimpleHeadphoneIR::ConventionVersionMinor;
 }
 
-
-std::string sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersion()
-{
-    return sofa::MultiSpeakerBRIR::GetConventionVersion();
+std::string sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersion() {
+  return sofa::MultiSpeakerBRIR::GetConventionVersion();
 }
 
-unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMajor()
-{
-    return sofa::MultiSpeakerBRIR::ConventionVersionMajor;
+unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMajor() {
+  return sofa::MultiSpeakerBRIR::ConventionVersionMajor;
 }
 
-unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMinor()
-{
-    return sofa::MultiSpeakerBRIR::ConventionVersionMinor;
+unsigned int sofa::ApiInfos::GetMultiSpeakerBRIRConventionVersionMinor() {
+  return sofa::MultiSpeakerBRIR::ConventionVersionMinor;
 }
 
-
-std::string sofa::ApiInfos::GetGeneralFIRConventionVersion()
-{
-    return sofa::GeneralFIR::GetConventionVersion();
+std::string sofa::ApiInfos::GetGeneralFIRConventionVersion() {
+  return sofa::GeneralFIR::GetConventionVersion();
 }
 
-unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMajor()
-{
-    return sofa::GeneralFIR::ConventionVersionMajor;
+unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMajor() {
+  return sofa::GeneralFIR::ConventionVersionMajor;
 }
 
-unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMinor()
-{
-    return sofa::GeneralFIR::ConventionVersionMinor;
+unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMinor() {
+  return sofa::GeneralFIR::ConventionVersionMinor;
 }
 
 /************************************************************************************/
@@ -300,37 +271,45 @@ unsigned int sofa::ApiInfos::GetGeneralFIRConventionVersionMinor()
  *
  */
 /************************************************************************************/
-std::string sofa::ApiInfos::GetAPICopyright()
-{
-    const std::string copyright =
-    sofa::ApiInfos::GetAPIName() + " version " + sofa::ApiInfos::GetAPIVersion()
-    + " (implementing SOFA specifications version " + sofa::ApiInfos::GetSpecificationsVersion() + ")\n"
-    + "\n" +
-    "Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC\n"
-    "All rights reserved.\n"
-    "\n"
-    "Redistribution and use in source and binary forms, with or without\n"
-    "modification, are permitted provided that the following conditions are met:\n"
-    "* Redistributions of source code must retain the above copyright\n"
-    "notice, this list of conditions and the following disclaimer.\n"
-    "* Redistributions in binary form must reproduce the above copyright\n"
-    "notice, this list of conditions and the following disclaimer in the\n"
-    "documentation and/or other materials provided with the distribution.\n"
-    "* Neither the name of the <organization> nor the\n"
-    "names of its contributors may be used to endorse or promote products\n"
-    "derived from this software without specific prior written permission.\n"
-    "\n"
-    "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS' AND\n"
-    "ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED\n"
-    "WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\n"
-    "DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY\n"
-    "DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES\n"
-    "(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;\n"
-    " LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND\n"
-    "ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n"
-    "(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS\n"
-    "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n";
-    
-    return copyright;
-}
+std::string sofa::ApiInfos::GetAPICopyright() {
+  const std::string copyright =
+      sofa::ApiInfos::GetAPIName() + " version " +
+      sofa::ApiInfos::GetAPIVersion() +
+      " (implementing SOFA specifications version " +
+      sofa::ApiInfos::GetSpecificationsVersion() + ")\n" + "\n" +
+      "Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS "
+      "/ UPMC\n"
+      "All rights reserved.\n"
+      "\n"
+      "Redistribution and use in source and binary forms, with or without\n"
+      "modification, are permitted provided that the following conditions are "
+      "met:\n"
+      "* Redistributions of source code must retain the above copyright\n"
+      "notice, this list of conditions and the following disclaimer.\n"
+      "* Redistributions in binary form must reproduce the above copyright\n"
+      "notice, this list of conditions and the following disclaimer in the\n"
+      "documentation and/or other materials provided with the distribution.\n"
+      "* Neither the name of the <organization> nor the\n"
+      "names of its contributors may be used to endorse or promote products\n"
+      "derived from this software without specific prior written permission.\n"
+      "\n"
+      "THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS "
+      "IS' AND\n"
+      "ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE "
+      "IMPLIED\n"
+      "WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\n"
+      "DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY\n"
+      "DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL "
+      "DAMAGES\n"
+      "(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR "
+      "SERVICES;\n"
+      " LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER "
+      "CAUSED AND\n"
+      "ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR "
+      "TORT\n"
+      "(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE "
+      "OF THIS\n"
+      "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n";
 
+  return copyright;
+}

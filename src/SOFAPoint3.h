@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAPoint3.h
  *   @brief      Represents one point in 3D
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_POINT3_H__
@@ -52,52 +52,50 @@ http://www.sofaconventions.org
 #include "../src/SOFACoordinates.h"
 #include "../src/SOFAUnits.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Point3 
-     *  @brief          Represents one point in 3D with a unit and a coordinate system,
-     *                  and allows for conversion between coordinate systems
-     *
-     */
-    /************************************************************************************/
-    class SOFA_API Point3
-    {
-    public:
-        Point3();
-        ~Point3() {};
-        
-        Point3( const Point3 &other );                    
-        const Point3 & operator= ( const Point3 &other );
-        
-        double operator[](const unsigned int index) const;
-        
-        sofa::Units::Type GetUnits() const;
-        sofa::Coordinates::Type GetCoordinates() const;
-        
-        void Set(const sofa::Units::Type &type_);
-        void Set(const sofa::Coordinates::Type &type_);                
-        void Set(const double data_[3]);
-        
-        /*
-        void ConvertTo(const sofa::Units::Type &newUnit);
-        void ConvertTo(const sofa::Coordinates::Type &newCoordinate);
-        void ConvertTo(const sofa::Coordinates::Type &newCoordinate, const sofa::Units::Type &newUnit);
-         */
-        
-    public:
-        //==============================================================================
-        /// data members kept public for convenience
-        double data[3];
-        sofa::Units::Type units;
-        sofa::Coordinates::Type coordinates;
-    };
-    
-    bool GetPoint3(sofa::Point3 &point3, const netCDF::NcVar & variable);
-    
-}
+namespace sofa {
+
+/************************************************************************************/
+/*!
+ *  @class          Point3
+ *  @brief          Represents one point in 3D with a unit and a coordinate
+ * system, and allows for conversion between coordinate systems
+ *
+ */
+/************************************************************************************/
+class SOFA_API Point3 {
+public:
+  Point3();
+  ~Point3(){};
+
+  Point3(const Point3 &other);
+  const Point3 &operator=(const Point3 &other);
+
+  double operator[](const unsigned int index) const;
+
+  sofa::Units::Type GetUnits() const;
+  sofa::Coordinates::Type GetCoordinates() const;
+
+  void Set(const sofa::Units::Type &type_);
+  void Set(const sofa::Coordinates::Type &type_);
+  void Set(const double data_[3]);
+
+  /*
+  void ConvertTo(const sofa::Units::Type &newUnit);
+  void ConvertTo(const sofa::Coordinates::Type &newCoordinate);
+  void ConvertTo(const sofa::Coordinates::Type &newCoordinate, const
+  sofa::Units::Type &newUnit);
+   */
+
+public:
+  //==============================================================================
+  /// data members kept public for convenience
+  double data[3];
+  sofa::Units::Type units;
+  sofa::Coordinates::Type coordinates;
+};
+
+bool GetPoint3(sofa::Point3 &point3, const netCDF::NcVar &variable);
+
+} // namespace sofa
 
 #endif /* _SOFA_POINT3_H__ */
-

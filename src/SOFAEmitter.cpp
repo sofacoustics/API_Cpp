@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAEmitter.cpp
  *   @brief      Represents a sofa emitter
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAEmitter.h"
@@ -59,15 +59,13 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-Emitter::Emitter(const netCDF::NcVar & varEmitterPosition,
-                 const netCDF::NcVar & varEmitterUp,
-                 const netCDF::NcVar & varEmitterView)
-: EmitterPosition( varEmitterPosition )
-, EmitterUp( varEmitterUp )
-, EmitterView( varEmitterView )
-, hasVarEmitterUp( (varEmitterUp.isNull() == false ) ? (true) : (false) )
-, hasVarEmitterView( (varEmitterView.isNull() == false ) ? (true) : (false) )
-{
+Emitter::Emitter(const netCDF::NcVar &varEmitterPosition,
+                 const netCDF::NcVar &varEmitterUp,
+                 const netCDF::NcVar &varEmitterView)
+    : EmitterPosition(varEmitterPosition), EmitterUp(varEmitterUp),
+      EmitterView(varEmitterView),
+      hasVarEmitterUp((varEmitterUp.isNull() == false) ? (true) : (false)),
+      hasVarEmitterView((varEmitterView.isNull() == false) ? (true) : (false)) {
 }
 
 /************************************************************************************/
@@ -83,59 +81,51 @@ Emitter::Emitter(const netCDF::NcVar & varEmitterPosition,
  *                        EmitterView:Type
  *                        EmitterView:Units
  *
- *                    Returns true if everything is conform to the specifications
- *                    False otherwise or if any error occured
+ *                    Returns true if everything is conform to the
+ * specifications False otherwise or if any error occured
  *  @param[in]      -
  *  @param[out]     -
  *  @param[in, out] -
  *  @return         -
  *
  *  @details
- *  @n                some of the tests are redundant, but anyway they should be rather fast
+ *  @n                some of the tests are redundant, but anyway they should be
+ * rather fast
  */
 /************************************************************************************/
-bool Emitter::IsValid() const
-{
-    /// EmitterPosition
-    if( EmitterPosition.IsValid() == false )
-    {
-        return false;
-    }
-    
-    /// EmitterUp
-    if( hasVarEmitterUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        /// EmitterUp do not require a EmitterUp::Type and EmitterUp::Unit.
-        /// it will use the EmitterView::Type and EmitterView::Unit
-        
-        if( EmitterUp.IsValid( shouldHaveTypeAndUnits )  == false )
-        {
-            return false;
-        }
-        
-        
-        /// EmitterView
-        if( hasVarEmitterView == true )
-        {
-            const bool shouldHaveTypeAndUnits = true;
-            /// EmitterView:Type and EmitterView:Units shall be ‘required’ when EmitterView or EmitterUp are used.
-            
-            if( EmitterView.IsValid( shouldHaveTypeAndUnits ) == false )
-            {
-                return false;
-            }
-        }
-        else
-        {
-            /// EmitterView shall be ‘required’ when  EmitterUp is used.
-            return false;
-        }
-    }
-    
-    return true;
-}
+bool Emitter::IsValid() const {
+  /// EmitterPosition
+  if (EmitterPosition.IsValid() == false) {
+    return false;
+  }
 
+  /// EmitterUp
+  if (hasVarEmitterUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+    /// EmitterUp do not require a EmitterUp::Type and EmitterUp::Unit.
+    /// it will use the EmitterView::Type and EmitterView::Unit
+
+    if (EmitterUp.IsValid(shouldHaveTypeAndUnits) == false) {
+      return false;
+    }
+
+    /// EmitterView
+    if (hasVarEmitterView == true) {
+      const bool shouldHaveTypeAndUnits = true;
+      /// EmitterView:Type and EmitterView:Units shall be ‘required’ when
+      /// EmitterView or EmitterUp are used.
+
+      if (EmitterView.IsValid(shouldHaveTypeAndUnits) == false) {
+        return false;
+      }
+    } else {
+      /// EmitterView shall be ‘required’ when  EmitterUp is used.
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /************************************************************************************/
 /*!
@@ -143,21 +133,17 @@ bool Emitter::IsValid() const
  *
  */
 /************************************************************************************/
-bool Emitter::HasEmitterUpVariable() const
-{
-    if( hasVarEmitterUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        
-        return EmitterUp.IsValid( shouldHaveTypeAndUnits );
-        
-        /// EmitterUp do not require a EmitterUp::Type and EmitterUp::Unit.
-        /// it will use the EmitterView::Type and EmitterView::Unit
-    }
-    else
-    {
-        return false;
-    }
+bool Emitter::HasEmitterUpVariable() const {
+  if (hasVarEmitterUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+
+    return EmitterUp.IsValid(shouldHaveTypeAndUnits);
+
+    /// EmitterUp do not require a EmitterUp::Type and EmitterUp::Unit.
+    /// it will use the EmitterView::Type and EmitterView::Unit
+  } else {
+    return false;
+  }
 }
 
 /************************************************************************************/
@@ -166,35 +152,28 @@ bool Emitter::HasEmitterUpVariable() const
  *
  */
 /************************************************************************************/
-bool Emitter::HasEmitterViewVariable() const
-{
-    if( hasVarEmitterView == true )
-    {
-        return EmitterView.IsValid();
-    }
-    else
-    {
-        return false;
-    }
+bool Emitter::HasEmitterViewVariable() const {
+  if (hasVarEmitterView == true) {
+    return EmitterView.IsValid();
+  } else {
+    return false;
+  }
 }
 
 bool Emitter::EmitterPositionHasDimensions(const unsigned long dim1,
                                            const unsigned long dim2,
-                                           const unsigned long dim3) const
-{
-    return EmitterPosition.HasDimensions( dim1, dim2, dim3 );
+                                           const unsigned long dim3) const {
+  return EmitterPosition.HasDimensions(dim1, dim2, dim3);
 }
 
 bool Emitter::EmitterUpHasDimensions(const unsigned long dim1,
                                      const unsigned long dim2,
-                                     const unsigned long dim3) const
-{
-    return EmitterUp.HasDimensions( dim1, dim2, dim3 );
+                                     const unsigned long dim3) const {
+  return EmitterUp.HasDimensions(dim1, dim2, dim3);
 }
 
 bool Emitter::EmitterViewHasDimensions(const unsigned long dim1,
                                        const unsigned long dim2,
-                                       const unsigned long dim3) const
-{
-    return EmitterView.HasDimensions( dim1, dim2, dim3 );
+                                       const unsigned long dim3) const {
+  return EmitterView.HasDimensions(dim1, dim2, dim3);
 }

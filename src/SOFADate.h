@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFADate.h
  *   @brief      Useful methods to represent and manipulate date and time
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_DATE_H__
@@ -51,68 +51,63 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPlatform.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Date 
-     *  @brief          Useful methods to represent and manipulate date and time
-     *
-     *  @details        When saved as attributes string in ISO 8601 format “yyyy-mm-dd HH:MM:SS” is used.
-     */
-    /************************************************************************************/
-    class SOFA_API Date
-    {
-    public:
-        static Date GetCurrentDate();
-        
-        static long long GetCurrentSystemTime();
-        
-        static bool IsValid(const std::string &iso8601);
-        
-    public:
-        Date();
-        ~Date() {};
-        
-        Date(const std::string &iso8601);
-        
-        Date(const Date &other);
-        Date & operator= (const Date &other);
-        
-        Date( const unsigned int year,
-              const unsigned int month_,
-              const unsigned int day,
-              const unsigned int hours,
-              const unsigned int minutes,
-              const unsigned int seconds        = 0,
-              const unsigned int milliseconds    = 0);
-        
-        explicit Date(const long long millisecondsSinceEpoch);
-        
-        long long GetMillisecondsSinceEpoch() const;
-        
-        //==============================================================================
-        unsigned int GetYear() const;
-        unsigned int GetMonth() const;
-        unsigned int GetDay() const;
-        unsigned int GetHours() const;
-        unsigned int GetMinutes() const;
-        unsigned int GetSeconds() const;
-        unsigned int GetMilliSeconds() const;
-        
-        std::string ToISO8601() const;
-        
-        bool IsValid() const;
-        
-    private:
-        static unsigned long long getMillisecondsSinceStartup();
-        
-    private:
-        long long millisSinceEpoch;        
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_DATE_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Date
+ *  @brief          Useful methods to represent and manipulate date and time
+ *
+ *  @details        When saved as attributes string in ISO 8601 format
+ * “yyyy-mm-dd HH:MM:SS” is used.
+ */
+/************************************************************************************/
+class SOFA_API Date {
+public:
+  static Date GetCurrentDate();
 
+  static long long GetCurrentSystemTime();
+
+  static bool IsValid(const std::string &iso8601);
+
+public:
+  Date();
+  ~Date(){};
+
+  Date(const std::string &iso8601);
+
+  Date(const Date &other);
+  Date &operator=(const Date &other);
+
+  Date(const unsigned int year, const unsigned int month_,
+       const unsigned int day, const unsigned int hours,
+       const unsigned int minutes, const unsigned int seconds = 0,
+       const unsigned int milliseconds = 0);
+
+  explicit Date(const long long millisecondsSinceEpoch);
+
+  long long GetMillisecondsSinceEpoch() const;
+
+  //==============================================================================
+  unsigned int GetYear() const;
+  unsigned int GetMonth() const;
+  unsigned int GetDay() const;
+  unsigned int GetHours() const;
+  unsigned int GetMinutes() const;
+  unsigned int GetSeconds() const;
+  unsigned int GetMilliSeconds() const;
+
+  std::string ToISO8601() const;
+
+  bool IsValid() const;
+
+private:
+  static unsigned long long getMillisecondsSinceStartup();
+
+private:
+  long long millisSinceEpoch;
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_DATE_H__ */

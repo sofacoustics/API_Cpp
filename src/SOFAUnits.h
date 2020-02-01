@@ -27,78 +27,73 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAUnits.h
  *   @brief      SOFA units systems
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_UNITS_H__
 #define _SOFA_UNITS_H__
 
 #include "../src/SOFAPlatform.h"
-#include "netcdf.h"
 #include "ncFile.h"
+#include "netcdf.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Units 
-     *  @brief          Static class to represent information about SOFA Units
-     *
-     */
-    /************************************************************************************/
-    class SOFA_API Units
-    {
-    public:
-        
-        enum Type
-        {
-            kMeter                  = 0,
-            kCubicMeter             = 1,
-            kHertz                  = 2,
-            kSamples                = 3,
-            kSphericalUnits         = 4,
-            kKelvin                 = 5,
-            kNumUnitsTypes          = 6
-        };
-        
-    public:
-        static std::string GetName(const sofa::Units::Type &type_);
-        static sofa::Units::Type GetType(const std::string &name);
-        
-        static bool IsDistanceUnit(const sofa::Units::Type &type_);
-        static bool IsFrequencyUnit(const sofa::Units::Type &type_);
-        static bool IsTimeUnit(const sofa::Units::Type &type_);
-        
-        static bool IsDistanceUnit(const std::string &name);
-        static bool IsFrequencyUnit(const std::string &name);
-        static bool IsTimeUnit(const std::string &name);
-                
-        static bool IsValid(const std::string &name);
-        
-        static bool IsValid(const netCDF::NcAtt &attr);
-        
-    protected:
-        Units() SOFA_DELETED_FUNCTION;
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_UNITS_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Units
+ *  @brief          Static class to represent information about SOFA Units
+ *
+ */
+/************************************************************************************/
+class SOFA_API Units {
+public:
+  enum Type {
+    kMeter = 0,
+    kCubicMeter = 1,
+    kHertz = 2,
+    kSamples = 3,
+    kSphericalUnits = 4,
+    kKelvin = 5,
+    kNumUnitsTypes = 6
+  };
 
+public:
+  static std::string GetName(const sofa::Units::Type &type_);
+  static sofa::Units::Type GetType(const std::string &name);
+
+  static bool IsDistanceUnit(const sofa::Units::Type &type_);
+  static bool IsFrequencyUnit(const sofa::Units::Type &type_);
+  static bool IsTimeUnit(const sofa::Units::Type &type_);
+
+  static bool IsDistanceUnit(const std::string &name);
+  static bool IsFrequencyUnit(const std::string &name);
+  static bool IsTimeUnit(const std::string &name);
+
+  static bool IsValid(const std::string &name);
+
+  static bool IsValid(const netCDF::NcAtt &attr);
+
+protected:
+  Units() SOFA_DELETED_FUNCTION;
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_UNITS_H__ */

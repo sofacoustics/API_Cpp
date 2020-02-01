@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAListener.cpp
  *   @brief      Represents a sofa listener
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAListener.h"
@@ -59,82 +59,71 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-Listener::Listener(const netCDF::NcVar & varListenerPosition,
-                   const netCDF::NcVar & varListenerUp,
-                   const netCDF::NcVar & varListenerView)
-: ListenerPosition( varListenerPosition )
-, ListenerUp( varListenerUp )
-, ListenerView( varListenerView )
-, hasVarListenerUp( ( varListenerUp.isNull() == false ) ? (true) : (false) )
-, hasVarListenerView( ( varListenerView.isNull() == false ) ? (true) : (false) )
-{
-}
+Listener::Listener(const netCDF::NcVar &varListenerPosition,
+                   const netCDF::NcVar &varListenerUp,
+                   const netCDF::NcVar &varListenerView)
+    : ListenerPosition(varListenerPosition), ListenerUp(varListenerUp),
+      ListenerView(varListenerView),
+      hasVarListenerUp((varListenerUp.isNull() == false) ? (true) : (false)),
+      hasVarListenerView((varListenerView.isNull() == false) ? (true)
+                                                             : (false)) {}
 
 /************************************************************************************/
 /*!
- *  @brief          Checks if the NcVar corresponds to 
- *                    ListenerPosition 
+ *  @brief          Checks if the NcVar corresponds to
+ *                    ListenerPosition
  *                        ListenerPosition:Type
  *                        ListenerPosition:Unit
- *                    ListenerUp 
+ *                    ListenerUp
  *                    ListenerView
  *                        ListenerView:Type
  *                        ListenerView:Units
  *
- *                    Returns true if everything is conform to the specifications
- *                    False otherwise or if any error occured
+ *                    Returns true if everything is conform to the
+ * specifications False otherwise or if any error occured
  *  @param[in]      -
  *  @param[out]     -
  *  @param[in, out] -
  *  @return         -
  *
  *  @details
- *  @n                some of the tests are redundant, but anyway they should be rather fast
+ *  @n                some of the tests are redundant, but anyway they should be
+ * rather fast
  */
 /************************************************************************************/
-bool Listener::IsValid() const
-{
-    /// ListenerPosition    
-    if( ListenerPosition.IsValid() == false )
-    {
+bool Listener::IsValid() const {
+  /// ListenerPosition
+  if (ListenerPosition.IsValid() == false) {
+    return false;
+  }
+
+  /// ListenerUp
+  if (hasVarListenerUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+    /// ListenerUp do not require a ListenerUp::Type and ListenerUp::Unit.
+    /// it will use the ListenerView::Type and ListenerView::Unit
+
+    if (ListenerUp.IsValid(shouldHaveTypeAndUnits) == false) {
+      return false;
+    }
+
+    /// ListenerView
+    if (hasVarListenerView == true) {
+      const bool shouldHaveTypeAndUnits = true;
+      /// ListenerView:Type and ListenerView:Units shall be ‘required’ when
+      /// ListenerView or ListenerUp are used.
+
+      if (ListenerView.IsValid(shouldHaveTypeAndUnits) == false) {
         return false;
+      }
+    } else {
+      /// ListenerView shall be ‘required’ when  ListenerUp is used.
+      return false;
     }
-    
-    
-    /// ListenerUp
-    if( hasVarListenerUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        /// ListenerUp do not require a ListenerUp::Type and ListenerUp::Unit.
-        /// it will use the ListenerView::Type and ListenerView::Unit
-        
-        if( ListenerUp.IsValid( shouldHaveTypeAndUnits )  == false )
-        {
-            return false;
-        }
-        
-        
-        /// ListenerView
-        if( hasVarListenerView == true )
-        {
-            const bool shouldHaveTypeAndUnits = true;
-            /// ListenerView:Type and ListenerView:Units shall be ‘required’ when ListenerView or ListenerUp are used.
-            
-            if( ListenerView.IsValid( shouldHaveTypeAndUnits ) == false )
-            {
-                return false;
-            }
-        }
-        else
-        {
-            /// ListenerView shall be ‘required’ when  ListenerUp is used.
-            return false;
-        }
-    }
+  }
 
-    return true;
+  return true;
 }
-
 
 /************************************************************************************/
 /*!
@@ -142,21 +131,17 @@ bool Listener::IsValid() const
  *
  */
 /************************************************************************************/
-bool Listener::HasListenerUp() const
-{
-    if( hasVarListenerUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        
-        return ListenerUp.IsValid( shouldHaveTypeAndUnits );
-        
-        /// ListenerUp do not require a ListenerUp::Type and ListenerUp::Unit.
-        /// it will use the ListenerView::Type and ListenerView::Unit
-    }
-    else
-    {
-        return false;
-    }
+bool Listener::HasListenerUp() const {
+  if (hasVarListenerUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+
+    return ListenerUp.IsValid(shouldHaveTypeAndUnits);
+
+    /// ListenerUp do not require a ListenerUp::Type and ListenerUp::Unit.
+    /// it will use the ListenerView::Type and ListenerView::Unit
+  } else {
+    return false;
+  }
 }
 
 /************************************************************************************/
@@ -165,34 +150,25 @@ bool Listener::HasListenerUp() const
  *
  */
 /************************************************************************************/
-bool Listener::HasListenerView() const
-{
-    if( hasVarListenerView == true )
-    {
-        return ListenerView.IsValid();
-    }
-    else
-    {
-        return false;
-    }
+bool Listener::HasListenerView() const {
+  if (hasVarListenerView == true) {
+    return ListenerView.IsValid();
+  } else {
+    return false;
+  }
 }
 
 bool Listener::ListenerPositionHasDimensions(const unsigned long dim1,
-                                             const unsigned long dim2) const
-{
-    return ListenerPosition.HasDimensions( dim1, dim2 );
+                                             const unsigned long dim2) const {
+  return ListenerPosition.HasDimensions(dim1, dim2);
 }
 
 bool Listener::ListenerUpHasDimensions(const unsigned long dim1,
-                                       const unsigned long dim2) const
-{
-    return ListenerUp.HasDimensions( dim1, dim2 );
+                                       const unsigned long dim2) const {
+  return ListenerUp.HasDimensions(dim1, dim2);
 }
 
 bool Listener::ListenerViewHasDimensions(const unsigned long dim1,
-                                         const unsigned long dim2) const
-{
-    return ListenerView.HasDimensions( dim1, dim2 );
+                                         const unsigned long dim2) const {
+  return ListenerView.HasDimensions(dim1, dim2);
 }
-
-

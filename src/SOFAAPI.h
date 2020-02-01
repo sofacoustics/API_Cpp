@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAAPI.h
  *   @brief      Informations about this API
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_API_H__
@@ -51,67 +51,65 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPlatform.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          ApiInfos 
-     *  @brief          Retrieves generic infos about sofa API
-     *
-     */
-    /************************************************************************************/
-    class SOFA_API ApiInfos
-    {
-    public:
-        //==============================================================================
-        // API
-        //==============================================================================
-        static std::string GetAPIName();
-        
-        static std::string GetAPIVersion();
-        
-        static unsigned int GetAPIVersionMinor();
-        static unsigned int GetAPIVersionMajor();
-        static unsigned int GetAPIVersionRelease();
-        
-        static std::string GetAPICopyright();
-        
-        //==============================================================================
-        // Specifications
-        //==============================================================================
-        static std::string GetSpecificationsVersion();
-        
-        static unsigned int GetSpecificationsVersionMinor();
-        static unsigned int GetSpecificationsVersionMajor();
-                
-        //==============================================================================
-        // Conventions
-        //==============================================================================
-        static std::string GetSimpleFreeFieldHRIRConventionVersion();
-        static unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
-        static unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
+namespace sofa {
 
-        static std::string GetSimpleFreeFieldSOSConventionVersion();
-        static unsigned int GetSimpleFreeFieldSOSConventionVersionMajor();
-        static unsigned int GetSimpleFreeFieldSOSConventionVersionMinor();
+/************************************************************************************/
+/*!
+ *  @class          ApiInfos
+ *  @brief          Retrieves generic infos about sofa API
+ *
+ */
+/************************************************************************************/
+class SOFA_API ApiInfos {
+public:
+  //==============================================================================
+  // API
+  //==============================================================================
+  static std::string GetAPIName();
 
-        static std::string GetSimpleHeadphoneIRConventionVersion();
-        static unsigned int GetSimpleHeadphoneIRConventionVersionMajor();
-        static unsigned int GetSimpleHeadphoneIRConventionVersionMinor();
-        
-        static std::string GetMultiSpeakerBRIRConventionVersion();
-        static unsigned int GetMultiSpeakerBRIRConventionVersionMajor();
-        static unsigned int GetMultiSpeakerBRIRConventionVersionMinor();
-        
-        static std::string GetGeneralFIRConventionVersion();
-        static unsigned int GetGeneralFIRConventionVersionMajor();
-        static unsigned int GetGeneralFIRConventionVersionMinor();
-        
-    private:
-        ApiInfos() SOFA_DELETED_FUNCTION;
-    };
-    
-}
+  static std::string GetAPIVersion();
+
+  static unsigned int GetAPIVersionMinor();
+  static unsigned int GetAPIVersionMajor();
+  static unsigned int GetAPIVersionRelease();
+
+  static std::string GetAPICopyright();
+
+  //==============================================================================
+  // Specifications
+  //==============================================================================
+  static std::string GetSpecificationsVersion();
+
+  static unsigned int GetSpecificationsVersionMinor();
+  static unsigned int GetSpecificationsVersionMajor();
+
+  //==============================================================================
+  // Conventions
+  //==============================================================================
+  static std::string GetSimpleFreeFieldHRIRConventionVersion();
+  static unsigned int GetSimpleFreeFieldHRIRConventionVersionMajor();
+  static unsigned int GetSimpleFreeFieldHRIRConventionVersionMinor();
+
+  static std::string GetSimpleFreeFieldSOSConventionVersion();
+  static unsigned int GetSimpleFreeFieldSOSConventionVersionMajor();
+  static unsigned int GetSimpleFreeFieldSOSConventionVersionMinor();
+
+  static std::string GetSimpleHeadphoneIRConventionVersion();
+  static unsigned int GetSimpleHeadphoneIRConventionVersionMajor();
+  static unsigned int GetSimpleHeadphoneIRConventionVersionMinor();
+
+  static std::string GetMultiSpeakerBRIRConventionVersion();
+  static unsigned int GetMultiSpeakerBRIRConventionVersionMajor();
+  static unsigned int GetMultiSpeakerBRIRConventionVersionMinor();
+
+  static std::string GetGeneralFIRConventionVersion();
+  static unsigned int GetGeneralFIRConventionVersionMajor();
+  static unsigned int GetGeneralFIRConventionVersionMinor();
+
+private:
+  ApiInfos() SOFA_DELETED_FUNCTION;
+};
+
+} // namespace sofa
 
 #endif /* _SOFA_API_H__ */

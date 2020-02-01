@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAListener.h
  *   @brief      Represents a sofa listener
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_LISTENER_H__
@@ -51,50 +51,53 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPosition.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Listener 
-     *  @brief          Represents a sofa listener
-     *
-     *  @details        Source and listener are defined in the coordinate system of the room, called global coordinate system.
-     */
-    /************************************************************************************/
-    class SOFA_API Listener
-    {
-    public:
-        Listener(const netCDF::NcVar &varListenerPosition,
-                 const netCDF::NcVar &varListenerUp,
-                 const netCDF::NcVar &varListenerView);
-        
-        ~Listener() {};
-                
-        bool IsValid() const;
-        
-        bool HasListenerUp() const;
-        bool HasListenerView() const;
-        
-        bool ListenerPositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        bool ListenerUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        bool ListenerViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;        
-        
-    private:    
-        const sofa::PositionVariable ListenerPosition;
-        const sofa::PositionVariable ListenerUp;
-        const sofa::PositionVariable ListenerView;
-        
-        const bool hasVarListenerUp;    ///< flag to check if a NcVar was provided for ListenerUp
-        const bool hasVarListenerView;  ///< flag to check if a NcVar was provided for ListenerView
-        
-    private:
-        //==============================================================================
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( Listener );
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_LISTENER_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Listener
+ *  @brief          Represents a sofa listener
+ *
+ *  @details        Source and listener are defined in the coordinate system of
+ * the room, called global coordinate system.
+ */
+/************************************************************************************/
+class SOFA_API Listener {
+public:
+  Listener(const netCDF::NcVar &varListenerPosition,
+           const netCDF::NcVar &varListenerUp,
+           const netCDF::NcVar &varListenerView);
 
+  ~Listener(){};
+
+  bool IsValid() const;
+
+  bool HasListenerUp() const;
+  bool HasListenerView() const;
+
+  bool ListenerPositionHasDimensions(const unsigned long dim1,
+                                     const unsigned long dim2) const;
+  bool ListenerUpHasDimensions(const unsigned long dim1,
+                               const unsigned long dim2) const;
+  bool ListenerViewHasDimensions(const unsigned long dim1,
+                                 const unsigned long dim2) const;
+
+private:
+  const sofa::PositionVariable ListenerPosition;
+  const sofa::PositionVariable ListenerUp;
+  const sofa::PositionVariable ListenerView;
+
+  const bool hasVarListenerUp;   ///< flag to check if a NcVar was provided for
+                                 ///< ListenerUp
+  const bool hasVarListenerView; ///< flag to check if a NcVar was provided for
+                                 ///< ListenerView
+
+private:
+  //==============================================================================
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(Listener);
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_LISTENER_H__ */

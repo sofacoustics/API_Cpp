@@ -27,66 +27,63 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFACoordinates.h
  *   @brief      SOFA Coordinates systems
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_COORDINATES_H__
 #define _SOFA_COORDINATES_H__
 
 #include "../src/SOFAPlatform.h"
-#include "netcdf.h"
 #include "ncFile.h"
+#include "netcdf.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Coordinates 
-     *  @brief          Static class to represent information about SOFA coordinates
-     *
-     *  @details        So far, SOFA specifications consider two coordinates system: cartesian and spherical
-     */
-    /************************************************************************************/
-    class SOFA_API Coordinates
-    {
-    public:
-        
-        enum Type
-        {
-            kCartesian              = 0,    ///< cartesian
-            kSpherical              = 1,    ///< spherical
-            kNumCoordinatesTypes    = 2
-        };
-        
-    public:
-        static std::string GetName(const sofa::Coordinates::Type &type_);
-        static sofa::Coordinates::Type GetType(const std::string &name);
-        
-        static bool IsValid(const std::string &name);
-        
-        static bool IsValid(const netCDF::NcAtt & attr);
-        
-    private:
-        Coordinates() SOFA_DELETED_FUNCTION;
-    };
-    
-}
+namespace sofa {
+
+/************************************************************************************/
+/*!
+ *  @class          Coordinates
+ *  @brief          Static class to represent information about SOFA coordinates
+ *
+ *  @details        So far, SOFA specifications consider two coordinates system:
+ * cartesian and spherical
+ */
+/************************************************************************************/
+class SOFA_API Coordinates {
+public:
+  enum Type {
+    kCartesian = 0, ///< cartesian
+    kSpherical = 1, ///< spherical
+    kNumCoordinatesTypes = 2
+  };
+
+public:
+  static std::string GetName(const sofa::Coordinates::Type &type_);
+  static sofa::Coordinates::Type GetType(const std::string &name);
+
+  static bool IsValid(const std::string &name);
+
+  static bool IsValid(const netCDF::NcAtt &attr);
+
+private:
+  Coordinates() SOFA_DELETED_FUNCTION;
+};
+
+} // namespace sofa
 
 #endif /* _SOFA_COORDINATES_H__ */

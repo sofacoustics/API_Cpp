@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAVersion.h
  *   @brief      API Version
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_VERSION_H__
@@ -51,14 +51,13 @@ http://www.sofaconventions.org
 
 //==============================================================================
 /* major version of sofa library */
-#define SOFA_VERSION_MAJOR   1
+#define SOFA_VERSION_MAJOR 1
 
 /* minor version of sofa library */
-#define SOFA_VERSION_MINOR   1
+#define SOFA_VERSION_MINOR 1
 
 /* release number of current version of sofa library */
 #define SOFA_VERSION_RELEASE 0
-
 
 //==============================================================================
 /* major version of the sofa specifications */
@@ -66,7 +65,5 @@ http://www.sofaconventions.org
 
 /* minor version of the sofa specifications */
 #define SOFA_SPECIFICATIONS_MINOR 0
-
-
 
 #endif /* _SOFA_VERSION_H__ */

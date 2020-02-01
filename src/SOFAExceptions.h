@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAExceptions.h
  *   @brief      Exception handling
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_EXCEPTIONS_H__
@@ -52,54 +52,48 @@ http://www.sofaconventions.org
 #include "../src/SOFAPlatform.h"
 #include <exception>
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Exception 
-     *  @brief          Exception handling
-     *
-     */
-    /************************************************************************************/
-    class SOFA_API Exception : public std::exception
-    {
-    public:
-        static void LogToCerr(const bool value);
-        static bool IsLoggedToCerr();
-        
-    public:
-        Exception(const std::string &text    = "unknown exception",
-                  const std::string &file    = "",
-                  const unsigned long line_  = 0,
-                  const bool exitAfterException = false);
-        
-        virtual ~Exception() SOFA_NOEXCEPT {};
-        virtual const char* what() const SOFA_NOEXCEPT SOFA_OVERRIDE;
-        
-        const std::string & GetFile() const;
-        unsigned long GetLine() const;
-        
-    private:
-        static std::string getFileName(const std::string & fullfilename);
-        
-        static bool logToCerr;
-        
-    private:
-        const std::string filename;            ///< name of the file where the exception occured
-        const std::string description;        ///< description of the exception
-        const unsigned long line;            ///< line number where the exception ocurred        
-    };
-    
-    /**
-     @brief Handy macro to throw a SOFA exception
-     */
-    #define SOFA_THROW( message )\
-    {\
-        throw sofa::Exception( message, __FILE__ , __LINE__ );\
-    }
-    
-}
+namespace sofa {
+
+/************************************************************************************/
+/*!
+ *  @class          Exception
+ *  @brief          Exception handling
+ *
+ */
+/************************************************************************************/
+class SOFA_API Exception : public std::exception {
+public:
+  static void LogToCerr(const bool value);
+  static bool IsLoggedToCerr();
+
+public:
+  Exception(const std::string &text = "unknown exception",
+            const std::string &file = "", const unsigned long line_ = 0,
+            const bool exitAfterException = false);
+
+  virtual ~Exception() SOFA_NOEXCEPT{};
+  virtual const char *what() const SOFA_NOEXCEPT SOFA_OVERRIDE;
+
+  const std::string &GetFile() const;
+  unsigned long GetLine() const;
+
+private:
+  static std::string getFileName(const std::string &fullfilename);
+
+  static bool logToCerr;
+
+private:
+  const std::string filename; ///< name of the file where the exception occured
+  const std::string description; ///< description of the exception
+  const unsigned long line;      ///< line number where the exception ocurred
+};
+
+/**
+ @brief Handy macro to throw a SOFA exception
+ */
+#define SOFA_THROW(message)                                                    \
+  { throw sofa::Exception(message, __FILE__, __LINE__); }
+
+} // namespace sofa
 
 #endif /* _SOFA_EXCEPTIONS_H__ */
-

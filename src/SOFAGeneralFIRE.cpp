@@ -1,7 +1,7 @@
 /*
  Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  * Redistributions of source code must retain the above copyright
@@ -12,7 +12,7 @@
  * Neither the name of the <organization> nor the
  names of its contributors may be used to endorse or promote products
  derived from this software without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,21 +26,21 @@
  */
 
 /**
- 
- Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
- http://www.aes.org
- 
+
+ Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+ Spatial Acoustic Data File Format http://www.aes.org
+
  SOFA (Spatially Oriented Format for Acoustics)
  http://www.sofaconventions.org
- 
- */
 
+ */
 
 /************************************************************************************/
 /*!
  *   @file       SOFAGeneralFIRE.cpp
  *   @brief      Class for SOFA files with GeneralFIRE convention
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
  *
@@ -48,19 +48,20 @@
 /************************************************************************************/
 #include "../src/SOFAGeneralFIRE.h"
 #include "../src/SOFAExceptions.h"
-#include "../src/SOFAUtils.h"
+#include "../src/SOFAListener.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAListener.h"
+#include "../src/SOFAUtils.h"
 
 using namespace sofa;
 
-const unsigned int GeneralFIRE::ConventionVersionMajor  =   1;
-const unsigned int GeneralFIRE::ConventionVersionMinor  =   0;
+const unsigned int GeneralFIRE::ConventionVersionMajor = 1;
+const unsigned int GeneralFIRE::ConventionVersionMinor = 0;
 
-std::string GeneralFIRE::GetConventionVersion()
-{
-    return sofa::String::Int2String( GeneralFIRE::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( GeneralFIRE::ConventionVersionMinor );
+std::string GeneralFIRE::GetConventionVersion() {
+  return sofa::String::Int2String(GeneralFIRE::ConventionVersionMajor) +
+         std::string(".") +
+         sofa::String::Int2String(GeneralFIRE::ConventionVersionMinor);
 }
 
 /************************************************************************************/
@@ -72,65 +73,59 @@ std::string GeneralFIRE::GetConventionVersion()
  */
 /************************************************************************************/
 GeneralFIRE::GeneralFIRE(const std::string &path,
-                       const netCDF::NcFile::FileMode &mode)
-: sofa::File( path, mode )
-{
-}
+                         const netCDF::NcFile::FileMode &mode)
+    : sofa::File(path, mode) {}
 
-bool GeneralFIRE::checkGlobalAttributes() const
-{
-    sofa::Attributes attributes;
-    GetGlobalAttributes( attributes );
-    
-    sofa::File::ensureSOFAConvention( "GeneralFIRE" );
-    sofa::File::ensureDataType( "FIRE" );
-    
-    return true;
+bool GeneralFIRE::checkGlobalAttributes() const {
+  sofa::Attributes attributes;
+  GetGlobalAttributes(attributes);
+
+  sofa::File::ensureSOFAConvention("GeneralFIRE");
+  sofa::File::ensureDataType("FIRE");
+
+  return true;
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if this is a valid SOFA file with GeneralFIRE convention
+ *  @brief          Returns true if this is a valid SOFA file with GeneralFIRE
+ * convention
  *
  */
 /************************************************************************************/
-bool GeneralFIRE::IsValid() const
-{
-    if( sofa::File::IsValid() == false )
-    {
-        return false;
-    }
-    
-    if( IsFIREDataType() == false )
-    {
-        SOFA_THROW( "'DataType' shall be FIRE" );
-        return false;
-    }
-    
-    if( checkGlobalAttributes() == false )
-    {
-        return false;
-    }
-    
-    SOFA_ASSERT( GetDimension( "I" ) == 1 );
-    SOFA_ASSERT( GetDimension( "C" ) == 3 );
-    
-    return true;
+bool GeneralFIRE::IsValid() const {
+  if (sofa::File::IsValid() == false) {
+    return false;
+  }
+
+  if (IsFIREDataType() == false) {
+    SOFA_THROW("'DataType' shall be FIRE");
+    return false;
+  }
+
+  if (checkGlobalAttributes() == false) {
+    return false;
+  }
+
+  SOFA_ASSERT(GetDimension("I") == 1);
+  SOFA_ASSERT(GetDimension("C") == 3);
+
+  return true;
 }
 
 /************************************************************************************/
 /*!
- *  @brief          In case Data.SamplingRate is of dimension [I], this function returns
- *                  its value. In case Data.SamplingRate is of dimension [M], an error is thrown
+ *  @brief          In case Data.SamplingRate is of dimension [I], this function
+ * returns its value. In case Data.SamplingRate is of dimension [M], an error is
+ * thrown
  *  @return         true on success
  *
  */
 /************************************************************************************/
-bool GeneralFIRE::GetSamplingRate(double &value) const
-{
-    SOFA_ASSERT( GeneralFIRE::IsValid() == true );
-    
-    return sofa::File::getSamplingRate( value );
+bool GeneralFIRE::GetSamplingRate(double &value) const {
+  SOFA_ASSERT(GeneralFIRE::IsValid() == true);
+
+  return sofa::File::getSamplingRate(value);
 }
 
 /************************************************************************************/
@@ -140,9 +135,8 @@ bool GeneralFIRE::GetSamplingRate(double &value) const
  *
  */
 /************************************************************************************/
-bool GeneralFIRE::GetSamplingRateUnits(sofa::Units::Type &units) const
-{
-    return sofa::File::getSamplingRateUnits( units );
+bool GeneralFIRE::GetSamplingRateUnits(sofa::Units::Type &units) const {
+  return sofa::File::getSamplingRateUnits(units);
 }
 
 /************************************************************************************/
@@ -158,17 +152,13 @@ bool GeneralFIRE::GetSamplingRateUnits(sofa::Units::Type &units) const
  *
  */
 /************************************************************************************/
-bool GeneralFIRE::GetDataIR(double *values,
-                            const unsigned long dim1,
-                            const unsigned long dim2,
-                            const unsigned long dim3,
-                            const unsigned long dim4) const
-{
-    /// Data.IR is [ M R N E ]
-    
-    return NetCDFFile::GetValues( values, dim1, dim2, dim3, dim4, "Data.IR" );
-}
+bool GeneralFIRE::GetDataIR(double *values, const unsigned long dim1,
+                            const unsigned long dim2, const unsigned long dim3,
+                            const unsigned long dim4) const {
+  /// Data.IR is [ M R N E ]
 
+  return NetCDFFile::GetValues(values, dim1, dim2, dim3, dim4, "Data.IR");
+}
 
 /************************************************************************************/
 /*!
@@ -178,18 +168,16 @@ bool GeneralFIRE::GetDataIR(double *values,
  *
  */
 /************************************************************************************/
-bool GeneralFIRE::GetDataIR(std::vector< double > &values) const
-{
-    /// Data.IR is [ M R N E ]
-    
-    return sofa::File::getDataIR( values );
+bool GeneralFIRE::GetDataIR(std::vector<double> &values) const {
+  /// Data.IR is [ M R N E ]
+
+  return sofa::File::getDataIR(values);
 }
 
+bool GeneralFIRE::GetDataDelay(double *values, const unsigned long dim1,
+                               const unsigned long dim2,
+                               const unsigned long dim3) const {
+  /// Data.Delay is [ I R E ] or [ M R E ]
 
-bool GeneralFIRE::GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const
-{
-    /// Data.Delay is [ I R E ] or [ M R E ]
-    
-    return sofa::File::getDataDelay( values, dim1, dim2, dim3 );
+  return sofa::File::getDataDelay(values, dim1, dim2, dim3);
 }
-

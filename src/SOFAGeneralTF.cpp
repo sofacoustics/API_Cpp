@@ -1,7 +1,7 @@
 /*
  Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  * Redistributions of source code must retain the above copyright
@@ -12,7 +12,7 @@
  * Neither the name of the <organization> nor the
  names of its contributors may be used to endorse or promote products
  derived from this software without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,21 +26,21 @@
  */
 
 /**
- 
- Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
- http://www.aes.org
- 
+
+ Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+ Spatial Acoustic Data File Format http://www.aes.org
+
  SOFA (Spatially Oriented Format for Acoustics)
  http://www.sofaconventions.org
- 
- */
 
+ */
 
 /************************************************************************************/
 /*!
  *   @file       SOFAGeneralTF.cpp
  *   @brief      Class for SOFA files with GeneralTF convention
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
  *
@@ -48,19 +48,20 @@
 /************************************************************************************/
 #include "../src/SOFAGeneralTF.h"
 #include "../src/SOFAExceptions.h"
-#include "../src/SOFAUtils.h"
+#include "../src/SOFAListener.h"
 #include "../src/SOFANcUtils.h"
 #include "../src/SOFAString.h"
-#include "../src/SOFAListener.h"
+#include "../src/SOFAUtils.h"
 
 using namespace sofa;
 
-const unsigned int GeneralTF::ConventionVersionMajor  =   1;
-const unsigned int GeneralTF::ConventionVersionMinor  =   0;
+const unsigned int GeneralTF::ConventionVersionMajor = 1;
+const unsigned int GeneralTF::ConventionVersionMinor = 0;
 
-std::string GeneralTF::GetConventionVersion()
-{
-    return sofa::String::Int2String( GeneralTF::ConventionVersionMajor ) + std::string(".") + sofa::String::Int2String( GeneralTF::ConventionVersionMinor );
+std::string GeneralTF::GetConventionVersion() {
+  return sofa::String::Int2String(GeneralTF::ConventionVersionMajor) +
+         std::string(".") +
+         sofa::String::Int2String(GeneralTF::ConventionVersionMinor);
 }
 
 /************************************************************************************/
@@ -73,48 +74,41 @@ std::string GeneralTF::GetConventionVersion()
 /************************************************************************************/
 GeneralTF::GeneralTF(const std::string &path,
                      const netCDF::NcFile::FileMode &mode)
-: sofa::File( path, mode )
-{
-}
+    : sofa::File(path, mode) {}
 
-bool GeneralTF::checkGlobalAttributes() const
-{
-    sofa::Attributes attributes;
-    GetGlobalAttributes( attributes );
-    
-    sofa::File::ensureSOFAConvention( "GeneralTF" );
-    sofa::File::ensureDataType( "TF" );
-    
-    return true;
+bool GeneralTF::checkGlobalAttributes() const {
+  sofa::Attributes attributes;
+  GetGlobalAttributes(attributes);
+
+  sofa::File::ensureSOFAConvention("GeneralTF");
+  sofa::File::ensureDataType("TF");
+
+  return true;
 }
 
 /************************************************************************************/
 /*!
- *  @brief          Returns true if this is a valid SOFA file with GeneralTF convention
+ *  @brief          Returns true if this is a valid SOFA file with GeneralTF
+ * convention
  *
  */
 /************************************************************************************/
-bool GeneralTF::IsValid() const
-{
-    if( sofa::File::IsValid() == false )
-    {
-        return false;
-    }
-    
-    if( IsTFDataType() == false )
-    {
-        SOFA_THROW( "'DataType' shall be TF" );
-        return false;
-    }
-    
-    if( checkGlobalAttributes() == false )
-    {
-        return false;
-    }
-    
-    SOFA_ASSERT( GetDimension( "I" ) == 1 );
-    SOFA_ASSERT( GetDimension( "C" ) == 3 );
-    
-    return true;
-}
+bool GeneralTF::IsValid() const {
+  if (sofa::File::IsValid() == false) {
+    return false;
+  }
 
+  if (IsTFDataType() == false) {
+    SOFA_THROW("'DataType' shall be TF");
+    return false;
+  }
+
+  if (checkGlobalAttributes() == false) {
+    return false;
+  }
+
+  SOFA_ASSERT(GetDimension("I") == 1);
+  SOFA_ASSERT(GetDimension("C") == 3);
+
+  return true;
+}

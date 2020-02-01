@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAReceiver.h
  *   @brief      Represents a sofa receiver
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_RECEIVER_H__
@@ -51,56 +51,61 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPosition.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Receiver 
-     *  @brief          Represents a sofa receiver
-     *
-     *  @details        Receiver is any acoustic sensor like the ear or a microphone.
-     *                  The number of receivers in not limited in SOFA and defines the size of the data matrix.
-     *
-     *  @details        Emitters and receivers have both their own coordinate system called local coordinate system.
-     *                  The local coordinate system of emitter and receiver are defined relatively to the coordinate system
-     *                  of the source and listener, respectively.
-     *                  With the source and listener in the origin and at default orientation,
-     *                  the local coordinate systems correspond to the global coordinate system.
-     */
-    /************************************************************************************/
-    class SOFA_API Receiver
-    {
-    public:
-        Receiver(const netCDF::NcVar & varReceiverPosition,
-                 const netCDF::NcVar & varReceiverUp,
-                 const netCDF::NcVar & varReceiverView);
-        
-        ~Receiver() {};
-        
-        bool IsValid() const;
-        
-        bool HasReceiverUpVariable() const;
-        bool HasReceiverViewVariable() const;
-        
-        bool ReceiverPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        bool ReceiverUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        bool ReceiverViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        
-    private:
-        const sofa::PositionVariable ReceiverPosition;
-        const sofa::PositionVariable ReceiverUp;
-        const sofa::PositionVariable ReceiverView;
-        const bool hasVarReceiverUp;
-        const bool hasVarReceiverView;
-        
-    private:
-        //==============================================================================
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( Receiver );
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_RECEIVER_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Receiver
+ *  @brief          Represents a sofa receiver
+ *
+ *  @details        Receiver is any acoustic sensor like the ear or a
+ * microphone. The number of receivers in not limited in SOFA and defines the
+ * size of the data matrix.
+ *
+ *  @details        Emitters and receivers have both their own coordinate system
+ * called local coordinate system. The local coordinate system of emitter and
+ * receiver are defined relatively to the coordinate system of the source and
+ * listener, respectively. With the source and listener in the origin and at
+ * default orientation, the local coordinate systems correspond to the global
+ * coordinate system.
+ */
+/************************************************************************************/
+class SOFA_API Receiver {
+public:
+  Receiver(const netCDF::NcVar &varReceiverPosition,
+           const netCDF::NcVar &varReceiverUp,
+           const netCDF::NcVar &varReceiverView);
 
+  ~Receiver(){};
+
+  bool IsValid() const;
+
+  bool HasReceiverUpVariable() const;
+  bool HasReceiverViewVariable() const;
+
+  bool ReceiverPositionHasDimensions(const unsigned long dim1,
+                                     const unsigned long dim2,
+                                     const unsigned long dim3) const;
+  bool ReceiverUpHasDimensions(const unsigned long dim1,
+                               const unsigned long dim2,
+                               const unsigned long dim3) const;
+  bool ReceiverViewHasDimensions(const unsigned long dim1,
+                                 const unsigned long dim2,
+                                 const unsigned long dim3) const;
+
+private:
+  const sofa::PositionVariable ReceiverPosition;
+  const sofa::PositionVariable ReceiverUp;
+  const sofa::PositionVariable ReceiverView;
+  const bool hasVarReceiverUp;
+  const bool hasVarReceiverView;
+
+private:
+  //==============================================================================
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(Receiver);
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_RECEIVER_H__ */

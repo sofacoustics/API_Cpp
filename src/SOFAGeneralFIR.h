@@ -1,7 +1,7 @@
 /*
  Copyright (c) 2013--2017, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
  * Redistributions of source code must retain the above copyright
@@ -12,7 +12,7 @@
  * Neither the name of the <organization> nor the
  names of its contributors may be used to endorse or promote products
  derived from this software without specific prior written permission.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,21 +26,21 @@
  */
 
 /**
- 
- Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
- http://www.aes.org
- 
+
+ Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+ Spatial Acoustic Data File Format http://www.aes.org
+
  SOFA (Spatially Oriented Format for Acoustics)
  http://www.sofaconventions.org
- 
- */
 
+ */
 
 /************************************************************************************/
 /*!
  *   @file       SOFAGeneralFIR.h
  *   @brief      Class for SOFA files with GeneralFIR convention
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
  *
@@ -51,53 +51,53 @@
 
 #include "../src/SOFAFile.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          GeneralFIR
-     *  @brief          Class for SOFA files with GeneralFIR convention
-     *
-     *  @details        Provides methods specific to SOFA files with GeneralFIR convention
-     */
-    /************************************************************************************/
-    class SOFA_API GeneralFIR : public sofa::File
-    {
-    public:
-        static const unsigned int ConventionVersionMajor;
-        static const unsigned int ConventionVersionMinor;
-        static std::string GetConventionVersion();
-        
-    public:
-        GeneralFIR(const std::string &path,
-                   const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
-        
-        virtual ~GeneralFIR() {};
-        
-        virtual bool IsValid() const SOFA_OVERRIDE;
-        
-        bool GetSamplingRate(double &value) const;
-        bool GetSamplingRateUnits(sofa::Units::Type &units) const;
-        
-        //==============================================================================
-        bool GetDataIR(std::vector< double > &values) const;
-        bool GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        
-        //==============================================================================
-        bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        bool GetDataDelay(std::vector< double > &values) const;
-        
-    private:
-        //==============================================================================
-        bool checkGlobalAttributes() const;
-        
-    private:
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( GeneralFIR );
-    };
-    
-}
+namespace sofa {
+
+/************************************************************************************/
+/*!
+ *  @class          GeneralFIR
+ *  @brief          Class for SOFA files with GeneralFIR convention
+ *
+ *  @details        Provides methods specific to SOFA files with GeneralFIR
+ * convention
+ */
+/************************************************************************************/
+class SOFA_API GeneralFIR : public sofa::File {
+public:
+  static const unsigned int ConventionVersionMajor;
+  static const unsigned int ConventionVersionMinor;
+  static std::string GetConventionVersion();
+
+public:
+  GeneralFIR(const std::string &path,
+             const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
+
+  virtual ~GeneralFIR(){};
+
+  virtual bool IsValid() const SOFA_OVERRIDE;
+
+  bool GetSamplingRate(double &value) const;
+  bool GetSamplingRateUnits(sofa::Units::Type &units) const;
+
+  //==============================================================================
+  bool GetDataIR(std::vector<double> &values) const;
+  bool GetDataIR(double *values, const unsigned long dim1,
+                 const unsigned long dim2, const unsigned long dim3) const;
+
+  //==============================================================================
+  bool GetDataDelay(double *values, const unsigned long dim1,
+                    const unsigned long dim2) const;
+  bool GetDataDelay(std::vector<double> &values) const;
+
+private:
+  //==============================================================================
+  bool checkGlobalAttributes() const;
+
+private:
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(GeneralFIR);
+};
+
+} // namespace sofa
 
 #endif /* _SOFA_GENERAL_FIR_H__ */
-

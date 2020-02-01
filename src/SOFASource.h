@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFASource.h
  *   @brief      Represents a sofa source
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_SOURCE_H__
@@ -51,50 +51,52 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPosition.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Source 
-     *  @brief          Represents a sofa source
-     *
-     *  @details        Source and Listener are defined in the coordinate system of the room, called global coordinate system.
-     */
-    /************************************************************************************/
-    class SOFA_API Source
-    {
-    public:
-        Source(const netCDF::NcVar & varSourcePosition,
-               const netCDF::NcVar & varSourceUp,
-               const netCDF::NcVar & varSourceView);
-        
-        ~Source() {};
-        
-        bool IsValid() const;
-        
-        bool HasSourceUp() const;
-        bool HasSourceView() const;
-        
-        bool SourcePositionHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        bool SourceUpHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        bool SourceViewHasDimensions(const unsigned long dim1, const unsigned long dim2) const;
-        
-    private:
-        const sofa::PositionVariable SourcePosition;
-        const sofa::PositionVariable SourceUp;
-        const sofa::PositionVariable SourceView;
-        
-        const bool hasVarSourceUp;    ///< flag to check if a NcVar was provided for SourceUp
-        const bool hasVarSourceView;  ///< flag to check if a NcVar was provided for SourceView
-        
-    private:
-        //==============================================================================
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( Source );        
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_SOURCE_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Source
+ *  @brief          Represents a sofa source
+ *
+ *  @details        Source and Listener are defined in the coordinate system of
+ * the room, called global coordinate system.
+ */
+/************************************************************************************/
+class SOFA_API Source {
+public:
+  Source(const netCDF::NcVar &varSourcePosition,
+         const netCDF::NcVar &varSourceUp, const netCDF::NcVar &varSourceView);
 
+  ~Source(){};
+
+  bool IsValid() const;
+
+  bool HasSourceUp() const;
+  bool HasSourceView() const;
+
+  bool SourcePositionHasDimensions(const unsigned long dim1,
+                                   const unsigned long dim2) const;
+  bool SourceUpHasDimensions(const unsigned long dim1,
+                             const unsigned long dim2) const;
+  bool SourceViewHasDimensions(const unsigned long dim1,
+                               const unsigned long dim2) const;
+
+private:
+  const sofa::PositionVariable SourcePosition;
+  const sofa::PositionVariable SourceUp;
+  const sofa::PositionVariable SourceView;
+
+  const bool
+      hasVarSourceUp; ///< flag to check if a NcVar was provided for SourceUp
+  const bool hasVarSourceView; ///< flag to check if a NcVar was provided for
+                               ///< SourceView
+
+private:
+  //==============================================================================
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(Source);
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_SOURCE_H__ */

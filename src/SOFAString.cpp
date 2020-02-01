@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAString.cpp
  *   @brief      Useful functions to manipulate strings
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAString.h"
@@ -62,45 +62,42 @@ using namespace sofa;
 /************************************************************************************/
 std::string sofa::String::PadWith(const std::string &src,
                                   const std::size_t totalLength,
-                                  const std::string &pad)
-{
-    const std::size_t length = src.length();
-    if( length > totalLength )
-    {
-        // the string is longer that expected...
-        // let's return the original string
-        return src; 
+                                  const std::string &pad) {
+  const std::size_t length = src.length();
+  if (length > totalLength) {
+    // the string is longer that expected...
+    // let's return the original string
+    return src;
+  } else {
+    const std::size_t paddingLength = pad.length();
+
+    const std::size_t numPad = (totalLength - length) / paddingLength;
+
+    std::string dest = src;
+
+    for (std::size_t i = 0; i < numPad; i++) {
+      dest += pad;
     }
-    else
-    {        
-        const std::size_t paddingLength = pad.length();
-        
-        const std::size_t numPad = ( totalLength - length ) / paddingLength;
-        
-        std::string dest = src;
-        
-        for( std::size_t i = 0; i < numPad; i++ )
-        {
-            dest += pad;
-        }
-        
-        return dest;
-    }
+
+    return dest;
+  }
 }
 
-void sofa::String::PrintSeparationLine(std::ostream & output)
-{
-    const unsigned int padding               = 30;
-    const std::string verticalSeparator      = " ";
-    const std::string horizontalSeparator    = "_";
-    
-    output << sofa::String::PadWith( horizontalSeparator, padding, horizontalSeparator );    
-    output << horizontalSeparator;
-    output << sofa::String::PadWith( horizontalSeparator, padding, horizontalSeparator );
-    output << horizontalSeparator ;
-    output << sofa::String::PadWith( horizontalSeparator, padding, horizontalSeparator );
-    output << horizontalSeparator ;
-    output << sofa::String::PadWith( horizontalSeparator, padding, horizontalSeparator );
-    output << std::endl;
-}
+void sofa::String::PrintSeparationLine(std::ostream &output) {
+  const unsigned int padding = 30;
+  const std::string verticalSeparator = " ";
+  const std::string horizontalSeparator = "_";
 
+  output << sofa::String::PadWith(horizontalSeparator, padding,
+                                  horizontalSeparator);
+  output << horizontalSeparator;
+  output << sofa::String::PadWith(horizontalSeparator, padding,
+                                  horizontalSeparator);
+  output << horizontalSeparator;
+  output << sofa::String::PadWith(horizontalSeparator, padding,
+                                  horizontalSeparator);
+  output << horizontalSeparator;
+  output << sofa::String::PadWith(horizontalSeparator, padding,
+                                  horizontalSeparator);
+  output << std::endl;
+}

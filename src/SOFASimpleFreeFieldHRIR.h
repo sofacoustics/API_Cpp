@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFASimpleFreeFieldHRIR.h
  *   @brief      Class for SOFA files with SimpleFreeFieldHRIR convention
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_SIMPLE_FREE_FIELD_HRIR_H__
@@ -51,54 +51,55 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAFile.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          SimpleFreeFieldHRIR 
-     *  @brief          Class for SOFA files with SimpleFreeFieldHRIR convention
-     *
-     *  @details        Provides methods specific to SOFA files with SimpleFreeFieldHRIR convention
-     */
-    /************************************************************************************/
-    class SOFA_API SimpleFreeFieldHRIR : public sofa::File
-    {
-    public:        
-        static const unsigned int ConventionVersionMajor;
-        static const unsigned int ConventionVersionMinor;
-        static std::string GetConventionVersion();
-        
-    public:
-        SimpleFreeFieldHRIR(const std::string &path,
-                            const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
-        
-        virtual ~SimpleFreeFieldHRIR() {};
-        
-        virtual bool IsValid() const SOFA_OVERRIDE;
-        
-        bool GetSamplingRate(double &value) const;
-        bool GetSamplingRateUnits(sofa::Units::Type &units) const;
-        
-        //==============================================================================
-        bool GetDataIR(std::vector< double > &values) const;
-        bool GetDataIR(double *values, const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        
-        //==============================================================================
-        bool GetDataDelay(double *values, const unsigned long dim1, const unsigned long dim2) const;
-        bool GetDataDelay(std::vector< double > &values) const;
-        
-    private:
-        //==============================================================================
-        bool checkGlobalAttributes() const;
-        bool checkListenerVariables() const;
-        
-    private:
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( SimpleFreeFieldHRIR );
-    };
-    
-}
+namespace sofa {
+
+/************************************************************************************/
+/*!
+ *  @class          SimpleFreeFieldHRIR
+ *  @brief          Class for SOFA files with SimpleFreeFieldHRIR convention
+ *
+ *  @details        Provides methods specific to SOFA files with
+ * SimpleFreeFieldHRIR convention
+ */
+/************************************************************************************/
+class SOFA_API SimpleFreeFieldHRIR : public sofa::File {
+public:
+  static const unsigned int ConventionVersionMajor;
+  static const unsigned int ConventionVersionMinor;
+  static std::string GetConventionVersion();
+
+public:
+  SimpleFreeFieldHRIR(
+      const std::string &path,
+      const netCDF::NcFile::FileMode &mode = netCDF::NcFile::read);
+
+  virtual ~SimpleFreeFieldHRIR(){};
+
+  virtual bool IsValid() const SOFA_OVERRIDE;
+
+  bool GetSamplingRate(double &value) const;
+  bool GetSamplingRateUnits(sofa::Units::Type &units) const;
+
+  //==============================================================================
+  bool GetDataIR(std::vector<double> &values) const;
+  bool GetDataIR(double *values, const unsigned long dim1,
+                 const unsigned long dim2, const unsigned long dim3) const;
+
+  //==============================================================================
+  bool GetDataDelay(double *values, const unsigned long dim1,
+                    const unsigned long dim2) const;
+  bool GetDataDelay(std::vector<double> &values) const;
+
+private:
+  //==============================================================================
+  bool checkGlobalAttributes() const;
+  bool checkListenerVariables() const;
+
+private:
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(SimpleFreeFieldHRIR);
+};
+
+} // namespace sofa
 
 #endif /* _SOFA_SIMPLE_FREE_FIELD_HRIR_H__ */
-

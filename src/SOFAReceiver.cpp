@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAReceiver.cpp
- *   @brief      
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @brief
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #include "../src/SOFAReceiver.h"
@@ -59,21 +59,19 @@ using namespace sofa;
  *
  */
 /************************************************************************************/
-Receiver::Receiver(const netCDF::NcVar & varReceiverPosition,
-                   const netCDF::NcVar & varReceiverUp,
-                   const netCDF::NcVar & varReceiverView)
-: ReceiverPosition( varReceiverPosition )
-, ReceiverUp( varReceiverUp )
-, ReceiverView( varReceiverView )
-, hasVarReceiverUp( (varReceiverUp.isNull() == false ) ? (true) : (false) )
-, hasVarReceiverView( (varReceiverView.isNull() == false  ) ? (true) : (false) )
-{
-}
+Receiver::Receiver(const netCDF::NcVar &varReceiverPosition,
+                   const netCDF::NcVar &varReceiverUp,
+                   const netCDF::NcVar &varReceiverView)
+    : ReceiverPosition(varReceiverPosition), ReceiverUp(varReceiverUp),
+      ReceiverView(varReceiverView),
+      hasVarReceiverUp((varReceiverUp.isNull() == false) ? (true) : (false)),
+      hasVarReceiverView((varReceiverView.isNull() == false) ? (true)
+                                                             : (false)) {}
 
 /************************************************************************************/
 /*!
- *  @brief          Checks if the NcVar corresponds to 
- *                    ReceiverPosition 
+ *  @brief          Checks if the NcVar corresponds to
+ *                    ReceiverPosition
  *                        ReceiverPosition:Type
  *                        ReceiverPosition:Unit
  *                    ReceiverUp (optional)
@@ -83,59 +81,51 @@ Receiver::Receiver(const netCDF::NcVar & varReceiverPosition,
  *                        ReceiverView:Type
  *                        ReceiverView:Units
  *
- *                    Returns true if everything is conform to the specifications
- *                    False otherwise or if any error occured
+ *                    Returns true if everything is conform to the
+ * specifications False otherwise or if any error occured
  *  @param[in]      -
  *  @param[out]     -
  *  @param[in, out] -
  *  @return         -
  *
  *  @details
- *  @n                some of the tests are redundant, but anyway they should be rather fast
+ *  @n                some of the tests are redundant, but anyway they should be
+ * rather fast
  */
 /************************************************************************************/
-bool Receiver::IsValid() const
-{
-    /// ReceiverPosition
-    if( ReceiverPosition.IsValid() == false )
-    {
-        return false;
-    }
-    
-    /// ReceiverUp
-    if( hasVarReceiverUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        /// ReceiverUp do not require a ReceiverUp::Type and ReceiverUp::Unit.
-        /// it will use the ReceiverView::Type and ReceiverView::Unit
-        
-        if( ReceiverUp.IsValid( shouldHaveTypeAndUnits )  == false )
-        {
-            return false;
-        }
-        
-        
-        /// ReceiverView
-        if( hasVarReceiverView == true )
-        {
-            const bool shouldHaveTypeAndUnits = true;
-            /// ReceiverView:Type and ReceiverView:Units shall be ‘required’ when ReceiverView or ReceiverUp are used.
-            
-            if( ReceiverView.IsValid( shouldHaveTypeAndUnits ) == false )
-            {
-                return false;
-            }
-        }
-        else
-        {
-            /// ReceiverView shall be ‘required’ when  ReceiverUp is used.
-            return false;
-        }
-    }
-    
-    return true;
-}
+bool Receiver::IsValid() const {
+  /// ReceiverPosition
+  if (ReceiverPosition.IsValid() == false) {
+    return false;
+  }
 
+  /// ReceiverUp
+  if (hasVarReceiverUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+    /// ReceiverUp do not require a ReceiverUp::Type and ReceiverUp::Unit.
+    /// it will use the ReceiverView::Type and ReceiverView::Unit
+
+    if (ReceiverUp.IsValid(shouldHaveTypeAndUnits) == false) {
+      return false;
+    }
+
+    /// ReceiverView
+    if (hasVarReceiverView == true) {
+      const bool shouldHaveTypeAndUnits = true;
+      /// ReceiverView:Type and ReceiverView:Units shall be ‘required’ when
+      /// ReceiverView or ReceiverUp are used.
+
+      if (ReceiverView.IsValid(shouldHaveTypeAndUnits) == false) {
+        return false;
+      }
+    } else {
+      /// ReceiverView shall be ‘required’ when  ReceiverUp is used.
+      return false;
+    }
+  }
+
+  return true;
+}
 
 /************************************************************************************/
 /*!
@@ -143,21 +133,17 @@ bool Receiver::IsValid() const
  *
  */
 /************************************************************************************/
-bool Receiver::HasReceiverUpVariable() const
-{
-    if( hasVarReceiverUp == true )
-    {
-        const bool shouldHaveTypeAndUnits = false;
-        
-        return ReceiverUp.IsValid( shouldHaveTypeAndUnits );
-        
-        /// ReceiverUp do not require a ReceiverUp::Type and ReceiverUp::Unit.
-        /// it will use the ReceiverView::Type and ReceiverView::Unit
-    }
-    else
-    {
-        return false;
-    }
+bool Receiver::HasReceiverUpVariable() const {
+  if (hasVarReceiverUp == true) {
+    const bool shouldHaveTypeAndUnits = false;
+
+    return ReceiverUp.IsValid(shouldHaveTypeAndUnits);
+
+    /// ReceiverUp do not require a ReceiverUp::Type and ReceiverUp::Unit.
+    /// it will use the ReceiverView::Type and ReceiverView::Unit
+  } else {
+    return false;
+  }
 }
 
 /************************************************************************************/
@@ -166,35 +152,28 @@ bool Receiver::HasReceiverUpVariable() const
  *
  */
 /************************************************************************************/
-bool Receiver::HasReceiverViewVariable() const
-{
-    if( hasVarReceiverView == true )
-    {
-        return ReceiverView.IsValid();
-    }
-    else
-    {
-        return false;
-    }
+bool Receiver::HasReceiverViewVariable() const {
+  if (hasVarReceiverView == true) {
+    return ReceiverView.IsValid();
+  } else {
+    return false;
+  }
 }
 
 bool Receiver::ReceiverPositionHasDimensions(const unsigned long dim1,
                                              const unsigned long dim2,
-                                             const unsigned long dim3) const
-{
-    return ReceiverPosition.HasDimensions( dim1, dim2, dim3 );
+                                             const unsigned long dim3) const {
+  return ReceiverPosition.HasDimensions(dim1, dim2, dim3);
 }
 
 bool Receiver::ReceiverUpHasDimensions(const unsigned long dim1,
                                        const unsigned long dim2,
-                                       const unsigned long dim3) const
-{
-    return ReceiverUp.HasDimensions( dim1, dim2, dim3 );
+                                       const unsigned long dim3) const {
+  return ReceiverUp.HasDimensions(dim1, dim2, dim3);
 }
 
 bool Receiver::ReceiverViewHasDimensions(const unsigned long dim1,
                                          const unsigned long dim2,
-                                         const unsigned long dim3) const
-{
-    return ReceiverView.HasDimensions( dim1, dim2, dim3 );
+                                         const unsigned long dim3) const {
+  return ReceiverView.HasDimensions(dim1, dim2, dim3);
 }

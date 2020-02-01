@@ -27,23 +27,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAEmitter.h
  *   @brief      Represents a sofa emitter
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_EMITTER_H__
@@ -51,57 +51,62 @@ http://www.sofaconventions.org
 
 #include "../src/SOFAPosition.h"
 
-namespace sofa
-{
-    
-    /************************************************************************************/
-    /*!
-     *  @class          Emitter 
-     *  @brief          Represents a sofa emitter
-     *
-     *  @details        Emitter is any acoustic excitation used for the measurement.
-     *                  The number of emitters is not limited in SOFA.
-     *                  The contribution of the particular emitter is described by the metadata (see later).
-     *
-     *  @details        Emitters and receivers have both their own coordinate system called local coordinate system.
-     *                  The local coordinate system of emitter and receiver are defined relatively to the coordinate system
-     *                  of the source and listener, respectively.
-     *                  With the source and listener in the origin and at default orientation,
-     *                  the local coordinate systems correspond to the global coordinate system.
-     */
-    /************************************************************************************/
-    class SOFA_API Emitter
-    {
-    public:
-        Emitter(const netCDF::NcVar & varEmitterPosition,
-                const netCDF::NcVar & varEmitterUp,
-                const netCDF::NcVar & varEmitterView);
-        
-        ~Emitter() {};
-        
-        bool IsValid() const;
-        
-        bool HasEmitterUpVariable() const;
-        bool HasEmitterViewVariable() const;
-        
-        bool EmitterPositionHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        bool EmitterUpHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        bool EmitterViewHasDimensions(const unsigned long dim1, const unsigned long dim2, const unsigned long dim3) const;
-        
-    private:
-        const sofa::PositionVariable EmitterPosition;
-        const sofa::PositionVariable EmitterUp;
-        const sofa::PositionVariable EmitterView;
-        const bool hasVarEmitterUp;
-        const bool hasVarEmitterView;
-        
-    private:
-        //==============================================================================
-        /// avoid shallow and copy constructor
-        SOFA_AVOID_COPY_CONSTRUCTOR( Emitter );
-    };
-    
-}
+namespace sofa {
 
-#endif /* _SOFA_EMITTER_H__ */ 
+/************************************************************************************/
+/*!
+ *  @class          Emitter
+ *  @brief          Represents a sofa emitter
+ *
+ *  @details        Emitter is any acoustic excitation used for the measurement.
+ *                  The number of emitters is not limited in SOFA.
+ *                  The contribution of the particular emitter is described by
+ * the metadata (see later).
+ *
+ *  @details        Emitters and receivers have both their own coordinate system
+ * called local coordinate system. The local coordinate system of emitter and
+ * receiver are defined relatively to the coordinate system of the source and
+ * listener, respectively. With the source and listener in the origin and at
+ * default orientation, the local coordinate systems correspond to the global
+ * coordinate system.
+ */
+/************************************************************************************/
+class SOFA_API Emitter {
+public:
+  Emitter(const netCDF::NcVar &varEmitterPosition,
+          const netCDF::NcVar &varEmitterUp,
+          const netCDF::NcVar &varEmitterView);
 
+  ~Emitter(){};
+
+  bool IsValid() const;
+
+  bool HasEmitterUpVariable() const;
+  bool HasEmitterViewVariable() const;
+
+  bool EmitterPositionHasDimensions(const unsigned long dim1,
+                                    const unsigned long dim2,
+                                    const unsigned long dim3) const;
+  bool EmitterUpHasDimensions(const unsigned long dim1,
+                              const unsigned long dim2,
+                              const unsigned long dim3) const;
+  bool EmitterViewHasDimensions(const unsigned long dim1,
+                                const unsigned long dim2,
+                                const unsigned long dim3) const;
+
+private:
+  const sofa::PositionVariable EmitterPosition;
+  const sofa::PositionVariable EmitterUp;
+  const sofa::PositionVariable EmitterView;
+  const bool hasVarEmitterUp;
+  const bool hasVarEmitterView;
+
+private:
+  //==============================================================================
+  /// avoid shallow and copy constructor
+  SOFA_AVOID_COPY_CONSTRUCTOR(Emitter);
+};
+
+} // namespace sofa
+
+#endif /* _SOFA_EMITTER_H__ */

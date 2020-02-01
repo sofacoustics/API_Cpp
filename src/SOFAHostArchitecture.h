@@ -27,58 +27,61 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /**
 
-Spatial acoustic data file format - AES69-2015 - Standard for File Exchange - Spatial Acoustic Data File Format
-http://www.aes.org
+Spatial acoustic data file format - AES69-2015 - Standard for File Exchange -
+Spatial Acoustic Data File Format http://www.aes.org
 
 SOFA (Spatially Oriented Format for Acoustics)
 http://www.sofaconventions.org
 
 */
 
-
 /************************************************************************************/
 /*!
  *   @file       SOFAHostArchitecture.h
- *   @brief      
- *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou / CNRS / UPMC
+ *   @brief
+ *   @author     Thibaut Carpentier, UMR STMS 9912 - Ircam-Centre Pompidou /
+ * CNRS / UPMC
  *
  *   @date       10/05/2013
- * 
+ *
  */
 /************************************************************************************/
 #ifndef _SOFA_HOST_ARCHITECTURE_H__
 #define _SOFA_HOST_ARCHITECTURE_H__
 
-#if ( defined(unix) || defined(__unix) || defined(__unix__) || defined(__linux__) )
+#if (defined(unix) || defined(__unix) || defined(__unix__) ||                  \
+     defined(__linux__))
 
-    //==============================================================================
-    /// UNIX
-    //==============================================================================
-    #define SOFA_UNIX 1
-    #undef SOFA_MAC
-    #undef SOFA_WINDOWS
+//==============================================================================
+/// UNIX
+//==============================================================================
+#define SOFA_UNIX 1
+#undef SOFA_MAC
+#undef SOFA_WINDOWS
 
-#elif ( defined(macintosh) || defined(__MACH__) || defined(__APPLE__) || defined (__APPLE_CPP__) || defined(__APPLE_CC__) )
+#elif (defined(macintosh) || defined(__MACH__) || defined(__APPLE__) ||        \
+       defined(__APPLE_CPP__) || defined(__APPLE_CC__))
 
-    //==============================================================================
-    /// MAC OS
-    //==============================================================================
-    #define SOFA_MAC 1
-    #undef SOFA_WINDOWS
-    #undef SOFA_UNIX
+//==============================================================================
+/// MAC OS
+//==============================================================================
+#define SOFA_MAC 1
+#undef SOFA_WINDOWS
+#undef SOFA_UNIX
 
-#elif ( defined(_WIN32) || defined (_WIN64)) || (defined (WIN32) || defined(__DOS__) || defined(_MSC_VER) )
+#elif (defined(_WIN32) || defined(_WIN64)) ||                                  \
+    (defined(WIN32) || defined(__DOS__) || defined(_MSC_VER))
 
-    //==============================================================================
-    /// WINDOWS
-    //==============================================================================
-    #define SOFA_WINDOWS 1
-    #undef SOFA_MAC
-    #undef SOFA_UNIX
+//==============================================================================
+/// WINDOWS
+//==============================================================================
+#define SOFA_WINDOWS 1
+#undef SOFA_MAC
+#undef SOFA_UNIX
 
 #else
-    
-    #error "Unknown host architecture"
+
+#error "Unknown host architecture"
 
 #endif
 
