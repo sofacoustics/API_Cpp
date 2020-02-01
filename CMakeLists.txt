@@ -98,11 +98,11 @@ add_executable(sofainfo "${CMAKE_CURRENT_SOURCE_DIR}/src/sofainfo.cpp")
 target_link_libraries(sofainfo sofa)
 
 add_executable(sofamisc "${CMAKE_CURRENT_SOURCE_DIR}/src/sofamisc.cpp")
-target_link_libraries(sofamisc sofa json-c)
+target_link_libraries(sofamisc sofa)
 
 add_executable(sofa2json "${CMAKE_CURRENT_SOURCE_DIR}/src/sofa2json.cpp")
 target_link_libraries(sofa2json sofa json-c)
 
-#add_executable(json2sofa "${CMAKE_CURRENT_SOURCE_DIR}/src/json2sofa.cpp")
-#target_link_libraries(json2sofa sofa)
+add_executable(json2sofa "${CMAKE_CURRENT_SOURCE_DIR}/src/json2sofa.cpp")
+target_link_libraries(json2sofa sofa json-c)
 

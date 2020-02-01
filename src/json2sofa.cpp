@@ -171,22 +171,24 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  FILE fhd = fopen(argv[1]);
+  FILE *fhd = fopen(argv[1], "rb");
   if (fhd == NULL) {
     std::cerr << "Cannot open file " << argv[1] << std::endl;
     return 2;
   }
-  fseek(fp, 0L, SEEK_END);
-  sz = ftell(fp);
-  fseek(fp, 0L, SEEK_SET);
+  fseek(fhd, 0L, SEEK_END);
+  sz = ftell(fhd);
+  fseek(fhd, 0L, SEEK_SET);
 
-  filestring = malloc(sz);
+  std::cout << "File " << argv[1] << " has size " << sz << std::endl;
+
+  filestring = (char *)malloc(sz);
   if (!filestring) {
     std::cerr << "Out of memory" << std::endl;
     return 3;
   }
 
-  if (fread(filestring, sz, 1, fhd) != sz) {
+  if (fread(filestring, sz, 1, fhd) != 1) {
     std::cerr << "Cannot read file" << std::endl;
     return 4;
   }
