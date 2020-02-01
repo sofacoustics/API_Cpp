@@ -32,14 +32,11 @@ endif(C_HAS_WALL)
 
 set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG -DVDEBUG")
 
-add_subdirectory(src)
-
 if(BUILD_TESTS)
-
-  add_test(CIPIC_subject_003_hrir_final ../tests/compare.sh
-           ../tests/CIPIC_subject_003_hrir_final)
-
+  enable_testing()
 endif(BUILD_TESTS)
+
+add_subdirectory(src)
 
 include(CPack)
 
@@ -47,3 +44,6 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/libsofa.pc.cmake"
                "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+
+

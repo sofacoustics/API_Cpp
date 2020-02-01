@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
 
   std::cout << "File " << argv[1] << " has size " << sz << std::endl;
 
-  filestring = (char *)malloc(sz);
+  filestring = (char *)malloc(sz+1);
   if (!filestring) {
     std::cerr << "Out of memory" << std::endl;
     return 3;
@@ -193,6 +193,7 @@ int main(int argc, char *argv[]) {
     return 4;
   }
 
+  filestring[sz]=0;
   json_object *jobj = json_tokener_parse(filestring);
   if (jobj == NULL) {
     std::cerr << "JSON error" << std::endl;

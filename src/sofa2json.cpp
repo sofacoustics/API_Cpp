@@ -186,5 +186,8 @@ int main(int argc, char *argv[]) {
 #endif
 
   puts(json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_PRETTY));
+
+  json_object_put(jobj);
+
   return 0;
 }

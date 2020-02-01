@@ -213,7 +213,7 @@ static void PrintListener(const sofa::File &theFile, std::ostream &output) {
     sofa::Units::Type units;
     const bool ok = theFile.GetListenerUp(coordinates, units);
 
-    SOFA_ASSERT(ok == true);
+// TODO:    SOFA_ASSERT(ok == true);
 
     output << sofa::String::PadWith("ListenerUp:Type") << " = "
            << sofa::Coordinates::GetName(coordinates) << std::endl;

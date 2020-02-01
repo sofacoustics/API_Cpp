@@ -17,7 +17,7 @@ Library for reading and writing the standartized .sofa file format (AES69-2015).
 <img alt="Travis CI Status" src="https://travis-ci.org/hoene/libsofa.svg?branch=master"/>
 </a>
 <a href="https://scan.coverity.com/projects/hoene-libsofa">
-<img alt="Coverity Scan Build Status" src="https://scan.coverity.com/projects/13030/badge.svg"/>
+<img alt="Coverity Scan Build Status" src="https://scan.coverity.com/projects/20300/badge.svg"/>
 </a>
 <a href="https://ci.appveyor.com/project/hoene/libsofa-s142k">
 <img alt="AppVeyor Status" src="https://ci.appveyor.com/api/projects/status/mk86lx4ux2jn9tddpo/branch/master?svg=true"/>
@@ -40,7 +40,7 @@ Then, to compile enter following commands
 
 > cmake -DCMAKE_BUILD_TYPE=Debug ..
 
-> make all
+> make all test
 
 
 

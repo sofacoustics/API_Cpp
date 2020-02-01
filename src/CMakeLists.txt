@@ -228,3 +228,16 @@ target_link_libraries(sofa2json sofa json-c)
 
 add_executable(json2sofa json2sofa.cpp)
 target_link_libraries(json2sofa sofa json-c)
+
+
+if(BUILD_TESTS)
+  add_test(sofainfo ./sofainfo 
+           ../../tests/MIT_KEMAR_large_pinna.sofa)
+  add_test(sofamisc ./sofamisc
+           ../../tests/MIT_KEMAR_large_pinna.sofa)
+  add_test(sofa2json ./sofa2json 
+           ../../tests/MIT_KEMAR_large_pinna.sofa)
+  add_test(json2sofa ./json2sofa 
+           ../../tests/MIT_KEMAR_large_pinna.json)
+
+endif(BUILD_TESTS)
