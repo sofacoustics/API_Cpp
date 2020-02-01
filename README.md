@@ -32,7 +32,7 @@ Library for reading and writing the standartized .sofa file format (AES69-2015).
 
 On Ubuntu, to install the required components, enter
 
-> sudo apt install libnetcdf-c++4-dev libjson-c-dev
+> sudo apt install libnetcdf-c++4-dev libjson-c-dev doxygen graphviz
 
 Then, to compile enter following commands
 
