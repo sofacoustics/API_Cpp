@@ -285,5 +285,5 @@ int main(int argc, char *argv[])
 
   // quit
   json_object_put(jobj);
-  return result?0:1;
+  return result?1:0;
 }
