@@ -23,7 +23,7 @@ Ok, here we go:
 
 - Close the MSYS2 console and start the convenient mingw32 or mingw64 console (bash scripts in MSYS2 directory), pending on the compiler installation before (32 or 64 bit).
 
-- You have to install several libraries and linux-like library wrappers: make, dlfcn, hdf5, netcdf, curl. ``pacman -Ss [fill on your own]`` plus a name hint will inform you about avilable up-to-date packages for each compiler, try ``pacman -Ss dlfcn`` and you'll see what I mean. Zlib is shipped with MinGW, so you don't need to install it.
+- You have to install several libraries and linux-like library wrappers: make, dlfcn, hdf5, netcdf. ``pacman -Ss [fill on your own]`` plus a name hint will inform you about avilable up-to-date packages for each compiler, try ``pacman -Ss dlfcn`` and you'll see what I mean. Zlib is shipped with MinGW, so you don't need to install it.
 
 - Unfortunalety, netcdf-c++4 is not available yet with pacman (maybe it is at the time when you read this? Try it with the command above). We need to build it from source. Download the netcdf_c++ unix-style source code (google will help you to find it) and navigate inside the mingw shell to the directory and configure the build with ``./configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32`` with the 64 bit compiler version, or ``./configure --host=i686-w64-mingw32 --build=i686-w64-mingw32`` with the 32Bit compiler version. then ``make`` and ``make install`` will compile static libraries and place them in the mingw lib folder.
 

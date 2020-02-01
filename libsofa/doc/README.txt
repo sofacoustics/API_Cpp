@@ -6,7 +6,6 @@ first name dot last name at ircam dot fr
 
 The SOFA API depends on the following libraries:
 - zlib
-- curl
 - hdf5
 - netcdf
 - netcdf C++
@@ -14,7 +13,6 @@ The SOFA API depends on the following libraries:
 The 'dependencies' folder contains pre-compiled static libraries for OSX and linux.
 I used the following versions:
 zlib-1.2.8
-curl-7.37.1
 hdf5-1.8.13
 netcdf-4.3.2
 netcdf-cxx4-4.2
