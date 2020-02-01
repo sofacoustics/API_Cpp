@@ -40,7 +40,7 @@ Then, to compile enter following commands
 
 > cmake -DCMAKE_BUILD_TYPE=Debug ..
 
-> make all test
+> make all test doxyDoc
 
 
 
