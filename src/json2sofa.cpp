@@ -13,52 +13,17 @@
 #include "../src/SOFA.h"
 #include <iostream>
 #include <json-c/json.h>
-#include <ncDim.h>
-#include <ncVar.h>
+//#include <ncDim.h>
+//#include <ncVar.h>
 #include <netcdf>
 
 using namespace netCDF;
 using namespace netCDF::exceptions;
 
-/************************************************************************************/
-/*!
- *  @brief          Testing whether a file match a SOFA convention or not
- *                  without raising any exception
- *
- */
-/************************************************************************************/
-static bool TestFileConvention(json_object *jobj, const std::string &filename)
-{
-  bool valid = sofa::IsValidSimpleFreeFieldHRIRFile(filename);
-  json_object_object_add(
-      jobj, "isNetCDF",
-      json_object_new_boolean(sofa::IsValidNetCDFFile(filename)));
-  json_object_object_add(
-      jobj, "isSOFA", json_object_new_boolean(sofa::IsValidSOFAFile(filename)));
-  json_object_object_add(jobj, "isSimpleFreeFieldHRIR",
-                         json_object_new_boolean(valid));
-  json_object_object_add(
-      jobj, "isSimpleFreeFieldSOS",
-      json_object_new_boolean(sofa::IsValidSimpleFreeFieldSOSFile(filename)));
-  json_object_object_add(
-      jobj, "isSimpleHeadphoneIRF",
-      json_object_new_boolean(sofa::IsValidSimpleHeadphoneIRFile(filename)));
-  json_object_object_add(
-      jobj, "isGeneralFIR",
-      json_object_new_boolean(sofa::IsValidGeneralFIRFile(filename)));
-  json_object_object_add(
-      jobj, "isGeneralTF",
-      json_object_new_boolean(sofa::IsValidGeneralTFFile(filename)));
-
-  return valid;
-}
-
-const NcDouble myNcDouble;
-
 //==============================================================================
 // global attributes
 //==============================================================================
-void writeAttributes(json_object *jobj, NcFile &dataFile)
+bool writeAttributes(json_object *jobj, NcFile &dataFile)
 {
   json_object_object_foreach(jobj, key, val)
   {
@@ -69,14 +34,16 @@ void writeAttributes(json_object *jobj, NcFile &dataFile)
       break;
     default:
       std::cerr << "Dropping dimensions " << key << std::endl;
+      return false;
     }
   }
+  return true;
 }
 
 //==============================================================================
 // dimensions
 //==============================================================================
-void writeDimensions(json_object *jobj, NcFile &dataFile)
+bool writeDimensions(json_object *jobj, NcFile &dataFile)
 {
   json_object_object_foreach(jobj, key, val)
   {
@@ -86,9 +53,11 @@ void writeDimensions(json_object *jobj, NcFile &dataFile)
       dataFile.addDim(key, json_object_get_int(val));
       break;
     default:
-      std::cerr << "Dropping attribute " << key << " " << json_object_get_type(val) << std::endl;
+      std::cerr << "Dropping dimension " << key << " " << json_object_get_type(val) << std::endl;
+      return false;
     }
   }
+  return true;
 }
 
 //==============================================================================
@@ -102,7 +71,7 @@ bool writeVariable(std::string name, json_object *jobj, NcFile &dataFile)
   std::vector<std::string> attributeNames;
   std::vector<std::string> attributeValues;
   std::vector<double> values;
-  
+
   json_object_object_foreach(jobj, key, val)
   {
     if (!strcmp(key, "TypeName") && json_object_get_type(val) == json_type_string)
@@ -134,7 +103,7 @@ bool writeVariable(std::string name, json_object *jobj, NcFile &dataFile)
           std::cerr << "variable " << name << " dimensionNames array incorrect " << json_object_get_type(val) << std::endl;
           return false;
         }
-                dimensionNames.push_back(json_object_get_string(node));
+        dimensionNames.push_back(json_object_get_string(node));
       }
     }
     else if (!strcmp(key, "Attributes") && json_object_get_type(val) == json_type_object)
@@ -147,8 +116,9 @@ bool writeVariable(std::string name, json_object *jobj, NcFile &dataFile)
     }
     else if (!strcmp(key, "Values") && json_object_get_type(val) == json_type_array)
     {
-        values.reserve(json_object_array_length(val));
-        for (size_t i = 0; i < json_object_array_length(val); i++) {
+      values.reserve(json_object_array_length(val));
+      for (size_t i = 0; i < json_object_array_length(val); i++)
+      {
         json_object *node = json_object_array_get_idx(val, i);
         if (node == nullptr || !(json_object_is_type(node, json_type_int) || json_object_is_type(node, json_type_double)))
         {
@@ -159,80 +129,39 @@ bool writeVariable(std::string name, json_object *jobj, NcFile &dataFile)
       }
     }
     else
+    {
       std::cerr << "variable " << name << " " << key << " " << json_object_get_type(val) << std::endl;
+      return false;
+    }
   }
 
-  // print
-  std::cerr << name << " typeName " << typeName << std::endl;
-  for (auto i : dimensions)
-    std::cerr << name << " dimension " << i << std::endl;
-  for (auto i : dimensionNames)
-    std::cerr << name << " dimensionName " << i << std::endl;
-  for (auto i : attributeNames)
-    std::cerr << name << " attributeNames " << i << std::endl;
-  for (auto i : attributeValues)
-    std::cerr << name << " attributeValues " << i << std::endl;
-    std::cerr << name << " values " << values.size() << std::endl;
-
+  // write to netcdf file
   NcVar var = dataFile.addVar(name, typeName, dimensionNames);
-  for (size_t i=0; i < attributeNames.size();i++)
-      var.putAtt(attributeNames[i], attributeValues[i]);
+  for (size_t i = 0; i < attributeNames.size(); i++)
+    var.putAtt(attributeNames[i], attributeValues[i]);
   var.putVar(values.data());
-  
+
   return true;
 }
 
 //==============================================================================
 // variables
 //==============================================================================
-void writeVariables(json_object *jobj, NcFile &dataFile)
+bool writeVariables(json_object *jobj, NcFile &dataFile)
 {
   json_object_object_foreach(jobj, key, val)
   {
     switch (json_object_get_type(val))
     {
     case json_type_object:
-      writeVariable(key, val, dataFile);
+      if (!writeVariable(key, val, dataFile))
+        return false;
       break;
     default:
       std::cerr << "Dropping variable " << key << " " << json_object_get_type(val) << std::endl;
+      return false;
     }
   }
-#if 0
-
-
-      std::vector<std::string> dimNames;
-      file.GetVariableDimensionsNames(dimNames, name);
-      json_object *jarray2 = json_object_new_array();
-      json_object_object_add(jobj3, "DimensionNames", jarray2);
-      for (size_t i = 0; i < dimNames.size(); i++)
-        json_object_array_add(jarray2,
-                              json_object_new_string(dimNames[i].c_str()));
-
-      std::vector<std::string> attributeNames;
-      std::vector<std::string> attributeValues;
-      file.GetVariablesAttributes(attributeNames, attributeValues, name);
-
-      SOFA_ASSERT(attributeNames.size() == attributeValues.size());
-
-      if (attributeNames.size() > 0) {
-        json_object *jobj4 = json_object_new_object();
-        json_object_object_add(jobj3, "Attributes", jobj4);
-
-        for (std::size_t j = 0; j < attributeNames.size(); j++)
-          json_object_object_add(
-              jobj4, attributeNames[j].c_str(),
-              json_object_new_string(attributeValues[j].c_str()));
-      }
-
-      std::vector<double> values;
-      file.GetValues(values, name);
-      json_object *jarray3 = json_object_new_array();
-      json_object_object_add(jobj3, "Values", jarray3);
-      for (size_t i = 0; i < values.size();)
-        json_object_array_add(jarray3, json_object_new_double(values[i++]));
-    }
-#endif
 }
 
 /************************************************************************************/
@@ -241,8 +170,8 @@ void writeVariables(json_object *jobj, NcFile &dataFile)
  *
  */
 /************************************************************************************/
-static void writeSofa(json_object *jobj,
-                      const std::string &filename)
+bool writeSofa(json_object *jobj,
+               const std::string &filename)
 {
   try
   {
@@ -256,22 +185,33 @@ static void writeSofa(json_object *jobj,
         continue;
       }
       if (!strcmp(key, "Attributes"))
-        writeAttributes(val, dataFile);
+      {
+        if (!writeAttributes(val, dataFile))
+          return false;
+      }
       else if (!strcmp(key, "Dimensions"))
-        writeDimensions(val, dataFile);
+      {
+        if (!writeDimensions(val, dataFile))
+          return false;
+      }
       else if (!strcmp(key, "Variables"))
-        writeVariables(val, dataFile);
+      {
+        if (!writeVariables(val, dataFile))
+          return false;
+      }
       else
       {
         std::cerr << "Unknown variable " << key << std::endl;
-        continue;
+        return false;
       }
     }
   }
   catch (NcException &e)
   {
     e.what();
+    return false;
   }
+  return true;
 }
 
 /************************************************************************************/
@@ -340,107 +280,10 @@ int main(int argc, char *argv[])
   free(filestring);
   fclose(fhd);
 
-  // convert to SOFA format
+  // write files
+  bool result = writeSofa(jobj, argv[2]);
 
-  /*
-function [Obj] = SOFAsave(filename,Obj,varargin)
-%SOFASAVE 
-%   [] = SOFAsave(filename,Obj,Compression) creates a new SOFA file and
-%   writes an entire data set to it.
-%
-%   filename specifies the name of the SOFA file to which the data is written.
-%   Obj is a struct containing the data and meta
-%   data to be written to the SOFA file (see below for exact format).
-%   Compression is an optional numeric value between 0 and 9 specifying the
-%   amount of compression to be applied to the data when writing to the netCDF file.
-%   0 is no compression and 9 is the most compression.
-% 
-%   The existence of mandatory variables will be checked. The dimensions
-%   will be updated.
-
-% SOFA API - function SOFAsave
-% Copyright (C) 2012-2013 Acoustics Research Institute - Austrian Academy of Sciences
-% Licensed under the EUPL, Version 1.1 or - as soon they will be approved by the European Commission - subsequent versions of the EUPL (the "License")
-% You may not use this work except in compliance with the License.
-% You may obtain a copy of the License at: http://joinup.ec.europa.eu/software/page/eupl
-% Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-% See the License for the specific language governing  permissions and limitations under the License. 
-
-Def = SOFAdefinitions;
-
-%% check file name
-filename=SOFAcheckFilename(filename);
-
-%% Remove private data
-if isfield(Obj,'PRIVATE'), Obj=rmfield(Obj,'PRIVATE'); end
-
-%% Check convention: mandatory variables
-ObjCheck = SOFAgetConventions(Obj.GLOBAL_SOFAConventions,'m');
-
-varNames = fieldnames(ObjCheck);
-for ii=1:size(varNames,1);
-    if ~isfield(Obj,varNames{ii})
-        error(['Mandatory variable/attribute not existing: ' varNames{ii}]);
-    end
-end
-
-%% Get & set dimensions
-Obj=SOFAupdateDimensions(Obj);
-
-%% Check convention: read-only variables
-ObjCheck = SOFAgetConventions(Obj.GLOBAL_SOFAConventions,'r');
-varNames = fieldnames(ObjCheck);
-
-for ii=1:size(varNames,1);
-	if ischar(Obj.(varNames{ii}))
-		if ~strcmp(Obj.(varNames{ii}), ObjCheck.(varNames{ii}))
-			warning('SOFA:save',[varNames{ii} ' is read-only and was reset to '  ObjCheck.(varNames{ii})],0);
-			Obj.(varNames{ii})=ObjCheck.(varNames{ii});
-		end
-	else
-		if Obj.(varNames{ii}) ~= ObjCheck.(varNames{ii})
-			warning('SOFA:save',[varNames{ii} ' is read-only and was reset to '  ObjCheck.(varNames{ii})],0);
-			Obj.(varNames{ii})=ObjCheck.(varNames{ii});
-		end
-	end
-end
-
-%% check attributes (syntax, 1-dimensional string)
-varNames = fieldnames(Obj);
-for ii=1:size(varNames,1);
-    
-    if size(strfind(varNames{ii},'_'),2) == 1
-        if ~ischar(Obj.(varNames{ii}))
-            error(['Attribute not a valid string: ' varNames{ii} ' = ' num2str(Obj.(varNames{ii}))]);
-        end
-    elseif size(strfind(varNames{ii},'_'),2) > 1
-        error(['Attribute not valid (only one underscore "_" is allowed in attribute name): ' varNames{ii}]);
-    end
-    
-end
-
-%% check varargin (compression)
-if ~isempty(varargin) && isnumeric(varargin{1})
-	if isscalar(varargin{1}) && varargin{1}>=0 && varargin{1}<=9
-        Compression = varargin{1};
-	else
-        error('Error: Compression must be a numeric scalar value between 0 and 9.');
-	end
-else
-    Compression = 1; % default
-end
-
-%% Set/modify time information
-Obj.GLOBAL_DateModified=datestr(now,Def.dateFormat);
-if isempty(Obj.GLOBAL_DateCreated), Obj.GLOBAL_DateCreated=Obj.GLOBAL_DateModified; end
-
-%% Save file
-NETCDFsave(filename,Obj,Compression);
-*/
-
-  //  puts(json_object_to_json_string_ext(jobj, JSON_C_TO_STRING_PRETTY));
-  writeSofa(jobj, argv[2]);
-
+  // quit
   json_object_put(jobj);
-  return 0;
+  return result?0:1;
 }
