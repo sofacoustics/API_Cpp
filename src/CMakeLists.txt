@@ -238,6 +238,6 @@ if(BUILD_TESTS)
   add_test(sofa2json ./sofa2json 
            ../../tests/MIT_KEMAR_large_pinna.sofa)
   add_test(json2sofa ./json2sofa 
-           ../../tests/MIT_KEMAR_large_pinna.json)
+           ../../tests/MIT_KEMAR_large_pinna.json tmp.sofa)
 
 endif(BUILD_TESTS)
