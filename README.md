@@ -1,6 +1,6 @@
 <div align="right">
 <a href="http://www.sofaconventions.org/">
-	<img alt="sofaconventions.org" width="320px" src="https://raw.githubusercontent.com/hoene/libsofa/master/11960889.png"/>
+	<img alt="sofaconventions.org" width="160px" src="https://raw.githubusercontent.com/hoene/libsofa/master/11960889.png"/>
 </a>
 </div
 
@@ -21,9 +21,6 @@ Library for reading and writing the standartized .sofa file format (AES69-2015).
 </a>
 <a href="https://ci.appveyor.com/project/hoene/libsofa-s142k">
 <img alt="AppVeyor Status" src="https://ci.appveyor.com/api/projects/status/mk86lx4ux2jn9tddpo/branch/master?svg=true"/>
-</a>
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GUN8R6NUQCS3C" >
-<img alt="Donate" src="https://symonics.com/Donate-PayPal-green.svg"/>
 </a>
 </div>
 

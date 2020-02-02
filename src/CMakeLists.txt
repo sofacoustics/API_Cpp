@@ -239,5 +239,9 @@ if(BUILD_TESTS)
            ../../tests/MIT_KEMAR_large_pinna.sofa)
   add_test(json2sofa ./json2sofa 
            ../../tests/MIT_KEMAR_large_pinna.json tmp.sofa)
+  add_test(../../tests/compare.sh 
+           ../../tests/MIT_KEMAR_large_pinna.json)
+  add_test(../../tests/compare.sh 
+           ../../tests/example_dummy_sofa48_with_user_defined_variable)
 
 endif(BUILD_TESTS)
