@@ -273,7 +273,7 @@ void NetCDFFile::PrintAllVariables(std::ostream & output) const
         const std::string varName       = (*it).first;
         
         std::vector< std::size_t > dimensions;
-        GetVariableDimensions( dimensions, varName ),
+        GetVariableDimensions( dimensions, varName );
         
         output << varName << " = " << "(";
         
