@@ -1,0 +1,4 @@
+libsofa/lib/*_debug*
+libsofa/build/macos/build
+libsofa/build/macos/libsofa.xcodeproj/project.xcworkspace
+libsofa/build/macos/libsofa.xcodeproj/xcuserdata

@@ -26,10 +26,10 @@ EXECUTABLE_PREFIX               =
 
 GCC_VERSION                     = com.apple.compilers.llvm.clang.1_0     ///< for Xcode 4
 
-SDKROOT                         = $(MACOSX_SDK_10_12)
+SDKROOT                         = macosx
 
-MACOSX_DEPLOYMENT_TARGET        = 10.7
-VALID_ARCHS                     = i386 x86_64
+MACOSX_DEPLOYMENT_TARGET        = $(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)
+VALID_ARCHS                     = x86_64
 
 //==============================================================================
 // VERSION
